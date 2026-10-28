@@ -108,3 +108,18 @@ nutriplan/
 `backend/src/services/nutrition/`, `rule_engine/` và `menu_planning/` dành cho tính toán và xử lý ràng buộc. `ai/src/` dành cho nhận diện, ước lượng, truy xuất và giải thích. `data/knowledge_base/` dành cho tài liệu nguồn; `database/vector_store/` dành cho dữ liệu vector phục vụ RAG.
 
 `.env.example` hiện để trống, dành cho danh sách biến môi trường sau khi thống nhất công nghệ.
+
+
+markdown
+# NutriPlan – Frontend
+
+## Yêu cầu
+- Node.js bản LTS (kiểm tra: `node -v`)
+
+## Cách chạy
+
+cd frontend
+npm install
+npm run dev
+
+Mở http://localhost:5173 trên trình duyệt.
