@@ -8,14 +8,21 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:demo": "vite --open /demo",
     "build": "vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.5",
     "vite": "^8.3.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0"
   }
 }

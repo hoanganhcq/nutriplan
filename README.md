@@ -123,3 +123,6 @@ npm install
 npm run dev
 
 Mở http://localhost:5173 trên trình duyệt.
+
+Để tự mở trang demo component khi khởi động frontend, chạy `npm run dev:demo`.
+Nếu server chọn cổng khác, dùng địa chỉ hiển thị trong terminal và thêm `/demo` (ví dụ: `http://localhost:5174/demo`). Trang chủ cũng có liên kết tới demo.
