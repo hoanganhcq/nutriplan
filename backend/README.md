@@ -41,10 +41,8 @@ pip install -e ".[dev]"
 uvicorn app.main:app --reload
 ```
 
-Khi ứng dụng khởi động, `app.db.database.initialize_database()` tự động chạy
-`app/db/schema.sql`. SQLite sẽ tạo file theo `DATABASE_URL` nếu file chưa tồn
-tại. Mặc định file là `backend/meal_analysis.db` khi chạy lệnh từ thư mục
-`backend`.
+Ứng dụng kết nối đến MySQL theo `DATABASE_URL`. Các bảng cần được tạo sẵn;
+backend không tự tạo hoặc tự sửa schema khi khởi động.
 
 API chạy tại `http://localhost:8000`; endpoint kiểm tra trạng thái là
 `http://localhost:8000/health`. Tài liệu tương tác ở
@@ -52,23 +50,35 @@ API chạy tại `http://localhost:8000`; endpoint kiểm tra trạng thái là
 
 ### Cấu hình database
 
-Tạo file `backend/.env` từ `.env.example`:
+Tạo file `backend/.env` từ `.env.example`, sau đó thay tên user, mật khẩu,
+host, port và tên database bằng thông tin MySQL của bạn:
 
 ```env
-DATABASE_URL=sqlite:///./nutriplan.db
+DATABASE_URL=mysql://nutriplan_user:your_password@127.0.0.1:3306/nutriplan
 ```
 
-Đường dẫn tương đối được tính từ thư mục đang chạy lệnh `uvicorn`:
+Ví dụ nếu MySQL chạy trên máy hiện tại, port là `3306`, database là
+`nutriplan`:
 
 ```powershell
 cd backend
 ..\.venv\Scripts\Activate.ps1
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+# Sửa DATABASE_URL trong .env bằng thông tin thật; không commit file .env.
+pip install -e ".[dev]"
 uvicorn app.main:app --reload
 ```
 
-Schema hiện có các bảng `HOUSEHOLD`, `USER_PROFILE`, `FOOD_ITEM`, `MEAL`,
-`MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN` và `MENU_ITEM`, cùng các khóa ngoại
-theo ERD.
+Tài khoản MySQL cần quyền `SELECT`, `INSERT`, `UPDATE` và `DELETE` trên
+database. Nếu mật khẩu chứa ký tự đặc biệt như `@`, `:`, `/` hoặc `%`, hãy
+URL-encode các ký tự đó trong `DATABASE_URL`.
+
+Các API hiện dùng các bảng `SESSION`, `HOUSEHOLD`, `MEMBER`, `FOOD_ITEM`,
+`MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN` và `MENU_ITEM`. Cấu trúc MySQL
+tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã tạo bảng, hãy đối chiếu tên
+bảng, tên cột, khóa ngoại và kiểu dữ liệu với file này. Endpoint
+`http://localhost:8000/health` báo `database: "ok"` khi kết nối được. Dữ liệu
+SQLite cũ trong `meal_analysis.db` không được tự chuyển sang MySQL.
 
 ### BE-02: phiên và hồ sơ
 
@@ -130,6 +140,63 @@ BE-11.
 
 Lặp lại bước 4 với JSON khác cho thành viên tiếp theo nhưng giữ nguyên
 `household_id`.
+
+### Thử ghi dữ liệu và kiểm tra trên MySQL
+
+Giữ API đang chạy, mở cửa sổ PowerShell khác và tạo dữ liệu giả qua API:
+
+```powershell
+$session = Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/sessions
+$headers = @{ Authorization = "Bearer $($session.token)" }
+
+$household = Invoke-RestMethod `
+  -Method Post `
+  -Uri http://127.0.0.1:8000/households `
+  -Headers $headers `
+  -ContentType "application/json" `
+  -Body (@{ name = "TEST MySQL household" } | ConvertTo-Json)
+
+$member = Invoke-RestMethod `
+  -Method Post `
+  -Uri "http://127.0.0.1:8000/households/$($household.household_id)/members" `
+  -Headers $headers `
+  -ContentType "application/json" `
+  -Body (@{
+    name = "TEST member"
+    age = 25
+    sex = "other"
+    conditions = @()
+    allergies = @()
+    food_preferences = @("test")
+  } | ConvertTo-Json)
+
+$household
+$member
+```
+
+Nếu API trả về `household_id` và `member_id`, hãy chạy các truy vấn sau trong
+MySQL Workbench, chọn đúng database trước khi chạy:
+
+```sql
+SELECT session_id, created_at
+FROM SESSION
+ORDER BY session_id DESC
+LIMIT 5;
+
+SELECT household_id, name, session_id
+FROM HOUSEHOLD
+ORDER BY household_id DESC
+LIMIT 5;
+
+SELECT member_id, full_name, household_id
+FROM MEMBER
+ORDER BY member_id DESC
+LIMIT 5;
+```
+
+Các bản ghi thử sẽ được lưu trong MySQL; xóa chúng sau khi kiểm tra nếu không
+còn cần. Đây là dữ liệu giả, không nhập thông tin sức khỏe hoặc cá nhân thật
+khi thử nghiệm.
 
 ## Chạy test
 

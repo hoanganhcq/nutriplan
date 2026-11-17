@@ -14,7 +14,7 @@ def create_session():
     token_hash = sha256(token.encode("utf-8")).hexdigest()
     with get_connection() as db:
         cursor = db.execute(
-            "INSERT INTO SESSION (token_hash) VALUES (?)", (token_hash,)
+            "INSERT INTO SESSION (token_hash) VALUES (%s)", (token_hash,)
         )
         session_id = cursor.lastrowid
     return {"session_id": session_id, "token": token}

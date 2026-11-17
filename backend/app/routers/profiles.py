@@ -34,7 +34,7 @@ def _member_response(row) -> MemberResponse:
 
 def _profile_response(db, household_id: int, household_name: str) -> ProfileResponse:
     rows = db.execute(
-        "SELECT * FROM MEMBER WHERE household_id = ? ORDER BY member_id",
+        "SELECT * FROM MEMBER WHERE household_id = %s ORDER BY member_id",
         (household_id,),
     ).fetchall()
     return ProfileResponse(
@@ -50,7 +50,7 @@ def _owned_member(db, member_id: int, session_id: int):
         SELECT p.*, h.name AS household_name, h.household_id
         FROM MEMBER p
         JOIN HOUSEHOLD h ON h.household_id = p.household_id
-        WHERE p.member_id = ? AND h.session_id = ?
+        WHERE p.member_id = %s AND h.session_id = %s
         """,
         (member_id, session_id),
     ).fetchone()
@@ -63,7 +63,7 @@ def create_profile(
     db=Depends(get_db),
 ):
     cursor = db.execute(
-        "INSERT INTO HOUSEHOLD (session_id, name) VALUES (?, ?)",
+        "INSERT INTO HOUSEHOLD (session_id, name) VALUES (%s, %s)",
         (session["session_id"], payload.household_name),
     )
     household_id = cursor.lastrowid
@@ -74,7 +74,7 @@ def create_profile(
             (household_id, full_name, age, sex, weight_kg, height_cm,
              health_conditions, allergies, preferences, energy_target_kcal,
              texture_requirements)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
                 household_id,
@@ -96,7 +96,7 @@ def create_profile(
 @router.get("", response_model=list[ProfileResponse])
 def list_profiles(session: Session, db=Depends(get_db)):
     households = db.execute(
-        "SELECT household_id, name FROM HOUSEHOLD WHERE session_id = ?",
+        "SELECT household_id, name FROM HOUSEHOLD WHERE session_id = %s",
         (session["session_id"],),
     ).fetchall()
     return [
@@ -126,10 +126,10 @@ def update_profile(
     db.execute(
         """
         UPDATE MEMBER
-        SET full_name = ?, age = ?, sex = ?, weight_kg = ?, height_cm = ?,
-            health_conditions = ?, allergies = ?, preferences = ?,
-            energy_target_kcal = ?, texture_requirements = ?
-        WHERE member_id = ?
+        SET full_name = %s, age = %s, sex = %s, weight_kg = %s, height_cm = %s,
+            health_conditions = %s, allergies = %s, preferences = %s,
+            energy_target_kcal = %s, texture_requirements = %s
+        WHERE member_id = %s
         """,
         (
             payload.name,
@@ -153,4 +153,4 @@ def delete_profile(profile_id: int, session: Session, db=Depends(get_db)):
     row = _owned_member(db, profile_id, session["session_id"])
     if not row:
         raise AppException("NOT_FOUND", "Không tìm thấy hồ sơ", 404)
-    db.execute("DELETE FROM MEMBER WHERE member_id = ?", (profile_id,))
+    db.execute("DELETE FROM MEMBER WHERE member_id = %s", (profile_id,))

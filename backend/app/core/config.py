@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     environment: str = "development"
 
-    database_url: str = "sqlite:///./nutriplan.sqlite"
+    database_url: str
 
     cors_origins: list[str] = [
         "http://localhost:5173",
