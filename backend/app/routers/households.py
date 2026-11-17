@@ -14,7 +14,7 @@ Session = Annotated[dict, Depends(get_current_session)]
 
 def _owned_household(db, household_id: int, session_id: int):
     return db.execute(
-        "SELECT * FROM HOUSEHOLD WHERE household_id = ? AND session_id = ?",
+        "SELECT * FROM HOUSEHOLD WHERE household_id = %s AND session_id = %s",
         (household_id, session_id),
     ).fetchone()
 
@@ -26,7 +26,7 @@ def create_household(
     db=Depends(get_db),
 ):
     cursor = db.execute(
-        "INSERT INTO HOUSEHOLD (session_id, name) VALUES (?, ?)",
+        "INSERT INTO HOUSEHOLD (session_id, name) VALUES (%s, %s)",
         (session["session_id"], payload.name),
     )
     return {"household_id": cursor.lastrowid, "name": payload.name}
@@ -52,7 +52,7 @@ def create_member(
         (household_id, full_name, age, sex, weight_kg, height_cm,
          health_conditions, allergies, preferences, energy_target_kcal,
          texture_requirements)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """,
         (
             household_id,
@@ -69,6 +69,6 @@ def create_member(
         ),
     )
     row = db.execute(
-        "SELECT * FROM MEMBER WHERE member_id = ?", (cursor.lastrowid,)
+        "SELECT * FROM MEMBER WHERE member_id = %s", (cursor.lastrowid,)
     ).fetchone()
     return _member_response(row)

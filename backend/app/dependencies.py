@@ -30,7 +30,7 @@ def get_current_session(
 
     token_hash = sha256(token.encode("utf-8")).hexdigest()
     session = db.execute(
-        "SELECT * FROM SESSION WHERE token_hash = ?", (token_hash,)
+        "SELECT * FROM SESSION WHERE token_hash = %s", (token_hash,)
     ).fetchone()
     if not session:
         raise AppException("UNAUTHORIZED", "Phiên không hợp lệ", 401)

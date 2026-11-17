@@ -16,8 +16,6 @@ htmlcov/
 
 # Database
 *.db
-*.sqlite
-*.sqlite3
 
 # IDE
 .vscode/
