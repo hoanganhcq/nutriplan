@@ -1,6 +1,8 @@
 import logging
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -8,9 +10,19 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
 from app.core.exceptions import AppException
+from app.db.database import initialize_database
 from app.routers.health import router as health_router
+from app.routers.households import router as households_router
+from app.routers.profiles import router as profiles_router
+from app.routers.sessions import router as sessions_router
 
 logger = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    initialize_database()
+    yield
 
 
 # 1. Khởi tạo FastAPI
@@ -18,6 +30,7 @@ app = FastAPI(
     title=settings.app_name,
     version="0.1.0",
     description="Backend API for AI Meal Analysis System",
+    lifespan=lifespan,
 )
 
 
@@ -59,7 +72,11 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     return JSONResponse(
         status_code=422,
         content={
-            "error": {"code": "VALIDATION_ERROR", "message": "Request data is invalid."}
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Request data is invalid.",
+                "details": jsonable_encoder(exc.errors()),
+            }
         },
     )
 
@@ -84,3 +101,6 @@ async def unexpected_exception_handler(request: Request, exc: Exception):
 
 # 7. Đăng ký router
 app.include_router(health_router)
+app.include_router(households_router)
+app.include_router(sessions_router)
+app.include_router(profiles_router)

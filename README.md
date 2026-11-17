@@ -18,23 +18,18 @@ nutriplan/
 │   └── tests/
 │       └── evaluation/
 ├── backend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── core/
-│   │   ├── middleware/
-│   │   ├── repositories/
-│   │   └── services/
-│   │       ├── auth/
-│   │       ├── profiles/
-│   │       ├── meal_analysis/
-│   │       ├── nutrition/
-│   │       ├── rule_engine/
-│   │       ├── menu_planning/
-│   │       ├── meal_diary/
-│   │       ├── privacy/
-│   │       ├── media/
-│   │       └── pdf_export/
-│   └── tests/
+│   ├── app/
+│   │   ├── routers/
+│   │   ├── services/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── db/
+│   │   └── core/
+│   ├── tests/
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── pyproject.toml
+│   └── README.md
 ├── contracts/
 │   ├── examples/
 │   ├── openapi/

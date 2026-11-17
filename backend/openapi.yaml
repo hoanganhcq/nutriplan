@@ -1,0 +1,1087 @@
+
+openapi: 3.1.0
+
+info:
+  title: NutriPlan API
+  description: API contract for NutriPlan MVP - Backend, Frontend and AI
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development
+
+tags:
+  - name: Profiles
+  - name: Meals
+  - name: Nutrition
+  - name: Recommendations
+
+security:
+  - BearerAuth: []
+
+paths:
+
+  # ==========================================
+  # 1. PROFILE APIs
+  # ==========================================
+
+  /profiles:
+    post:
+      tags: [Profiles]
+      summary: Create household profile
+      operationId: createProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileCreateRequest'
+            example:
+              household_name: "Gia đình An"
+              members:
+                - name: "Nguyễn Văn An"
+                  age: 25
+                  sex: male
+                  weight_kg: 65
+                  height_cm: 170
+                  conditions: []
+                  allergies: []
+      responses:
+        '201':
+          description: Profile created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    get:
+      tags: [Profiles]
+      summary: Get household profile
+      operationId: getProfile
+      responses:
+        '200':
+          description: Profile information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    put:
+      tags: [Profiles]
+      summary: Update household profile
+      operationId: updateProfile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileCreateRequest'
+      responses:
+        '200':
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  # ==========================================
+  # 2. MEAL APIs
+  # ==========================================
+
+  /meals:
+    post:
+      tags: [Meals]
+      summary: Create a meal
+      operationId: createMeal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealCreateRequest'
+            example:
+              eaten_at: "2026-11-04T12:00:00+07:00"
+              meal_type: lunch
+              notes: "Lunch at home"
+      responses:
+        '201':
+          description: Meal created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    get:
+      tags: [Meals]
+      summary: Get meal history
+      operationId: getMeals
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: member_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Meal history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /meals/{meal_id}/images:
+    post:
+      tags: [Meals]
+      summary: Upload meal image
+      operationId: uploadMealImage
+      parameters:
+        - $ref: '#/components/parameters/MealId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: >
+                    JPEG, PNG or WebP. Maximum file size is 10 MiB.
+      responses:
+        '201':
+          description: Image uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealImageResponse'
+              example:
+                image_id: "2a7b7d70-0d35-4d8a-b56d-c21a41b3f0d1"
+                meal_id: "b6dba0c0-8b5d-4e17-8b0f-123456789abc"
+                file_name: "lunch.jpg"
+                content_type: image/jpeg
+                size_bytes: 1240000
+                uploaded_at: "2026-11-04T12:05:00+07:00"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '413':
+          $ref: '#/components/responses/PayloadTooLarge'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  # ==========================================
+  # 3. AI ANALYSIS API
+  # ==========================================
+
+  /meals/{meal_id}/analyze:
+    post:
+      tags: [Meals]
+      summary: Analyze meal image using AI
+      operationId: analyzeMeal
+      parameters:
+        - $ref: '#/components/parameters/MealId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - image_ids
+              properties:
+                image_ids:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+                    format: uuid
+                language:
+                  type: string
+                  enum: [vi]
+                  default: vi
+      responses:
+        '200':
+          description: AI analysis completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResult'
+              examples:
+
+                success:
+                  summary: Successfully recognized food
+                  value:
+                    analysis_id: "4a7b7d70-0d35-4d8a-b56d-c21a41b3f0d1"
+                    meal_id: "b6dba0c0-8b5d-4e17-8b0f-123456789abc"
+                    status: success
+                    uncertain: false
+                    dishes:
+                      - dish_id: pho_bo
+                        dish_name: "Phở bò"
+                        confidence: 0.94
+                        uncertainty_status: certain
+                        estimated_portion_g: 450
+                        portion_confidence: 0.82
+                        notes: "Estimated from image"
+                    warnings: []
+                    analyzed_at: "2026-11-04T12:06:00+07:00"
+
+                unrecognized:
+                  summary: AI cannot recognize food
+                  value:
+                    analysis_id: "4a7b7d70-0d35-4d8a-b56d-c21a41b3f0d1"
+                    meal_id: "b6dba0c0-8b5d-4e17-8b0f-123456789abc"
+                    status: unrecognized
+                    uncertain: true
+                    dishes: []
+                    warnings:
+                      - "Cannot recognize food. Please upload another image."
+                    analyzed_at: "2026-11-04T12:06:00+07:00"
+
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          description: AI analysis failed or invalid AI output
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: AI_ANALYSIS_FAILED
+                  message: "AI could not analyze this image."
+                  details:
+                    reason: invalid_model_output
+                  request_id: req_123
+        '504':
+          $ref: '#/components/responses/AITimeout'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  # ==========================================
+  # 4. NUTRITION API
+  # ==========================================
+
+  /meals/{meal_id}/nutrition:
+    get:
+      tags: [Nutrition]
+      summary: Get meal nutrition information
+      operationId: getMealNutrition
+      parameters:
+        - $ref: '#/components/parameters/MealId'
+        - name: member_id
+          in: query
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Nutrition information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NutritionResponse'
+              example:
+                meal_id: "b6dba0c0-8b5d-4e17-8b0f-123456789abc"
+                items:
+                  - dish_name: "Phở bò"
+                    portion_g: 450
+                    energy_kcal: 520
+                    protein_g: 28
+                    carbohydrate_g: 62
+                    fat_g: 16
+                    sodium_mg: 1100
+                    potassium_mg: 420
+                total:
+                  energy_kcal: 520
+                  protein_g: 28
+                  carbohydrate_g: 62
+                  fat_g: 16
+                  sodium_mg: 1100
+                  potassium_mg: 420
+                assessment:
+                  member_id: "c6dba0c0-8b5d-4e17-8b0f-123456789abc"
+                  suitability: caution
+                  reasons:
+                    - "High estimated sodium content"
+                is_estimated: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  # ==========================================
+  # 5. CONFIRM MEAL API
+  # ==========================================
+
+  /meals/{meal_id}/confirm:
+    put:
+      tags: [Meals]
+      summary: Confirm and save meal information
+      operationId: confirmMeal
+      parameters:
+        - $ref: '#/components/parameters/MealId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MealConfirmRequest'
+            example:
+              items:
+                - dish_id: pho_bo
+                  dish_name: "Phở bò"
+                  portion_g: 400
+              confirmed_by_member_id: "c6dba0c0-8b5d-4e17-8b0f-123456789abc"
+              note: "Corrected portion size"
+      responses:
+        '200':
+          description: Meal confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MealResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Meal already confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  # ==========================================
+  # 6. RECOMMENDATION API
+  # ==========================================
+
+  /recommendations:
+    post:
+      tags: [Recommendations]
+      summary: Generate personalized meal recommendations
+      operationId: createRecommendations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecommendationRequest'
+            example:
+              member_id: "c6dba0c0-8b5d-4e17-8b0f-123456789abc"
+              days: 1
+              meals_per_day:
+                - breakfast
+                - lunch
+                - dinner
+              exclude_dish_ids:
+                - tom_rim
+              preferred_dish_ids:
+                - ca_hap
+      responses:
+        '200':
+          description: Recommendations generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+        '504':
+          $ref: '#/components/responses/AITimeout'
+
+
+# ==========================================
+# COMPONENTS
+# ==========================================
+
+components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    MealId:
+      name: meal_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  # ------------------------------------------
+  # COMMON RESPONSES
+  # ------------------------------------------
+
+  responses:
+
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: BAD_REQUEST
+              message: "Invalid request data"
+              request_id: req_123
+
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: "Authentication required"
+              request_id: req_123
+
+    Forbidden:
+      description: Permission denied
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: FORBIDDEN
+              message: "Permission denied"
+              request_id: req_123
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: RESOURCE_NOT_FOUND
+              message: "Resource not found"
+              request_id: req_123
+
+    PayloadTooLarge:
+      description: File exceeds maximum upload size
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: FILE_TOO_LARGE
+              message: "Maximum image size is 10 MiB"
+              request_id: req_123
+
+    UnsupportedMediaType:
+      description: Unsupported image format
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: UNSUPPORTED_MEDIA_TYPE
+              message: "Only JPEG, PNG and WebP are supported"
+              request_id: req_123
+
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: VALIDATION_ERROR
+              message: "Invalid field values"
+              details:
+                field: age
+                issue: must_be_greater_than_zero
+              request_id: req_123
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: INTERNAL_SERVER_ERROR
+              message: "Internal server error"
+              request_id: req_123
+
+    AITimeout:
+      description: AI service timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: AI_TIMEOUT
+              message: "AI processing timeout"
+              request_id: req_123
+
+  # ------------------------------------------
+  # DATA SCHEMAS
+  # ------------------------------------------
+
+  schemas:
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+            - request_id
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object
+              additionalProperties: true
+            request_id:
+              type: string
+
+    # PROFILE
+
+    ProfileCreateRequest:
+      type: object
+      required:
+        - household_name
+        - members
+      properties:
+        household_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        members:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Member'
+
+    Member:
+      type: object
+      required:
+        - name
+        - age
+      properties:
+        member_id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+        age:
+          type: integer
+          minimum: 1
+          maximum: 120
+        sex:
+          type: string
+          enum: [male, female, other, undisclosed]
+        weight_kg:
+          type: number
+          exclusiveMinimum: 0
+        height_cm:
+          type: number
+          exclusiveMinimum: 0
+        conditions:
+          type: array
+          items:
+            type: string
+        allergies:
+          type: array
+          items:
+            type: string
+        energy_target_kcal:
+          type: integer
+          minimum: 1
+        food_preferences:
+          type: array
+          items:
+            type: string
+        texture_requirements:
+          type: string
+          enum: [normal, soft, minced, liquid, other]
+
+    ProfileResponse:
+      type: object
+      required:
+        - profile_id
+        - household_name
+        - members
+        - created_at
+        - updated_at
+      properties:
+        profile_id:
+          type: string
+          format: uuid
+        household_name:
+          type: string
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    # MEAL
+
+    MealCreateRequest:
+      type: object
+      required:
+        - eaten_at
+        - meal_type
+      properties:
+        eaten_at:
+          type: string
+          format: date-time
+        meal_type:
+          type: string
+          enum: [breakfast, lunch, dinner, snack]
+        notes:
+          type: string
+          maxLength: 1000
+
+    MealResponse:
+      type: object
+      required:
+        - meal_id
+        - eaten_at
+        - meal_type
+        - status
+        - created_at
+      properties:
+        meal_id:
+          type: string
+          format: uuid
+        eaten_at:
+          type: string
+          format: date-time
+        meal_type:
+          type: string
+        notes:
+          type: [string, 'null']
+        status:
+          type: string
+          enum: [draft, analyzed, confirmed]
+        image_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        created_at:
+          type: string
+          format: date-time
+
+    MealImageResponse:
+      type: object
+      required:
+        - image_id
+        - meal_id
+        - file_name
+        - content_type
+        - size_bytes
+        - uploaded_at
+      properties:
+        image_id:
+          type: string
+          format: uuid
+        meal_id:
+          type: string
+          format: uuid
+        file_name:
+          type: string
+        content_type:
+          type: string
+          enum: [image/jpeg, image/png, image/webp]
+        size_bytes:
+          type: integer
+        uploaded_at:
+          type: string
+          format: date-time
+
+    MealListResponse:
+      type: object
+      required:
+        - items
+        - limit
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MealResponse'
+        limit:
+          type: integer
+        next_cursor:
+          type: [string, 'null']
+
+    # AI ANALYSIS
+    # PROVISIONAL SCHEMA: MUST BE ALIGNED WITH AI-03 / TV4.
+
+    AnalysisResult:
+      type: object
+      required:
+        - analysis_id
+        - meal_id
+        - status
+        - uncertain
+        - dishes
+        - warnings
+        - analyzed_at
+      properties:
+        analysis_id:
+          type: string
+          format: uuid
+        meal_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [success, unrecognized]
+        uncertain:
+          type: boolean
+        dishes:
+          type: array
+          items:
+            type: object
+            required:
+              - dish_name
+              - confidence
+              - uncertainty_status
+            properties:
+              dish_id:
+                type: [string, 'null']
+              dish_name:
+                type: string
+              confidence:
+                type: number
+                minimum: 0
+                maximum: 1
+              uncertainty_status:
+                type: string
+                enum: [certain, uncertain, unknown]
+              estimated_portion_g:
+                type: [number, 'null']
+                exclusiveMinimum: 0
+              portion_confidence:
+                type: [number, 'null']
+                minimum: 0
+                maximum: 1
+              notes:
+                type: [string, 'null']
+        warnings:
+          type: array
+          items:
+            type: string
+        analyzed_at:
+          type: string
+          format: date-time
+
+    # NUTRITION
+
+    NutrientValues:
+      type: object
+      properties:
+        energy_kcal:
+          type: number
+          minimum: 0
+        protein_g:
+          type: number
+          minimum: 0
+        carbohydrate_g:
+          type: number
+          minimum: 0
+        fat_g:
+          type: number
+          minimum: 0
+        sodium_mg:
+          type: number
+          minimum: 0
+        potassium_mg:
+          type: number
+          minimum: 0
+
+    NutritionResponse:
+      type: object
+      required:
+        - meal_id
+        - items
+        - total
+        - is_estimated
+      properties:
+        meal_id:
+          type: string
+          format: uuid
+        items:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/NutrientValues'
+              - type: object
+                required:
+                  - dish_name
+                  - portion_g
+                properties:
+                  dish_name:
+                    type: string
+                  portion_g:
+                    type: number
+                    exclusiveMinimum: 0
+        total:
+          $ref: '#/components/schemas/NutrientValues'
+        assessment:
+          type: [object, 'null']
+          properties:
+            member_id:
+              type: string
+              format: uuid
+            suitability:
+              type: string
+              enum: [suitable, caution, unsuitable, unknown]
+            reasons:
+              type: array
+              items:
+                type: string
+        is_estimated:
+          type: boolean
+
+    # CONFIRM MEAL
+
+    MealConfirmRequest:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - dish_name
+              - portion_g
+            properties:
+              dish_id:
+                type: [string, 'null']
+              dish_name:
+                type: string
+              portion_g:
+                type: number
+                exclusiveMinimum: 0
+        confirmed_by_member_id:
+          type: string
+          format: uuid
+        note:
+          type: string
+          maxLength: 1000
+
+    # RECOMMENDATIONS
+
+    RecommendationRequest:
+      type: object
+      required:
+        - member_id
+        - days
+      properties:
+        member_id:
+          type: string
+          format: uuid
+        days:
+          type: integer
+          minimum: 1
+          maximum: 3
+          default: 1
+        meals_per_day:
+          type: array
+          items:
+            type: string
+            enum: [breakfast, lunch, dinner, snack]
+        exclude_dish_ids:
+          type: array
+          items:
+            type: string
+        preferred_dish_ids:
+          type: array
+          items:
+            type: string
+
+    RecommendationResponse:
+      type: object
+      required:
+        - recommendation_id
+        - member_id
+        - days
+        - plan
+        - generated_at
+      properties:
+        recommendation_id:
+          type: string
+          format: uuid
+        member_id:
+          type: string
+          format: uuid
+        days:
+          type: integer
+        plan:
+          type: array
+          items:
+            type: object
+            required:
+              - date
+              - meals
+            properties:
+              date:
+                type: string
+                format: date
+              meals:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - meal_type
+                    - dishes
+                  properties:
+                    meal_type:
+                      type: string
+                      enum: [breakfast, lunch, dinner, snack]
+                    dishes:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - dish_id
+                          - dish_name
+                        properties:
+                          dish_id:
+                            type: string
+                          dish_name:
+                            type: string
+                          portion_g:
+                            type: [number, 'null']
+                          reason:
+                            type: [string, 'null']
+        generated_at:
+          type: string
+          format: date-time
