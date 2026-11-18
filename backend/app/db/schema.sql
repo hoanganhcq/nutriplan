@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS MEMBER (
     preferences TEXT,
     energy_target_kcal INTEGER,
     texture_requirements VARCHAR(20),
+    is_simulated BOOLEAN NOT NULL DEFAULT FALSE,
+    profile_version INTEGER NOT NULL DEFAULT 1,
     INDEX idx_member_household (household_id),
     FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -38,7 +40,14 @@ CREATE TABLE IF NOT EXISTS FOOD_ITEM (
     carb_per_100g DECIMAL(8,2),
     fat_per_100g DECIMAL(8,2),
     source_name VARCHAR(150),
-    source_url TEXT
+    source_url TEXT,
+    aliases TEXT,
+    default_portion_g DECIMAL(8,2),
+    ingredients TEXT,
+    allergen_codes TEXT,
+    allergen_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    texture VARCHAR(20),
+    cooking_effort VARCHAR(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS MEAL (
@@ -48,6 +57,11 @@ CREATE TABLE IF NOT EXISTS MEAL (
     eaten_at DATETIME NOT NULL,
     image_path TEXT,
     status VARCHAR(30) DEFAULT 'pending',
+    meal_type VARCHAR(30),
+    revision INTEGER NOT NULL DEFAULT 1,
+    image_count INTEGER NOT NULL DEFAULT 0,
+    is_estimate BOOLEAN NOT NULL DEFAULT TRUE,
+    warnings TEXT,
     INDEX idx_meal_household_eaten_at (household_id, eaten_at),
     FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id),
     FOREIGN KEY (created_by_member_id) REFERENCES MEMBER(member_id)
@@ -59,6 +73,8 @@ CREATE TABLE IF NOT EXISTS MEAL_ITEM (
     food_id INTEGER NOT NULL,
     estimated_weight_g DECIMAL(8,2),
     confirmed_weight_g DECIMAL(8,2),
+    seasoning TEXT,
+    confidence DECIMAL(4,3),
     INDEX idx_meal_item_meal (meal_id),
     FOREIGN KEY (meal_id) REFERENCES MEAL(meal_id),
     FOREIGN KEY (food_id) REFERENCES FOOD_ITEM(food_id)
@@ -72,6 +88,10 @@ CREATE TABLE IF NOT EXISTS ASSESSMENT (
     explanation TEXT,
     suggestion_text TEXT,
     created_at DATETIME NOT NULL,
+    meal_revision INTEGER NOT NULL DEFAULT 1,
+    profile_version INTEGER NOT NULL DEFAULT 1,
+    ruleset_version VARCHAR(30),
+    reasons TEXT,
     UNIQUE (meal_id, member_id),
     INDEX idx_assessment_member (member_id),
     FOREIGN KEY (meal_id) REFERENCES MEAL(meal_id),
@@ -84,6 +104,9 @@ CREATE TABLE IF NOT EXISTS MENU_PLAN (
     start_date DATE NOT NULL,
     duration_days INTEGER NOT NULL DEFAULT 1,
     status VARCHAR(30) DEFAULT 'draft',
+    revision INTEGER NOT NULL DEFAULT 1,
+    validation_json TEXT,
+    soft_score DECIMAL(5,2),
     INDEX idx_menu_plan_member_start_date (member_id, start_date),
     FOREIGN KEY (member_id) REFERENCES MEMBER(member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -97,4 +120,46 @@ CREATE TABLE IF NOT EXISTS MENU_ITEM (
     INDEX idx_menu_item_menu_plan (menu_plan_id),
     FOREIGN KEY (menu_plan_id) REFERENCES MENU_PLAN(menu_plan_id),
     FOREIGN KEY (food_id) REFERENCES FOOD_ITEM(food_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS CONSENT (
+    household_id INTEGER NOT NULL,
+    consent_type VARCHAR(50) NOT NULL,
+    granted BOOLEAN NOT NULL,
+    policy_version VARCHAR(30) NOT NULL,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (household_id, consent_type),
+    FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS CONSENT_HISTORY (
+    consent_history_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    household_id INTEGER NOT NULL,
+    consent_type VARCHAR(50) NOT NULL,
+    granted BOOLEAN NOT NULL,
+    policy_version VARCHAR(30) NOT NULL,
+    changed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_consent_history_household (household_id, changed_at),
+    FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS MEAL_MEMBER (
+    meal_id INTEGER NOT NULL,
+    member_id INTEGER NOT NULL,
+    PRIMARY KEY (meal_id, member_id),
+    FOREIGN KEY (meal_id) REFERENCES MEAL(meal_id),
+    FOREIGN KEY (member_id) REFERENCES MEMBER(member_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS NUTRITION_RULE (
+    rule_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    rule_type VARCHAR(50) NOT NULL,
+    subject VARCHAR(100) NOT NULL,
+    severity VARCHAR(20) NOT NULL,
+    ruleset_version VARCHAR(30) NOT NULL,
+    source_name VARCHAR(150) NOT NULL,
+    source_url TEXT NOT NULL,
+    verified BOOLEAN NOT NULL DEFAULT FALSE,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    UNIQUE KEY uq_rule_version (rule_type, subject, ruleset_version)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

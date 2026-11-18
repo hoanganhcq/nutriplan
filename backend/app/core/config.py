@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     environment: str = "development"
 
     database_url: str
+    vision_provider: str = "unavailable"
+    vision_url: str | None = None
+    vision_api_key: str | None = None
+    vision_mock_detections: str = "[]"
 
     cors_origins: list[str] = [
         "http://localhost:5173",

@@ -81,3 +81,17 @@ def update(db, member_id: int, member: MemberUpdate) -> None:
 
 def delete(db, member_id: int) -> None:
     db.execute("DELETE FROM MEMBER WHERE member_id = %s", (member_id,))
+
+
+def bump_version_if_available(db, member_id: int) -> None:
+    exists = db.execute(
+        """SELECT 1 FROM information_schema.COLUMNS
+           WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'MEMBER'
+             AND COLUMN_NAME = 'profile_version'"""
+    ).fetchone()
+    if exists:
+        db.execute(
+            "UPDATE MEMBER SET profile_version = profile_version + 1 "
+            "WHERE member_id = %s",
+            (member_id,),
+        )

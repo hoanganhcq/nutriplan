@@ -42,6 +42,7 @@ def get_profile(db, session_id: int, profile_id: int):
 def update_profile(db, session_id: int, profile_id: int, payload: MemberUpdate):
     _owned_member(db, profile_id, session_id)
     member_repository.update(db, profile_id, payload)
+    member_repository.bump_version_if_available(db, profile_id)
     return member_response(_owned_member(db, profile_id, session_id))
 
 
