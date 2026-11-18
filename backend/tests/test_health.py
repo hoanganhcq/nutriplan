@@ -7,7 +7,7 @@ client = TestClient(app)
 
 def test_health_endpoint_returns_ok_when_database_is_available(monkeypatch):
     monkeypatch.setattr(
-        "app.routers.health.check_database_connection", lambda: True
+        "app.services.health_service.check_database_connection", lambda: True
     )
     response = client.get("/health")
 
@@ -17,7 +17,7 @@ def test_health_endpoint_returns_ok_when_database_is_available(monkeypatch):
 
 def test_health_endpoint_reports_unavailable_database(monkeypatch):
     monkeypatch.setattr(
-        "app.routers.health.check_database_connection", lambda: False
+        "app.services.health_service.check_database_connection", lambda: False
     )
     response = client.get("/health")
 

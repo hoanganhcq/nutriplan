@@ -1,4 +1,3 @@
-from hashlib import sha256
 from typing import Annotated
 
 from fastapi import Depends
@@ -6,6 +5,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.core.exceptions import AppException
 from app.db.database import get_connection
+from app.services import session_service
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -28,10 +28,4 @@ def get_current_session(
     if not token:
         raise AppException("UNAUTHORIZED", "Thiếu token phiên", 401)
 
-    token_hash = sha256(token.encode("utf-8")).hexdigest()
-    session = db.execute(
-        "SELECT * FROM SESSION WHERE token_hash = %s", (token_hash,)
-    ).fetchone()
-    if not session:
-        raise AppException("UNAUTHORIZED", "Phiên không hợp lệ", 401)
-    return session
+    return session_service.get_current_session(db, token)

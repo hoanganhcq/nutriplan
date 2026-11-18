@@ -11,6 +11,7 @@ backend/
 │   ├── main.py
 │   ├── routers/
 │   ├── services/
+│   ├── repositories/
 │   ├── models/
 │   ├── schemas/
 │   ├── db/
@@ -24,6 +25,12 @@ backend/
 ├── pyproject.toml
 └── README.md
 ```
+
+Các API hiện có đi theo luồng `Router → Service → Repository → Database`.
+Router nhận request và khai báo response; Service xử lý token, quyền sở hữu và
+các thao tác nhiều bước; Repository giữ truy vấn MySQL. `get_db` truyền cùng
+một kết nối qua các tầng; kết nối commit khi request thành công và rollback khi
+có ngoại lệ. Health Service dùng phép kiểm tra kết nối trong tầng Database.
 
 ## Cài đặt
 
