@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS FOOD_ITEM (
     allergen_codes TEXT,
     allergen_verified BOOLEAN NOT NULL DEFAULT FALSE,
     texture VARCHAR(20),
-    cooking_effort VARCHAR(20)
+    cooking_effort VARCHAR(20),
+    INDEX idx_food_item_category_food (category, food_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS MEAL (
@@ -63,6 +64,7 @@ CREATE TABLE IF NOT EXISTS MEAL (
     is_estimate BOOLEAN NOT NULL DEFAULT TRUE,
     warnings TEXT,
     INDEX idx_meal_household_eaten_at (household_id, eaten_at),
+    INDEX idx_meal_status_eaten (status, eaten_at),
     FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id),
     FOREIGN KEY (created_by_member_id) REFERENCES MEMBER(member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -147,6 +149,7 @@ CREATE TABLE IF NOT EXISTS MEAL_MEMBER (
     meal_id INTEGER NOT NULL,
     member_id INTEGER NOT NULL,
     PRIMARY KEY (meal_id, member_id),
+    INDEX idx_meal_member_member (member_id),
     FOREIGN KEY (meal_id) REFERENCES MEAL(meal_id),
     FOREIGN KEY (member_id) REFERENCES MEMBER(member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -161,5 +164,6 @@ CREATE TABLE IF NOT EXISTS NUTRITION_RULE (
     source_url TEXT NOT NULL,
     verified BOOLEAN NOT NULL DEFAULT FALSE,
     active BOOLEAN NOT NULL DEFAULT TRUE,
+    INDEX idx_rule_active_verified (active, verified, rule_type, subject),
     UNIQUE KEY uq_rule_version (rule_type, subject, ruleset_version)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

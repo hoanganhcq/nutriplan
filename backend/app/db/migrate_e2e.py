@@ -1,11 +1,5 @@
-"""Additive E2E schema migration. Run only after reviewing the target database."""
+"""Bổ sung bảng, cột và index E2E còn thiếu; kiểm tra trước khi áp dụng."""
 
-"""
-    Script này được dùng để thêm các cột mới vào các bảng hiện có và tạo các bảng mới trong cơ sở dữ liệu. 
-    Nó được thiết kế để chạy một lần duy nhất, sau khi đã kiểm tra kỹ lưỡng cơ sở dữ liệu mục tiêu. 
-    Các thay đổi bao gồm việc thêm các cột mới vào các bảng MEMBER, FOOD_ITEM, MEAL, MEAL_ITEM, ASSESSMENT 
-    và MENU_PLAN, cũng như tạo các bảng mới CONSENT, CONSENT_HISTORY, MEAL_MEMBER và NUTRITION_RULE.
-"""
 import sys
 from pathlib import Path
 
@@ -47,6 +41,20 @@ COLUMNS = {
 }
 
 NEW_TABLES = ("CONSENT", "CONSENT_HISTORY", "MEAL_MEMBER", "NUTRITION_RULE")
+INDEXES = {
+    "FOOD_ITEM": {
+        "idx_food_item_category_food": "(category, food_id)",
+    },
+    "MEAL": {
+        "idx_meal_status_eaten": "(status, eaten_at)",
+    },
+    "MEAL_MEMBER": {
+        "idx_meal_member_member": "(member_id)",
+    },
+    "NUTRITION_RULE": {
+        "idx_rule_active_verified": "(active, verified, rule_type, subject)",
+    },
+}
 
 # hàm migrate() thực hiện việc thêm các cột mới và tạo các bảng mới trong cơ sở dữ liệu.
 def migrate(db, dry_run=False):
@@ -80,6 +88,18 @@ def migrate(db, dry_run=False):
                 # Identifiers and definitions come only from the constant map above.
                 if not dry_run:
                     db.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+    for table, indexes in INDEXES.items():
+        for name, fields in indexes.items():
+            exists = db.execute(
+                """SELECT 1 FROM information_schema.STATISTICS
+                   WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = %s
+                     AND INDEX_NAME = %s LIMIT 1""",
+                (table, name),
+            ).fetchone()
+            if not exists:
+                planned.append(f"CREATE INDEX {name} ON {table}")
+                if not dry_run:
+                    db.execute(f"CREATE INDEX {name} ON {table} {fields}")
     return planned
 
 

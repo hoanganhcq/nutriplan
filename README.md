@@ -2,6 +2,11 @@
 
 Khung dự án hệ thống AI phân tích bữa ăn và đề xuất thực đơn cá nhân hóa theo bệnh lý cho từng thành viên trong gia đình, dựa trên báo cáo tiến độ, WBS và sơ đồ kiến trúc tổng quan.
 
+Backend hiện dùng một database MySQL `nutriplan` cho phát triển, kiểm thử và
+demo. Xem [hướng dẫn backend](./backend/README.md) để khởi tạo schema, seed dữ
+liệu mẫu, chạy API và reset có xác nhận; xem [hướng dẫn E2E](./docs/E2E_TESTING.md)
+để chạy kiểm thử với giao dịch rollback.
+
 
 ## Cấu trúc thư mục
 

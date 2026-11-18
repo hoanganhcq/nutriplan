@@ -1,71 +1,83 @@
-# Kiểm thử E2E backend NutriPlan trên Windows
+# Khởi tạo database và kiểm thử E2E NutriPlan
 
-## Điều kiện chuẩn bị
+## Phạm vi hiện tại
 
-Dùng Python 3.11+ và MySQL. Cài gói backend trong PowerShell:
+Backend dùng duy nhất MySQL database `nutriplan` cho development, kiểm thử tích hợp và demo. Chưa có database production hoặc dữ liệu người dùng chính thức. `pytest` không tự tạo, xóa hay reset database. FastAPI cũng không tự chạy migration hoặc seed khi khởi động.
+
+## Chuẩn bị
+
+Dùng Python 3.11+, MySQL và cài gói backend. Sao chép `backend/.env.example` thành `backend/.env`, đặt `ENVIRONMENT=development` và `DATABASE_URL` trỏ đúng đến `nutriplan`. Không commit mật khẩu. Tài khoản chạy ứng dụng cần quyền `SELECT`, `INSERT`, `UPDATE`, `DELETE`; tài khoản khởi tạo schema cần thêm `CREATE` và `ALTER`.
 
 ```powershell
 cd backend
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+Copy-Item .env.example .env
+# Sửa DATABASE_URL trong .env, giữ tên database là nutriplan.
 ```
 
-Đặt `DATABASE_URL` trong `backend/.env` trỏ đến cơ sở dữ liệu MySQL do bạn quản lý. Không đưa thông tin đăng nhập vào Git. Tài khoản ứng dụng hiện được cấu hình không có quyền CREATE/ALTER. Quản trị viên cần xem và áp dụng migration chỉ bổ sung:
+### Khởi tạo từ đầu hoặc nâng cấp schema
+
+`app/db/schema.sql` là schema đầy đủ, gồm bảng phiên, hộ gia đình, thành viên, món ăn và dinh dưỡng, bữa ăn, đánh giá, thực đơn, đồng ý và quy tắc. `app/db/migrate_e2e.py` bổ sung cột/index còn thiếu vào các bảng cũ. Lệnh `init` dùng cả hai, kiểm tra bảng trước khi tạo và không nhân đôi bảng đã có:
 
 ```powershell
-cd backend
+.\.venv\Scripts\python.exe -m app.db.dev_db init
+```
+
+Nếu `nutriplan` chưa tồn tại, lệnh cần quyền tạo database. Nếu đã tồn tại nhưng thiếu bảng/cột E2E, lệnh cần quyền `CREATE`/`ALTER`. DDL của MySQL có thể commit riêng từng câu lệnh. Tài khoản ứng dụng trên máy hiện tại chưa có quyền này; quản trị viên cần cấp quyền hoặc tự chạy lệnh `init`. Có thể xem các thay đổi migration dự kiến bằng lệnh đọc sau:
+
+```powershell
 .\.venv\Scripts\python.exe -m app.db.migrate_e2e --check
-# Kiểm tra các thao tác được liệt kê và cơ sở dữ liệu đích trước khi chạy:
-.\.venv\Scripts\python.exe -m app.db.migrate_e2e
 ```
 
-Migration thêm bốn bảng (`CONSENT`, `CONSENT_HISTORY`, `MEAL_MEMBER`, `NUTRITION_RULE`) và thêm cột vào `MEMBER`, `FOOD_ITEM`, `MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN`. Migration không xóa bảng hoặc thay đổi giá trị hiện có. MySQL có thể commit từng câu lệnh DDL riêng; hãy sao lưu và áp dụng trong khung bảo trì nếu cơ sở dữ liệu có dữ liệu quan trọng.
-
-## Kiểm thử trên cơ sở dữ liệu riêng
-
-Lệnh kiểm thử mặc định sẽ bỏ qua các bài kiểm thử cũ có ghi vào MySQL nếu chưa khai báo cơ sở dữ liệu kiểm thử:
+### Seed dữ liệu mẫu
 
 ```powershell
-cd backend
-.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
+.\.venv\Scripts\python.exe -m app.db.dev_db seed
 ```
 
-Để chạy toàn bộ, tạo cơ sở dữ liệu riêng có tên kết thúc bằng `_test`, khởi tạo bằng `backend/app/db/schema.sql`, rồi chỉ định URL của cơ sở dữ liệu đó:
+Lệnh seed tạo ba món `DEMO` với số dinh dưỡng **mô phỏng**, ba bản ghi quy tắc `verified=0` và `active=0`, cùng một phiên, hộ gia đình, thành viên `is_simulated=1` và sự đồng ý lưu hồ sơ giả lập. Món demo có dấu `DEMO_SYNTHETIC_UNVERIFIED` và không có URL nguồn dinh dưỡng; quy tắc demo dùng URL `example.invalid`. Chúng không phải dữ liệu dinh dưỡng hoặc y khoa đã xác thực. Lệnh bỏ qua bản ghi đã seed và giữ token demo trong `backend/.demo-session-token` (Git bỏ qua tệp này). Dùng token đó trong `Authorization: Bearer <token>` khi thử API.
+
+Dữ liệu mẫu đủ để kiểm tra danh mục món, hồ sơ, tạo bản nháp bữa ăn và xử lý lỗi thiếu bằng chứng. Bộ quy tắc hiện từ chối xác nhận bữa ăn hoặc lưu thực đơn nếu thiếu quy tắc, nguồn và bộ đánh giá đã xác minh. Vì vậy chỉ có thể demo kết quả thành công cuối luồng sau khi bổ sung dữ liệu và quy tắc thực sự được xác thực; không đánh dấu ngưỡng y khoa giả là đã xác minh.
+
+## Chạy backend và pytest
 
 ```powershell
-$env:TEST_DATABASE_URL = "mysql://test_user:password@127.0.0.1:3306/nutriplan_e2e_test"
-.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
-```
-
-`tests/run_isolated.py` có thể tạo cơ sở dữ liệu kiểm thử từ URL phát triển và khởi tạo schema nếu tài khoản MySQL có quyền CREATE. Công cụ không xóa cơ sở dữ liệu. Tài khoản ứng dụng hiện tại không thể tạo cơ sở dữ liệu này. Các bài kiểm thử không cần dịch vụ AI bên ngoài.
-
-## Chạy và kiểm tra API
-
-```powershell
-cd backend
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
 ```
 
-Mở `http://localhost:8000/docs` để xem hợp đồng API được sinh và `http://localhost:8000/health` để kiểm tra kết nối DB. Các API hiện có vẫn dùng đường dẫn gốc. Tệp YAML tĩnh riêng có thể mô tả đường dẫn cũ; `/openapi.json` phản ánh ứng dụng đang chạy.
+Mở `http://localhost:8000/docs` để xem hợp đồng API đang chạy và `http://localhost:8000/health` để kiểm tra kết nối DB. Trong cửa sổ PowerShell khác:
 
-Để demo không dùng dịch vụ nhận diện ảnh bên ngoài, đặt `ENVIRONMENT=demo`, `VISION_PROVIDER=mock` và có thể đặt `VISION_MOCK_DETECTIONS` thành JSON, chẳng hạn `[{"name":"Tên món trong danh mục","grams":120,"confidence":0.9}]`. Phản hồi có cảnh báo về dữ liệu mô phỏng. Để dùng bộ kết nối HTTP thật, đặt `VISION_PROVIDER=http`, `VISION_URL` và tùy chọn `VISION_API_KEY`; cần đồng ý `send_image_to_ai_provider` trước khi gọi dịch vụ bên ngoài. Không bật mock trong môi trường sản xuất.
+```powershell
+cd backend
+.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
+```
 
-## Quy trình kiểm thử thủ công UC1
+Pytest dùng `DATABASE_URL` hiện tại và chỉ chấp nhận tên database `nutriplan`. Các test tích hợp có dấu `pytest.mark.integration`; fixture xác nhận `SELECT DATABASE()` trước khi ghi và thay dependency `get_db` bằng một kết nối dùng chung trong từng test. Mọi thao tác của test được rollback sau test, kể cả khi lỗi. Test tích hợp mới có ghi DB cũng phải mang dấu này. Không chạy đồng thời các test tích hợp với thao tác reset hoặc thay đổi schema. Pytest không `DROP`, `TRUNCATE` hay seed tự động và không phụ thuộc bản ghi từ test trước.
 
-1. Gọi `POST /sessions`, lưu `token` và gửi `Authorization: Bearer <token>` trong các request riêng tư.
-2. Gọi `POST /households` với `{"name":"Demo"}`; lưu `household_id`.
-3. Gọi `PUT /consents` với `householdId`, `policyVersion: "0.1"` và `store_health_profile: true`.
-4. Gọi `POST /members` với `householdId`, tên, tuổi và hồ sơ sức khỏe; lưu `data.memberId`.
-5. Gọi `GET /dishes` để chọn ID món ăn. Danh mục phải có bản ghi kèm nguồn.
-6. Tải JPEG/PNG/WebP qua `POST /meals/analyze` với `images`, `householdId` và `memberIds` là chuỗi mảng JSON. Nếu nhận diện ảnh không tìm thấy món, gọi `POST /meals/{mealId}/items` với `dishId` có trong danh mục và `grams`.
-7. Gọi `PATCH /meals/{mealId}/items/{itemId}` để sửa khẩu phần. `GET /meals/{mealId}` cần hiển thị tổng dinh dưỡng đã tính lại và phiên bản mới.
-8. Gọi `POST /meals/{mealId}/assessments` với `{"memberIds":[...]}`. Bữa ăn chỉ được xác nhận khi các thành viên gắn với bữa ăn có đánh giá hiện hành. Hồ sơ có bệnh lý vẫn nhận kết quả chưa đủ dữ liệu cho đến khi bổ sung quy tắc và bộ đánh giá tương ứng.
-9. Gọi `POST /meals/{mealId}/confirm`, sau đó `GET /meals?memberId=...` để xem nhật ký. Không thể sửa bữa ăn đã xác nhận.
+## Reset development khi chủ động yêu cầu
 
-## Quy trình kiểm thử thủ công UC2
+Lệnh dưới đây xóa **toàn bộ dữ liệu** trong `nutriplan` nhưng giữ schema. Nó chỉ chấp nhận `ENVIRONMENT=development`, URL và DB thực tế tên `nutriplan`, cờ xác nhận, rồi yêu cầu nhập chính xác `RESET nutriplan`. Không có đường gọi reset từ pytest hoặc FastAPI.
 
-Đặt `energyGoalKcal` cho thành viên, bổ sung món có nguồn và `default_portion_g` trong danh mục, rồi nạp quy tắc đã xác minh với phiên bản thống nhất. Gọi `POST /menu-plans/generate` với `days: 1`, sau đó `GET /menu-plans/{planId}`. Thiếu bằng chứng đã xác minh sẽ trả lỗi và không lưu kế hoạch. Hệ thống chỉ lưu thực đơn vượt qua toàn bộ quy tắc.
+```powershell
+.\.venv\Scripts\python.exe -m app.db.dev_db reset --confirm-reset-nutriplan
+```
 
-## Kết quả kiểm chứng hiện tại
+Sau reset, chạy lại `seed` nếu cần demo. Chỉ thực hiện lệnh khi đã chủ động quyết định xóa dữ liệu development.
 
-Bộ kiểm thử không cần cơ sở dữ liệu có 18 bài đạt và 5 bài bỏ qua. Các bài cần DB được bỏ qua vì chưa có cơ sở dữ liệu kiểm thử riêng. Tài khoản MySQL hiện tại không thể tạo cơ sở dữ liệu kiểm thử hoặc áp dụng migration E2E. Danh mục món ăn hiện có 0 bản ghi; chưa được cung cấp dữ liệu quy tắc hoặc dịch vụ nhận diện ảnh thật. Việc kiểm chứng đầy đủ UC1/UC2 trên môi trường đang chạy còn phụ thuộc các đầu vào này.
+## Quy trình thủ công UC1
+
+1. Gọi `POST /sessions`, lưu `token` và gửi `Authorization: Bearer <token>` cho các request riêng tư.
+2. Gọi `POST /households`, lưu `household_id`; gọi `PUT /consents` với `store_health_profile: true`.
+3. Gọi `POST /members`, lưu `data.memberId`; gọi `GET /dishes` để chọn món mẫu.
+4. Gửi ảnh qua `POST /meals/analyze` với `images`, `householdId` và `memberIds` là chuỗi mảng JSON. Có thể dùng `ENVIRONMENT=demo` và `VISION_PROVIDER=mock` để thử nhận diện mô phỏng; nếu không nhận diện được món, dùng `POST /meals/{mealId}/items`.
+5. Sửa khẩu phần bằng `PATCH /meals/{mealId}/items/{itemId}`, rồi xem `GET /meals/{mealId}`.
+6. Gọi `POST /meals/{mealId}/assessments`. Nếu thiếu bằng chứng đã xác minh, kết quả phải là `INSUFFICIENT_DATA` và `POST /meals/{mealId}/confirm` phải từ chối. Khi có bộ quy tắc hợp lệ, xác nhận rồi đọc `GET /meals?memberId=...`.
+
+## Quy trình thủ công UC2
+
+Đặt `energyGoalKcal` cho thành viên, bổ sung danh mục dinh dưỡng có nguồn thực và quy tắc đã xác minh. Gọi `POST /menu-plans/generate` với `days: 1`, rồi `GET /menu-plans/{planId}`. Nếu bằng chứng chưa đủ, API trả lỗi và không lưu thực đơn. Dữ liệu seed mô phỏng chỉ dùng để kiểm tra nhánh lỗi này.
+
+## Kết quả kiểm tra gần nhất
+
+Đã chạy pytest trên `nutriplan`: **26 bài đạt**, không có bài bị bỏ qua; test tích hợp dùng rollback. Số bản ghi trong `SESSION`, `HOUSEHOLD` và `MEMBER` không đổi trước và sau lần chạy kiểm tra. Chưa áp dụng schema E2E lên DB hiện tại vì tài khoản MySQL thiếu quyền `CREATE`/`ALTER`. Lệnh `init` đã dừng tại bảng `CONSENT` còn thiếu. Vì vậy chưa chạy seed hoặc xác minh đầy đủ UC1/UC2 trên DB thật.
 

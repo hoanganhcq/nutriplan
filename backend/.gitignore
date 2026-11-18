@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+.demo-session-token
 
 # Python
 __pycache__/

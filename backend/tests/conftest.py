@@ -1,29 +1,52 @@
+"""Kiểm thử tích hợp trên nutriplan bằng giao dịch rollback cho từng test."""
+
 import os
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 import pytest
 
 
-def pytest_configure():
-    test_url = os.getenv("TEST_DATABASE_URL")
-    if test_url:
-        if not urlsplit(test_url).path.lstrip("/").endswith("_test"):
-            raise pytest.UsageError(
-                "TEST_DATABASE_URL must point to a database ending in _test"
-            )
-        from app.core.config import settings
-
-        settings.database_url = test_url
-        settings.environment = "test"
-        settings.vision_provider = "mock"
-
-
-def pytest_collection_modifyitems(items):
+def pytest_configure(config):
     if os.getenv("TEST_DATABASE_URL"):
+        raise pytest.UsageError(
+            "Không dùng TEST_DATABASE_URL ở giai đoạn này; "
+            "hãy dùng DATABASE_URL=.../nutriplan"
+        )
+    from app.core.config import settings
+
+    parsed = urlsplit(settings.database_url)
+    if unquote(parsed.path.lstrip("/")) != "nutriplan":
+        raise pytest.UsageError("Pytest chỉ được dùng database development nutriplan")
+    settings.environment = "test"
+    settings.vision_provider = "mock"
+
+
+@pytest.fixture(autouse=True)
+def rollback_integration_data(request):
+    if not request.node.get_closest_marker("integration"):
+        yield
         return
-    marker = pytest.mark.skip(
-        reason="Set TEST_DATABASE_URL or use tests/run_isolated.py"
-    )
-    for item in items:
-        if item.path.name in {"test_households.py", "test_profiles.py"}:
-            item.add_marker(marker)
+
+    from app.db.database import get_connection
+    from app.dependencies import get_db
+    from app.main import app
+
+    db = get_connection()
+    try:
+        actual = db.execute("SELECT DATABASE() AS name").fetchone()["name"]
+        if actual != "nutriplan":
+            raise pytest.UsageError("Kết nối sai database; dừng trước khi ghi test")
+
+        def transactional_db():
+            yield db
+
+        if get_db in app.dependency_overrides:
+            raise pytest.UsageError("Test tích hợp đã ghi đè get_db ngoài fixture")
+        app.dependency_overrides[get_db] = transactional_db
+        try:
+            yield
+        finally:
+            app.dependency_overrides.pop(get_db, None)
+    finally:
+        db._connection.rollback()
+        db._connection.close()

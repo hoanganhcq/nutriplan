@@ -8,7 +8,7 @@
 - Cơ sở dữ liệu và repository mới: `backend/app/db/migrate_e2e.py`; `backend/app/repositories/{assessment,consent,dish,meal,menu_plan,rule}_repository.py`.
 - Router mới: `backend/app/routers/{consents,dishes,meals,members,menu_plans}.py`.
 - Service mới: `backend/app/services/{assessment,consent,dish,meal,member,menu_plan,nutrition,vision}_service.py`, `backend/app/services/ownership.py` và `backend/app/services/rule_engine.py`.
-- Schema và kiểm thử mới: `backend/app/schemas/e2e.py`, `backend/tests/conftest.py`, `backend/tests/run_isolated.py`, `backend/tests/test_e2e_api.py`, `backend/tests/test_e2e_unit.py`.
+- Schema và kiểm thử mới: `backend/app/schemas/e2e.py`, `backend/tests/conftest.py`, `backend/tests/test_e2e_api.py`, `backend/tests/test_e2e_unit.py`.
 - Tài liệu bàn giao mới: `docs/API_E2E.md` và `docs/E2E_TESTING.md`.
 
 | API | Trạng thái khi kiểm kê | Tệp đã có | Công việc |
@@ -35,7 +35,7 @@
 - `backend/app/db/schema.sql` dùng các bảng `MEMBER`, `FOOD_ITEM`, `MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN` và `MENU_ITEM`. Cần mở rộng các bảng này, không đổi tên.
 - `get_db` quản lý giao dịch theo request: commit khi thành công và rollback khi có ngoại lệ. Repository không tự commit.
 - Các API cũ `/profiles` và `/households/{id}/members` hiện lưu dữ liệu sức khỏe mà chưa kiểm tra sự đồng ý. API `/members` mới yêu cầu đồng ý; việc đổi hành vi API cũ cần một quyết định riêng về tương thích.
-- Các bài kiểm thử phiên, hộ gia đình và hồ sơ hiện dùng cấu hình MySQL thật. Chúng phải chạy trên cơ sở dữ liệu kiểm thử riêng; không chạy migration hoặc kiểm thử trên dữ liệu sản xuất.
+- Database `nutriplan` hiện chỉ dùng cho phát triển, kiểm thử và demo. Các test tích hợp dùng giao dịch rollback trên chính database này; pytest không tự reset schema hoặc dữ liệu.
 - Không tìm thấy tài liệu riêng có tên “Tài liệu API Backend – Hệ thống AI phân tích bữa ăn và đề xuất thực đơn cá nhân hoá”. Những chi tiết request/response ngoài nội dung người dùng cung cấp vẫn chưa được xác nhận.
 
 ## Các giai đoạn
@@ -108,7 +108,7 @@ Lỗi có dạng `{"error":{"code":"...","message":"..."}}`. Lỗi xác thực r
 
 ### Bằng chứng và giới hạn còn lại
 
-- `FOOD_ITEM` là danh mục món ăn và dinh dưỡng. `NUTRITION_RULE` chứa quy tắc có phiên bản, nguồn và trạng thái xác minh. Không tạo sẵn dữ liệu dinh dưỡng hoặc y khoa không có nguồn.
+- `FOOD_ITEM` là danh mục món ăn và dinh dưỡng. `NUTRITION_RULE` chứa quy tắc có phiên bản, nguồn và trạng thái xác minh. Lệnh seed development tạo dữ liệu mô phỏng, ghi rõ chưa xác thực và không dùng làm bằng chứng y khoa.
 - Kiểm tra dị ứng yêu cầu JSON `allergen_codes` đã xác minh cùng quy tắc dị ứng đã xác minh. Chưa cấu hình bộ đánh giá riêng cho từng bệnh lý, nên các hồ sơ đó nhận `INSUFFICIENT_DATA`. Yêu cầu kết cấu được đối chiếu với trường kết cấu của món. Thiếu nguồn dinh dưỡng cũng khiến hệ thống từ chối đánh giá chắc chắn.
 - API nhận `referenceObject` nhưng chưa dùng để ước lượng khẩu phần. Hệ thống dùng số gram do nhận diện trả về hoặc khẩu phần mặc định có nguồn. Ảnh được xử lý trong bộ nhớ; chỉ lưu số lượng ảnh, chưa lưu tệp ảnh.
 - Dịch vụ nhận diện HTTP nhận `{"images":[{"mimeType":"image/jpeg","base64":"..."}]}` và trả `detections` gồm `name`, `grams` tùy chọn và `confidence` tùy chọn. Cần chốt nhà cung cấp và cách tích hợp Qwen.

@@ -1,6 +1,9 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
+
+pytestmark = pytest.mark.integration
 
 
 def _session(client: TestClient) -> dict[str, str]:

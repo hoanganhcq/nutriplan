@@ -51,6 +51,42 @@ uvicorn app.main:app --reload
 Ứng dụng kết nối đến MySQL theo `DATABASE_URL`. Các bảng cần được tạo sẵn;
 backend không tự tạo hoặc tự sửa schema khi khởi động.
 
+## Database development và dữ liệu demo
+
+Giai đoạn hiện tại chỉ dùng database MySQL `nutriplan` cho phát triển, kiểm thử
+tích hợp và demo. Không có database production hay `nutriplan_test`.
+Sao chép `.env.example` thành `.env`, điền thông tin kết nối đến `nutriplan`
+và đặt `ENVIRONMENT=development`. Không commit `.env`.
+
+```powershell
+cd backend
+Copy-Item .env.example .env
+# Sửa DATABASE_URL trong .env; tài khoản khởi tạo cần quyền CREATE/ALTER.
+.\.venv\Scripts\python.exe -m app.db.dev_db init
+.\.venv\Scripts\python.exe -m app.db.dev_db seed
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload
+```
+
+Lệnh `init` dùng `app/db/schema.sql` và migration `app/db/migrate_e2e.py`.
+Nó tạo bảng còn thiếu và bổ sung cột/index E2E khi cần; không xóa dữ liệu.
+Tài khoản API chỉ cần quyền đọc/ghi dữ liệu, nhưng lệnh `init` cần tài khoản
+có quyền tạo/sửa schema. Nếu DB `nutriplan` đã tồn tại, lệnh không tạo lại
+các bảng hiện có. Lệnh `seed` thêm ba món với số dinh dưỡng mô phỏng,
+quy tắc **chưa xác thực** và một hồ sơ giả lập; chạy lại không nhân đôi dữ liệu
+khi tệp token demo vẫn còn. Token demo nằm trong `.demo-session-token` và
+được Git bỏ qua. Không dùng dữ liệu mẫu để đưa ra kết luận y khoa.
+
+Lệnh reset chỉ xóa dữ liệu sau khi người chạy thêm cờ và nhập đúng câu xác nhận:
+
+```powershell
+.\.venv\Scripts\python.exe -m app.db.dev_db reset --confirm-reset-nutriplan
+```
+
+Reset chỉ chạy khi `ENVIRONMENT=development` và DB thực tế là `nutriplan`.
+Lệnh giữ nguyên schema, không tự chạy khi khởi động API hay khi chạy pytest.
+Xem [quy trình E2E](../docs/E2E_TESTING.md) để biết cách kiểm thử và giới hạn
+của dữ liệu demo.
+
 API chạy tại `http://localhost:8000`; endpoint kiểm tra trạng thái là
 `http://localhost:8000/health`. Tài liệu tương tác ở
 `http://localhost:8000/docs`.
@@ -69,7 +105,7 @@ Ví dụ nếu MySQL chạy trên máy hiện tại, port là `3306`, database l
 
 ```powershell
 cd backend
-..\.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 # Sửa DATABASE_URL trong .env bằng thông tin thật; không commit file .env.
 pip install -e ".[dev]"
@@ -81,7 +117,8 @@ database. Nếu mật khẩu chứa ký tự đặc biệt như `@`, `:`, `/` ho
 URL-encode các ký tự đó trong `DATABASE_URL`.
 
 Các API hiện dùng các bảng `SESSION`, `HOUSEHOLD`, `MEMBER`, `FOOD_ITEM`,
-`MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN` và `MENU_ITEM`. Cấu trúc MySQL
+`MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN`, `MENU_ITEM`, `CONSENT`,
+`CONSENT_HISTORY`, `MEAL_MEMBER` và `NUTRITION_RULE`. Cấu trúc MySQL
 tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã tạo bảng, hãy đối chiếu tên
 bảng, tên cột, khóa ngoại và kiểu dữ liệu với file này. Endpoint
 `http://localhost:8000/health` báo `database: "ok"` khi kết nối được. Dữ liệu
@@ -112,9 +149,8 @@ Các endpoint đã có:
 - `DELETE /profiles/{member_id}`
 
 Danh sách bệnh lý và dị ứng được giới hạn trong
-`app/schemas/profiles.py`. Hiện schema chưa có bảng `consent`, nên chưa có bước
-xin phép riêng; có thể bổ sung trước khi lưu dữ liệu sức khỏe khi triển khai
-BE-11.
+`app/schemas/profiles.py`. API `/consents` mới yêu cầu ghi nhận đồng ý trước
+khi tạo thành viên qua `/members`. Các API hồ sơ cũ vẫn giữ hành vi trước đây.
 
 Để tạo từng thành viên riêng trên Swagger:
 
@@ -207,6 +243,10 @@ khi thử nghiệm.
 
 ## Chạy test
 
-```bash
-pytest
+```powershell
+cd backend
+.\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
+
+Các test tích hợp dùng `nutriplan` và rollback sau từng test; không cần DB kiểm
+thử riêng. Test không tự khởi tạo, seed hay reset database.
