@@ -1,0 +1,1 @@
+"""NutriPlan backend application package."""

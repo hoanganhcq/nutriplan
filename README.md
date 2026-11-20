@@ -2,6 +2,11 @@
 
 Khung dự án hệ thống AI phân tích bữa ăn và đề xuất thực đơn cá nhân hóa theo bệnh lý cho từng thành viên trong gia đình, dựa trên báo cáo tiến độ, WBS và sơ đồ kiến trúc tổng quan.
 
+Backend hiện dùng một database MySQL `nutriplan` cho phát triển, kiểm thử và
+demo. Xem [hướng dẫn backend](./backend/README.md) để khởi tạo schema, seed dữ
+liệu mẫu, chạy API và reset có xác nhận; xem [hướng dẫn E2E](./docs/E2E_TESTING.md)
+để chạy kiểm thử với giao dịch rollback.
+
 
 ## Cấu trúc thư mục
 
@@ -18,23 +23,18 @@ nutriplan/
 │   └── tests/
 │       └── evaluation/
 ├── backend/
-│   ├── src/
-│   │   ├── api/
-│   │   ├── core/
-│   │   ├── middleware/
-│   │   ├── repositories/
-│   │   └── services/
-│   │       ├── auth/
-│   │       ├── profiles/
-│   │       ├── meal_analysis/
-│   │       ├── nutrition/
-│   │       ├── rule_engine/
-│   │       ├── menu_planning/
-│   │       ├── meal_diary/
-│   │       ├── privacy/
-│   │       ├── media/
-│   │       └── pdf_export/
-│   └── tests/
+│   ├── app/
+│   │   ├── routers/
+│   │   ├── services/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── db/
+│   │   └── core/
+│   ├── tests/
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── pyproject.toml
+│   └── README.md
 ├── contracts/
 │   ├── examples/
 │   ├── openapi/

@@ -1,0 +1,27 @@
+# Environment
+.env
+.env.*
+!.env.example
+.demo-session-token
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Testing
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Database
+*.db
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
