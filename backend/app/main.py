@@ -12,6 +12,7 @@ from app.core.exceptions import AppException
 from app.routers.consents import router as consents_router
 from app.routers.dishes import router as dishes_router
 from app.routers.health import router as health_router
+from app.routers.households import alias_router as household_alias_router
 from app.routers.households import router as households_router
 from app.routers.meals import router as meals_router
 from app.routers.members import router as members_router
@@ -98,6 +99,7 @@ async def unexpected_exception_handler(request: Request, exc: Exception):
 # 7. Đăng ký router
 app.include_router(health_router)
 app.include_router(households_router)
+app.include_router(household_alias_router)
 app.include_router(sessions_router)
 app.include_router(profiles_router)
 app.include_router(consents_router)

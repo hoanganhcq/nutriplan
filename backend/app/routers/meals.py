@@ -2,6 +2,9 @@ import json
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from pydantic import BaseModel, Field
+
+from app.repositories import meal_repository
 
 from app.core.exceptions import AppException
 from app.dependencies import get_current_session, get_db
@@ -23,6 +26,10 @@ router = APIRouter(
     },
 )
 
+
+class ClarificationAnswer(BaseModel):
+    answer: str = Field(min_length=1, max_length=1000)
+
 # truy vấn các bữa ăn và các mục liên quan đến bữa ăn, bao gồm phân tích hình ảnh, xác nhận và đánh giá
 @router.post("/analyze", status_code=201, response_model=MealResponse)
 async def analyze_meal(
@@ -32,6 +39,7 @@ async def analyze_meal(
     eaten_at: datetime | None = Form(None, alias="eatenAt"),
     member_ids: str = Form("[]", alias="memberIds"),
     reference_object: str | None = Form(None, alias="referenceObject"),
+    portion_method: str | None = Form("reference_object", alias="portionMethod"),
     use_external_vision: bool = Form(False, alias="useExternalVision"),
     session=Depends(get_current_session),
     db=Depends(get_db),
@@ -57,6 +65,8 @@ async def analyze_meal(
             eaten_at,
             parsed_ids,
             use_external_vision,
+            reference_object,
+            portion_method,
         )
     }
 
@@ -113,6 +123,19 @@ def post_item(
 ):
     return {"data": meal_service.add_item(db, session["session_id"], meal_id, payload)}
 
+@router.delete("/{meal_id}/items/{item_id}", response_model=MealResponse)
+def delete_item(
+    meal_id: int,
+    item_id: int,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": meal_service.remove_item(
+            db, session["session_id"], meal_id, item_id
+        )
+    }
+
 
 # xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.post("/{meal_id}/assessments", response_model=AssessmentResponse)
@@ -133,3 +156,20 @@ def assess(
 @router.post("/{meal_id}/confirm", response_model=MealResponse)
 def confirm(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
     return {"data": assessment_service.confirm(db, session["session_id"], meal_id)}
+
+@router.post(
+    "/{meal_id}/clarifications/{question_id}/answer",
+    response_model=MealResponse,
+)
+def answer_clarification(
+    meal_id: int,
+    question_id: int,
+    payload: ClarificationAnswer,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    row = meal_service.owned(db, session["session_id"], meal_id, lock=True)
+    if row["status"] != "draft":
+        raise AppException("MEAL_LOCKED", "Confirmed meal cannot be edited", 409)
+    meal_repository.increment_revision(db, meal_id)
+    return {"data": meal_service.detail(db, session["session_id"], meal_id)}

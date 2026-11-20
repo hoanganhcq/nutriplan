@@ -36,15 +36,24 @@ async def validate_images(files):
 
 def _item(row):
     grams = float(row["confirmed_weight_g"] or row["estimated_weight_g"] or 0)
+    confidence = (
+        float(row["confidence"])
+        if row.get("confidence") is not None
+        else None
+    )
     return {
         "itemId": row["meal_item_id"],
         "dishId": row["food_id"],
         "name": row["name"],
         "grams": grams,
         "seasoning": row.get("seasoning"),
-        "confidence": float(row["confidence"])
-        if row.get("confidence") is not None
-        else None,
+        "confidence": confidence,
+        "portionConfidence": confidence,
+        "portionMethod": "reference_object" if confidence is not None else "unknown",
+        "entityType": "INGREDIENT"
+        if str(row.get("category") or "").casefold() == "ingredient"
+        else "DISH",
+        "bbox": row.get("bbox") if isinstance(row.get("bbox"), dict) else None,
         "isEstimate": row["confirmed_weight_g"] is None,
         "nutrition": nutrition_service.portion(row, grams),
     }
@@ -97,6 +106,8 @@ def analyze(
     eaten_at,
     member_ids,
     use_external_vision,
+    reference_object=None,
+    portion_method=None,
 ):
     consent_service.require(
         db, session_id, household_id, "store_health_profile"
@@ -112,7 +123,9 @@ def analyze(
         consent_service.require(
             db, session_id, household_id, "send_image_to_ai_provider"
         )
-    detections, warnings = vision_service.recognize(images)
+    detections, warnings = vision_service.recognize(
+        images, reference_object, portion_method
+    )
     meal_id = meal_repository.create(
         db,
         household_id,
@@ -129,6 +142,12 @@ def analyze(
             detection.get("name"), str
         ):
             continue
+        entity_type = str(
+            detection.get("entityType") or detection.get("entity_type") or "DISH"
+        ).upper()
+        if entity_type == "NON_FOOD":
+            warnings.append("NON_FOOD")
+            continue
         food = dish_repository.match_name(db, detection["name"])
         if not food:
             warnings.append(f"Unmatched dish: {detection['name'][:100]}")
@@ -138,6 +157,16 @@ def analyze(
             warnings.append(f"Portion unknown: {food['name']}")
             continue
         confidence = detection.get("confidence")
+        numeric_confidence = (
+            confidence
+            if isinstance(confidence, (int, float)) and 0 <= confidence <= 1
+            else None
+        )
+        if numeric_confidence is not None:
+            if numeric_confidence < 0.45:
+                warnings.append("LOW_CONFIDENCE")
+            elif numeric_confidence <= 0.75:
+                warnings.append("AMBIGUITY_NEEDS_CONFIRMATION")
         meal_repository.add_item(
             db,
             meal_id,
@@ -199,6 +228,24 @@ def add_item(db, session_id, meal_id, payload):
     meal_repository.add_item(
         db, meal_id, payload.dish_id, payload.grams, payload.seasoning
     )
+    meal_repository.increment_revision(db, meal_id)
+    return detail(db, session_id, meal_id)
+
+def remove_item(db, session_id, meal_id, item_id):
+    row = owned(db, session_id, meal_id, lock=True)
+    if row["status"] != "draft":
+        raise AppException("MEAL_LOCKED", "Confirmed meal cannot be edited", 409)
+    current = next(
+        (
+            item
+            for item in meal_repository.items(db, meal_id)
+            if item["meal_item_id"] == item_id
+        ),
+        None,
+    )
+    if not current:
+        raise AppException("NOT_FOUND", "Meal item not found", 404)
+    meal_repository.delete_item(db, meal_id, item_id)
     meal_repository.increment_revision(db, meal_id)
     return detail(db, session_id, meal_id)
 

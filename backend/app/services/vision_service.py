@@ -11,7 +11,7 @@ def mode():
     return settings.vision_provider
 
 
-def recognize(images):
+def recognize(images, reference_object=None, portion_method=None):
     """Return provider detections; never invent food labels in production."""
     if settings.vision_provider == "mock" and settings.environment in {"test", "demo"}:
         try:
@@ -31,7 +31,9 @@ def recognize(images):
         "images": [
             {"mimeType": mime, "base64": base64.b64encode(content).decode("ascii")}
             for mime, content in images
-        ]
+        ],
+        "referenceObject": reference_object,
+        "portionMethod": portion_method or "reference_object",
     }
     request = Request(
         settings.vision_url,

@@ -28,7 +28,7 @@ def add_item(db, meal_id, food_id, grams, seasoning=None, confidence=None):
 
 def items(db, meal_id):
     return db.execute(
-        """SELECT i.*, f.name, f.kcal_per_100g, f.protein_per_100g,
+        """SELECT i.*, f.name, f.category, f.kcal_per_100g, f.protein_per_100g,
                   f.carb_per_100g, f.fat_per_100g, f.source_name, f.source_url,
                   f.ingredients, f.allergen_codes, f.allergen_verified, f.texture
            FROM MEAL_ITEM i JOIN FOOD_ITEM f ON f.food_id = i.food_id
@@ -42,6 +42,12 @@ def update_item(db, meal_id, item_id, food_id, grams, seasoning):
         """UPDATE MEAL_ITEM SET food_id = %s, confirmed_weight_g = %s, seasoning = %s
            WHERE meal_id = %s AND meal_item_id = %s""",
         (food_id, grams, seasoning, meal_id, item_id),
+    )
+
+def delete_item(db, meal_id, item_id):
+    db.execute(
+        "DELETE FROM MEAL_ITEM WHERE meal_id = %s AND meal_item_id = %s",
+        (meal_id, item_id),
     )
 
 

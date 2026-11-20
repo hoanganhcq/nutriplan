@@ -122,6 +122,7 @@ class DishOutput(CamelModel):
     dish_id: int
     name: str
     category: str | None
+    entity_type: str = "DISH"
     default_portion_g: float | None
     per100g: NutritionOutput
     source: SourceOutput
@@ -134,6 +135,10 @@ class MealItemOutput(CamelModel):
     grams: float
     seasoning: str | None
     confidence: float | None
+    portion_confidence: float | None = None
+    portion_method: str | None = None
+    entity_type: str = "DISH"
+    bbox: dict | None = None
     is_estimate: bool
     nutrition: NutritionOutput
 
