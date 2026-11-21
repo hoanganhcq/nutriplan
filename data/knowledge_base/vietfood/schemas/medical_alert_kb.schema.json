@@ -1,0 +1,774 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NutriPlan medical alert KB",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "kb_id": {
+      "const": "nutriplan_medical_alerts_vi"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[a-z0-9.]+)?$"
+    },
+    "locale": {
+      "const": "vi-VN"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "clinically_approved"
+      ]
+    },
+    "production_enabled": {
+      "type": "boolean"
+    },
+    "condition_codes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/$defs/Condition"
+          },
+          "label_vi": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profile_codes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "mapping_vi": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "code",
+          "label_vi",
+          "profile_codes",
+          "mapping_vi"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "confirmed_meal_contract": {
+      "type": "object",
+      "properties": {
+        "nutrition_basis": {
+          "const": "per_100g_edible"
+        },
+        "input_fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "item_fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "input_sources": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "model_suggestion",
+              "manual_addition"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "quantity_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QuantitySource"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "eligible_quantity_sources": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "weighed",
+              "user_entered"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "steps_vi": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "nutrition_basis",
+        "input_fields",
+        "item_fields",
+        "input_sources",
+        "quantity_sources",
+        "eligible_quantity_sources",
+        "steps_vi"
+      ],
+      "additionalProperties": false
+    },
+    "evaluation_policy": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "const": "backend_rule_engine"
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Status"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "gates_vi": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "owner",
+        "statuses",
+        "gates_vi"
+      ],
+      "additionalProperties": false
+    },
+    "retrieval_policy": {
+      "type": "object",
+      "properties": {
+        "seed": {
+          "const": "rule_evidence_ids"
+        },
+        "required_filters": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "condition_code",
+              "nutrient_key",
+              "profile_scope"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "allow_zero_score_external_match": {
+          "const": false
+        },
+        "no_evidence_action": {
+          "const": "use_backend_message"
+        },
+        "notes_vi": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "seed",
+        "required_filters",
+        "allow_zero_score_external_match",
+        "no_evidence_action",
+        "notes_vi"
+      ],
+      "additionalProperties": false
+    },
+    "llm_policy": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "const": "explain_backend_alert"
+        },
+        "external_consent": {
+          "const": "llm_explanation"
+        },
+        "allowed_response_fields": {
+          "const": [
+            "alert_id",
+            "reason_vi",
+            "evidence_ids",
+            "advice_ids"
+          ]
+        },
+        "fallback": {
+          "const": "backend_message"
+        },
+        "validation_vi": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "role",
+        "external_consent",
+        "allowed_response_fields",
+        "fallback",
+        "validation_vi"
+      ],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Source"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Rule"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "context_checks": {
+      "type": "object",
+      "properties": {
+        "ckd_confirmed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ckd_stage_known": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dialysis_status_known": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type2_diabetes_confirmed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "meal_slot_matches_plan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "clinician_validated_potassium_context": {
+          "type": "string",
+          "minLength": 1
+        },
+        "clinician_validated_phosphorus_context": {
+          "type": "string",
+          "minLength": 1
+        },
+        "no_ckd_or_other_individual_sodium_plan": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known",
+        "type2_diabetes_confirmed",
+        "meal_slot_matches_plan",
+        "clinician_validated_potassium_context",
+        "clinician_validated_phosphorus_context",
+        "no_ckd_or_other_individual_sodium_plan"
+      ],
+      "additionalProperties": false
+    },
+    "approval": {
+      "$ref": "#/$defs/Approval"
+    }
+  },
+  "required": [
+    "$schema",
+    "kb_id",
+    "version",
+    "locale",
+    "status",
+    "production_enabled",
+    "condition_codes",
+    "confirmed_meal_contract",
+    "evaluation_policy",
+    "retrieval_policy",
+    "llm_policy",
+    "sources",
+    "evidence",
+    "rules",
+    "context_checks"
+  ],
+  "additionalProperties": false,
+  "if": {
+    "properties": {
+      "production_enabled": {
+        "const": true
+      }
+    },
+    "required": [
+      "production_enabled"
+    ]
+  },
+  "then": {
+    "properties": {
+      "status": {
+        "const": "clinically_approved"
+      },
+      "rules": {
+        "items": {
+          "properties": {
+            "review_status": {
+              "const": "clinically_approved"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Condition": {
+      "enum": [
+        "HTN",
+        "T2DM",
+        "CKD"
+      ]
+    },
+    "NutrientKey": {
+      "enum": [
+        "energy_kcal",
+        "protein_g",
+        "fat_g",
+        "sat_fat_g",
+        "carb_g",
+        "sugar_g",
+        "added_sugar_g",
+        "fiber_g",
+        "sodium_mg",
+        "potassium_mg",
+        "phosphorus_mg"
+      ]
+    },
+    "QuantitySource": {
+      "enum": [
+        "weighed",
+        "user_entered",
+        "model_estimate",
+        "reference_default"
+      ]
+    },
+    "Status": {
+      "enum": [
+        "triggered",
+        "not_triggered",
+        "insufficient_data",
+        "needs_context",
+        "not_applicable",
+        "pending_review"
+      ]
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "organization": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https://"
+        },
+        "type": {
+          "enum": [
+            "national_guideline",
+            "clinical_education"
+          ]
+        },
+        "retrieved_on": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "id",
+        "organization",
+        "title",
+        "url",
+        "type",
+        "retrieved_on"
+      ],
+      "additionalProperties": false
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "condition_codes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "nutrient_keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NutrientKey"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "summary_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_context": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ckd_confirmed",
+              "ckd_stage_known",
+              "dialysis_status_known",
+              "type2_diabetes_confirmed",
+              "meal_slot_matches_plan",
+              "clinician_validated_potassium_context",
+              "clinician_validated_phosphorus_context",
+              "no_ckd_or_other_individual_sodium_plan"
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "excerpt_vi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 180
+        },
+        "applicability_note_vi": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "source_id",
+        "locator",
+        "condition_codes",
+        "nutrient_keys",
+        "summary_vi",
+        "required_context",
+        "excerpt_vi",
+        "applicability_note_vi"
+      ],
+      "additionalProperties": false
+    },
+    "Rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "category": {
+          "const": "medical"
+        },
+        "condition_code": {
+          "$ref": "#/$defs/Condition"
+        },
+        "nutrient_key": {
+          "$ref": "#/$defs/NutrientKey"
+        },
+        "period": {
+          "enum": [
+            "meal",
+            "day"
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "clinician_upper_limit"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "published_reference"
+                },
+                "upper_limit": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "operator": {
+                  "enum": [
+                    "lt",
+                    "lte"
+                  ]
+                },
+                "unit": {
+                  "enum": [
+                    "g",
+                    "mg",
+                    "kcal"
+                  ]
+                }
+              },
+              "required": [
+                "kind",
+                "upper_limit",
+                "operator",
+                "unit"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "required_context": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ckd_confirmed",
+              "ckd_stage_known",
+              "dialysis_status_known",
+              "type2_diabetes_confirmed",
+              "meal_slot_matches_plan",
+              "clinician_validated_potassium_context",
+              "clinician_validated_phosphorus_context",
+              "no_ckd_or_other_individual_sodium_plan"
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "precedence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning"
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9_]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "label_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "review_status": {
+          "enum": [
+            "pending_clinical_review",
+            "clinically_approved"
+          ]
+        },
+        "approval": {
+          "$ref": "#/$defs/Approval"
+        },
+        "medical_warning_basis_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "medical_advice": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MedicalAdvice"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "condition_code",
+        "nutrient_key",
+        "period",
+        "target",
+        "required_context",
+        "precedence",
+        "severity",
+        "tags",
+        "label_vi",
+        "message_vi",
+        "evidence_ids",
+        "review_status",
+        "medical_warning_basis_vi",
+        "medical_advice"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "review_status": {
+            "const": "clinically_approved"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "approval"
+        ]
+      }
+    },
+    "Approval": {
+      "type": "object",
+      "properties": {
+        "approval_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "approved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "approval_ref",
+        "approved_at"
+      ],
+      "additionalProperties": false
+    },
+    "MedicalAdvice": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]+$"
+        },
+        "kind": {
+          "enum": [
+            "review_intake",
+            "review_label",
+            "consult_clinician"
+          ]
+        },
+        "text_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "text_vi",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "clinically_approved"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "approval"
+        ]
+      }
+    }
+  ]
+}
