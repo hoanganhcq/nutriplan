@@ -13,6 +13,7 @@ from app.routers.consents import router as consents_router
 from app.routers.dishes import router as dishes_router
 from app.routers.health import router as health_router
 from app.routers.households import router as households_router
+from app.routers.local_meal_analysis import router as local_meal_analysis_router
 from app.routers.meals import router as meals_router
 from app.routers.members import router as members_router
 from app.routers.menu_plans import router as menu_plans_router
@@ -105,3 +106,10 @@ app.include_router(members_router)
 app.include_router(dishes_router)
 app.include_router(meals_router)
 app.include_router(menu_plans_router)
+
+if settings.local_meal_analysis_enabled and settings.environment in {
+    "development",
+    "demo",
+    "test",
+}:
+    app.include_router(local_meal_analysis_router)

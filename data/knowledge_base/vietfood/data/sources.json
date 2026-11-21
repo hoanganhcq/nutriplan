@@ -1,0 +1,117 @@
+{
+  "version": "2.0.0",
+  "sources": [
+    {
+      "source_id": "NIN_FOOD",
+      "title": "Tra cứu thành phần thực phẩm, 100 g phần ăn được",
+      "url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+      "organization": "Viện Dinh dưỡng Quốc gia",
+      "kind": "composition",
+      "retrieved_on": "2026-11-18",
+      "locator": "Bảng chi tiết ghi: Giá trị dinh dưỡng (100g ăn được)",
+      "api_url": "https://viendinhduong.vn/api/fe/foodNatunal/getPageFoodData",
+      "verification": "primary_retrieved"
+    },
+    {
+      "source_id": "NIN_DISH",
+      "title": "Tra cứu giá trị dinh dưỡng món ăn",
+      "url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-mon-an",
+      "organization": "Viện Dinh dưỡng Quốc gia",
+      "kind": "composition",
+      "retrieved_on": "2026-11-18",
+      "locator": "Cơ sở khối lượng chưa được xác nhận từ các bản ghi đã đọc",
+      "api_url": "https://viendinhduong.vn/api/fe/tool/getPageFoodData",
+      "verification": "basis_unresolved"
+    },
+    {
+      "source_id": "USDA_FDC",
+      "title": "FoodData Central SR Legacy",
+      "url": "https://fdc.nal.usda.gov/",
+      "organization": "USDA",
+      "kind": "composition",
+      "retrieved_on": "2026-11-18",
+      "locator": "foodNutrients per 100 g; foodPortions.gramWeight",
+      "verification": "primary_retrieved"
+    },
+    {
+      "source_id": "PORTION_UI_V2",
+      "title": "Khẩu phần khởi tạo để nhập liệu",
+      "url": null,
+      "organization": "Thiết kế ứng dụng",
+      "kind": "application_policy",
+      "retrieved_on": "2026-11-18",
+      "locator": "Không phải trung bình thống kê người trưởng thành; cần người dùng sửa/xác nhận",
+      "verification": "editorial_assumption"
+    },
+    {
+      "source_id": "SYSTEM_V2",
+      "title": "Quy tắc dữ liệu và giới hạn suy luận",
+      "url": null,
+      "organization": "Thiết kế ứng dụng",
+      "kind": "application_policy",
+      "retrieved_on": "2026-11-18",
+      "locator": "",
+      "verification": "implementation_policy"
+    },
+    {
+      "source_id": "KDIGO_2024",
+      "title": "KDIGO 2024 CKD Executive Summary",
+      "url": "https://kdigo.org/wp-content/uploads/2017/02/KDIGO-2024-CKD-Guideline-Executive-Summary.pdf",
+      "organization": "KDIGO",
+      "kind": "clinical_guidance",
+      "retrieved_on": "2026-11-18",
+      "locator": "Table 4, PDF p10, sections 3.3.1 and 3.3.2",
+      "verification": "primary_read"
+    },
+    {
+      "source_id": "ADA_2026_S5",
+      "title": "Standards of Care in Diabetes 2026, Section 5",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12690188/",
+      "organization": "American Diabetes Association",
+      "kind": "clinical_guidance",
+      "retrieved_on": "2026-11-18",
+      "locator": "Table 5.1; Meal Planning",
+      "verification": "primary_read"
+    },
+    {
+      "source_id": "AHA_2026_PATTERN",
+      "title": "2026 Dietary Guidance — Top Things to Know",
+      "url": "https://professional.heart.org/en/science-news/2026-dietary-guidance-to-improve-cardiovascular-health/top-things-to-know",
+      "organization": "American Heart Association",
+      "kind": "clinical_guidance",
+      "retrieved_on": "2026-11-18",
+      "locator": "Items 5–9",
+      "verification": "primary_organization_summary_read"
+    },
+    {
+      "source_id": "AHA_SODIUM",
+      "title": "How Much Sodium Should I Eat Per Day?",
+      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/sodium/how-much-sodium-should-i-eat-per-day",
+      "organization": "American Heart Association",
+      "kind": "clinical_guidance",
+      "retrieved_on": "2026-11-18",
+      "locator": "Recommended intake and exceptions",
+      "verification": "primary_organization_read"
+    },
+    {
+      "source_id": "AHA_SAT_FAT",
+      "title": "Saturated Fats",
+      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/saturated-fats",
+      "organization": "American Heart Association",
+      "kind": "clinical_guidance",
+      "retrieved_on": "2026-11-18",
+      "locator": "American Heart Association Recommendation",
+      "verification": "primary_organization_read"
+    },
+    {
+      "source_id": "NIDDK_CKD",
+      "title": "Healthy Eating for Adults with Chronic Kidney Disease",
+      "url": "https://www.niddk.nih.gov/health-information/kidney-disease/chronic-kidney-disease-ckd/healthy-eating-adults-chronic-kidney-disease",
+      "organization": "NIDDK / NIH",
+      "kind": "clinical_guidance",
+      "retrieved_on": "2026-11-18",
+      "locator": "Protein, sodium, potassium, phosphorus and fluids",
+      "verification": "primary_organization_read"
+    }
+  ]
+}

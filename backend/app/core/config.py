@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     vision_url: str | None = None
     vision_api_key: str | None = None
     vision_mock_detections: str = "[]"
+    local_meal_analysis_enabled: bool = False
+    local_meal_analysis_device: str = "cpu"
 
     cors_origins: list[str] = [
         "http://localhost:5173",

@@ -5,6 +5,7 @@ import Icon from '../../components/Icon.jsx';
 import { useResource } from '../../hooks/useResource.js';
 import { useAction } from '../../hooks/useAction.js';
 import { service } from '../../services/nutriplan.js';
+import { localMealAnalysisEnabled } from '../../services/localMealAnalysis.js';
 
 const steps = ['Tải ảnh', 'Xác nhận món', 'Xem đánh giá'];
 
@@ -35,6 +36,7 @@ export default function CapturePage() {
   }
   function reset() { setStep(0); setFile(null); setDishes([]); setAssessment(null); action.setError(''); }
   return <div className="page capture-page"><div className="page-top"><div><span className="eyebrow">GHI NHẬN BỮA ĂN</span><h1>Chụp bữa ăn</h1><p>Từ hình ảnh đến nhật ký, qua ba bước đơn giản.</p></div><DemoLabel /></div>
+    {localMealAnalysisEnabled && <Link to="/chup-bua-an/vietfood" className="button button--secondary">Phân tích ảnh bằng VietFood</Link>}
     <ol className="stepper">{steps.map((label, index) => <li key={label} className={index <= step ? 'active' : ''}><span>{index + 1}</span>{label}</li>)}</ol>
     <Notice message={action.notice} onClose={() => action.setNotice('')} />{action.error && <p className="form-error" role="alert">{action.error}</p>}
     {step === 0 && <div className="capture-grid"><section className="panel"><span className="eyebrow">BƯỚC 01</span><h2>Tải ảnh bữa ăn</h2><p>Ảnh được xử lý giả lập trong trình duyệt. NutriPlan không gửi ảnh đến máy chủ ở mock mode.</p><label className="upload-zone"><input type="file" accept="image/*" capture="environment" onChange={(event) => { setFile(event.target.files?.[0] || null); action.setError(''); }} /><span className="upload-icon"><Icon name="camera" size={32} /></span><b>{file ? file.name : 'Chọn hoặc chụp một bức ảnh'}</b><small>JPG, PNG hoặc ảnh khác · Tối đa 5 MB</small></label><button className="button button--primary" disabled={!file || action.busy} onClick={analyze}>{action.busy ? 'Đang mô phỏng…' : 'Nhận diện món ăn →'}</button></section><div className="preview-panel panel">{preview ? <img src={preview} alt="Ảnh bữa ăn đã chọn" /> : <div className="preview-empty"><Icon name="plate" size={68} /><p>Ảnh của bạn sẽ hiển thị ở đây</p></div>}</div></div>}

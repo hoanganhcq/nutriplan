@@ -1,0 +1,620 @@
+{
+  "kb_type": "clinical",
+  "kb_version": "2.0.0",
+  "updated_on": "2026-11-18",
+  "clinical_review_status": "not_clinically_reviewed",
+  "scope": "adult nutrition education and source-grounded draft alerts; no diagnosis or treatment prescribing",
+  "conditions": [
+    {
+      "condition_id": "CKD",
+      "name_vi": "Bệnh thận mạn / suy thận mạn",
+      "nutrients": [
+        "protein_g",
+        "sodium_mg",
+        "potassium_mg",
+        "phosphorus_mg"
+      ],
+      "context_fields": [
+        "kidney_disease_type",
+        "ckd_stage",
+        "dialysis",
+        "recent_labs",
+        "clinician_daily_targets"
+      ],
+      "unsupported_subgroups": [
+        "acute_kidney_injury",
+        "transplant"
+      ]
+    },
+    {
+      "condition_id": "T2DM",
+      "name_vi": "Đái tháo đường típ 2",
+      "nutrients": [
+        "carb_g",
+        "fiber_g",
+        "sugar_g",
+        "added_sugar_g"
+      ],
+      "context_fields": [
+        "diabetes_type",
+        "insulin_or_secretagogue",
+        "sglt2_inhibitor",
+        "clinician_daily_targets"
+      ],
+      "unsupported_subgroups": [
+        "type1_diabetes",
+        "gestational_diabetes"
+      ]
+    },
+    {
+      "condition_id": "CVD",
+      "name_vi": "Nguy cơ tim mạch / bệnh tim mạch ổn định",
+      "nutrients": [
+        "sodium_mg",
+        "sat_fat_g",
+        "fat_g",
+        "fiber_g"
+      ],
+      "context_fields": [
+        "heart_failure",
+        "fluid_restriction",
+        "clinician_daily_targets"
+      ],
+      "unsupported_subgroups": [
+        "acute_cardiovascular_event",
+        "individual_heart_failure_prescription"
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "CKD_PROTEIN_TARGET",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "protein",
+      "text_vi": "CKD G3–G5 chưa lọc máu: KDIGO gợi ý protein 0,8 g/kg/ngày; không áp dụng máy móc khi suy dinh dưỡng.",
+      "nutrients": [
+        "protein_g"
+      ],
+      "source_id": "KDIGO_2024",
+      "locator": "3.3.1.1; Practice Point 3.3.1.5",
+      "applies_to": {
+        "population": "adults",
+        "ckd_stages": [
+          "G3a",
+          "G3b",
+          "G4",
+          "G5"
+        ],
+        "dialysis": "none",
+        "exclude": [
+          "acute_kidney_injury",
+          "transplant",
+          "metabolic_instability",
+          "frailty_or_malnutrition"
+        ]
+      },
+      "evidence_grade": "2C",
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_HIGH_PROTEIN",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "protein",
+      "text_vi": "Tránh protein trên 1,3 g/kg/ngày ở người CKD có nguy cơ tiến triển.",
+      "nutrients": [
+        "protein_g"
+      ],
+      "source_id": "KDIGO_2024",
+      "locator": "Practice Point 3.3.1.1",
+      "applies_to": {
+        "population": "adults",
+        "dialysis": "none",
+        "progression_risk": true
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_SODIUM",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "sodium",
+      "text_vi": "KDIGO gợi ý natri dưới 2.000 mg/ngày; bệnh thận mất muối là ngoại lệ cần đánh giá riêng.",
+      "nutrients": [
+        "sodium_mg"
+      ],
+      "source_id": "KDIGO_2024",
+      "locator": "3.3.2.1; Practice Point 3.3.2.1",
+      "applies_to": {
+        "population": "adults",
+        "dialysis": "none",
+        "exclude": [
+          "sodium_wasting_nephropathy",
+          "transplant",
+          "acute_kidney_injury"
+        ]
+      },
+      "evidence_grade": "2C",
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_INDIVIDUAL",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "individualization",
+      "text_vi": "Điều chỉnh protein, natri, kali và phospho theo bệnh cảnh; cần chuyên gia dinh dưỡng thận hỗ trợ.",
+      "nutrients": [
+        "protein_g",
+        "sodium_mg",
+        "potassium_mg",
+        "phosphorus_mg"
+      ],
+      "source_id": "KDIGO_2024",
+      "locator": "Practice Point 3.3.2",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_DIALYSIS",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "dialysis",
+      "text_vi": "Lọc máu có thể làm tăng nhu cầu protein. Không dùng mục tiêu protein trước lọc máu cho người đang lọc máu.",
+      "nutrients": [
+        "protein_g"
+      ],
+      "source_id": "NIDDK_CKD",
+      "locator": "Protein",
+      "applies_to": {
+        "population": "adults",
+        "dialysis": [
+          "hemodialysis",
+          "peritoneal_dialysis"
+        ]
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_POTASSIUM",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "potassium",
+      "text_vi": "Nhu cầu giới hạn kali thay đổi theo chức năng thận, thuốc và xét nghiệm. Không cấm mọi rau quả chỉ vì có CKD.",
+      "nutrients": [
+        "potassium_mg"
+      ],
+      "source_id": "NIDDK_CKD",
+      "locator": "Potassium",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_PHOSPHORUS",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "phosphorus",
+      "text_vi": "Phospho từ phụ gia dễ hấp thu hơn nhiều nguồn tự nhiên; kiểm tra thành phần thực phẩm chế biến và mục tiêu điều trị.",
+      "nutrients": [
+        "phosphorus_mg"
+      ],
+      "source_id": "NIDDK_CKD",
+      "locator": "Phosphorus",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CKD_FLUID",
+      "conditions": [
+        "CKD"
+      ],
+      "topic": "fluid",
+      "text_vi": "Mức dịch cần cá thể hóa. Ảnh món ăn và số gram thực phẩm không đủ để suy ra hạn mức nước uống.",
+      "nutrients": [],
+      "source_id": "NIDDK_CKD",
+      "locator": "Liquids",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "DM_INDIVIDUAL",
+      "conditions": [
+        "T2DM"
+      ],
+      "topic": "individualization",
+      "text_vi": "Không có tỷ lệ carbohydrate, protein, chất béo tối ưu chung; lập kế hoạch ăn theo nhu cầu và điều trị.",
+      "nutrients": [
+        "carb_g",
+        "protein_g",
+        "fat_g"
+      ],
+      "source_id": "ADA_2026_S5",
+      "locator": "Meal Planning; 5.13",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": "B",
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "DM_CARB",
+      "conditions": [
+        "T2DM"
+      ],
+      "topic": "carbohydrate",
+      "text_vi": "Theo dõi lượng carbohydrate và khẩu phần; không dùng đường tổng số thay thế carbohydrate.",
+      "nutrients": [
+        "carb_g",
+        "sugar_g"
+      ],
+      "source_id": "ADA_2026_S5",
+      "locator": "5.27–5.28",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "DM_FIBER",
+      "conditions": [
+        "T2DM"
+      ],
+      "topic": "fiber",
+      "text_vi": "Ưu tiên carbohydrate ít chế biến, giàu xơ; ADA nêu ít nhất 14 g xơ/1.000 kcal.",
+      "nutrients": [
+        "fiber_g"
+      ],
+      "source_id": "ADA_2026_S5",
+      "locator": "5.24",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": "B",
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "DM_SODIUM",
+      "conditions": [
+        "T2DM"
+      ],
+      "topic": "sodium",
+      "text_vi": "ADA khuyên hạn chế natri dưới 2.300 mg/ngày khi phù hợp lâm sàng.",
+      "nutrients": [
+        "sodium_mg"
+      ],
+      "source_id": "ADA_2026_S5",
+      "locator": "5.20",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": "B",
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "DM_DRINKS",
+      "conditions": [
+        "T2DM"
+      ],
+      "topic": "beverages",
+      "text_vi": "Ưu tiên nước thay đồ uống có đường; giảm thực phẩm có đường bổ sung.",
+      "nutrients": [
+        "added_sugar_g",
+        "carb_g"
+      ],
+      "source_id": "ADA_2026_S5",
+      "locator": "5.21; 5.25",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "DM_SGLT2",
+      "conditions": [
+        "T2DM"
+      ],
+      "topic": "medication_context",
+      "text_vi": "Người dùng SGLT2 cần được tư vấn nguy cơ nhiễm toan ceton và tránh tự áp dụng chế độ ketogenic.",
+      "nutrients": [
+        "carb_g"
+      ],
+      "source_id": "ADA_2026_S5",
+      "locator": "5.26",
+      "applies_to": {
+        "population": "adults",
+        "sglt2_inhibitor": true
+      },
+      "evidence_grade": "E",
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CVD_PATTERN",
+      "conditions": [
+        "CVD"
+      ],
+      "topic": "dietary_pattern",
+      "text_vi": "Ưu tiên rau quả đa dạng, ngũ cốc nguyên hạt, nguồn đạm phù hợp; giảm thực phẩm siêu chế biến, đường bổ sung và muối.",
+      "nutrients": [
+        "fiber_g",
+        "added_sugar_g",
+        "sodium_mg"
+      ],
+      "source_id": "AHA_2026_PATTERN",
+      "locator": "Items 5–9",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CVD_REPLACE_FATS",
+      "conditions": [
+        "CVD"
+      ],
+      "topic": "fat_quality",
+      "text_vi": "Thay nguồn chất béo bão hòa bằng chất béo không bão hòa; đánh giá cả kiểu ăn, không chỉ một món.",
+      "nutrients": [
+        "sat_fat_g",
+        "fat_g"
+      ],
+      "source_id": "AHA_2026_PATTERN",
+      "locator": "Item 7",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CVD_SODIUM",
+      "conditions": [
+        "CVD"
+      ],
+      "topic": "sodium",
+      "text_vi": "AHA nêu không quá 2.300 mg natri/ngày, mục tiêu tối ưu 1.500 mg cho đa số người lớn; có ngoại lệ.",
+      "nutrients": [
+        "sodium_mg"
+      ],
+      "source_id": "AHA_SODIUM",
+      "locator": "Recommended intake; Can you eat too little sodium?",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "CVD_SAT_FAT",
+      "conditions": [
+        "CVD"
+      ],
+      "topic": "saturated_fat",
+      "text_vi": "AHA gợi ý kiểu ăn có dưới 6% năng lượng từ chất béo bão hòa. Cần biết nhu cầu năng lượng trước quy đổi gram/ngày.",
+      "nutrients": [
+        "sat_fat_g",
+        "energy_kcal"
+      ],
+      "source_id": "AHA_SAT_FAT",
+      "locator": "American Heart Association Recommendation",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "source_checked_not_clinically_reviewed"
+    },
+    {
+      "chunk_id": "SYSTEM_SCOPE",
+      "conditions": [
+        "CKD",
+        "T2DM",
+        "CVD"
+      ],
+      "topic": "scope",
+      "text_vi": "Hỗ trợ giáo dục dinh dưỡng người lớn. Chưa cá thể hóa cho trẻ em, thai kỳ, tổn thương thận cấp, ghép thận hoặc suy tim có hạn dịch.",
+      "nutrients": [],
+      "source_id": "SYSTEM_V2",
+      "locator": "scope_policy",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "implementation_policy"
+    },
+    {
+      "chunk_id": "SYSTEM_MISSING",
+      "conditions": [
+        "CKD",
+        "T2DM",
+        "CVD"
+      ],
+      "topic": "missing_data",
+      "text_vi": "Thiếu chất dinh dưỡng là null, không phải 0. Không kết luận một bữa ăn an toàn khi thiếu dữ liệu cần thiết.",
+      "nutrients": [],
+      "source_id": "SYSTEM_V2",
+      "locator": "missing_data_policy",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "implementation_policy"
+    },
+    {
+      "chunk_id": "SYSTEM_PORTION",
+      "conditions": [
+        "CKD",
+        "T2DM",
+        "CVD"
+      ],
+      "topic": "portion",
+      "text_vi": "Gram FoodCNN chưa kiểm chứng. Cho phép xem phép tính nháp nhưng cần xác nhận món, biến thể và lượng ăn trước đánh giá mục tiêu cá nhân.",
+      "nutrients": [],
+      "source_id": "SYSTEM_V2",
+      "locator": "portion_policy",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "implementation_policy"
+    },
+    {
+      "chunk_id": "SYSTEM_DAILY",
+      "conditions": [
+        "CKD",
+        "T2DM",
+        "CVD"
+      ],
+      "topic": "time_basis",
+      "text_vi": "Không chia ngưỡng ngày cho ba để tạo ngưỡng bữa. Một bữa thấp hơn ngưỡng ngày không chứng minh cả ngày phù hợp.",
+      "nutrients": [],
+      "source_id": "SYSTEM_V2",
+      "locator": "time_basis_policy",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "implementation_policy"
+    },
+    {
+      "chunk_id": "SYSTEM_COMORBID",
+      "conditions": [
+        "CKD",
+        "T2DM",
+        "CVD"
+      ],
+      "topic": "comorbidity",
+      "text_vi": "Giữ đồng thời các bệnh trong truy xuất. Khi mục tiêu xung đột, trình bày xung đột; không tự lấy ngưỡng nhỏ nhất.",
+      "nutrients": [],
+      "source_id": "SYSTEM_V2",
+      "locator": "comorbidity_policy",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "implementation_policy"
+    },
+    {
+      "chunk_id": "SYSTEM_BASIS",
+      "conditions": [
+        "CKD",
+        "T2DM",
+        "CVD"
+      ],
+      "topic": "nutrition_basis",
+      "text_vi": "Chỉ tính từ bản ghi có cơ sở khối lượng xác định. Không dùng dữ liệu món chưa biết theo 100 g hay theo suất.",
+      "nutrients": [],
+      "source_id": "SYSTEM_V2",
+      "locator": "basis_policy",
+      "applies_to": {
+        "population": "adults"
+      },
+      "evidence_grade": null,
+      "review_status": "implementation_policy"
+    }
+  ],
+  "reference_thresholds": [
+    {
+      "reference_id": "REF_CKD_SODIUM",
+      "condition": "CKD",
+      "nutrient": "sodium_mg",
+      "operator": "<",
+      "value": 2000,
+      "unit": "mg/day",
+      "basis_chunk_id": "CKD_SODIUM",
+      "use": "educational_reference_not_patient_prescription"
+    },
+    {
+      "reference_id": "REF_CKD_PROTEIN",
+      "condition": "CKD",
+      "nutrient": "protein_g",
+      "operator": "target",
+      "value": 0.8,
+      "unit": "g/kg/day",
+      "basis_chunk_id": "CKD_PROTEIN_TARGET",
+      "use": "educational_reference_not_patient_prescription"
+    },
+    {
+      "reference_id": "REF_CKD_HIGH_PROTEIN",
+      "condition": "CKD",
+      "nutrient": "protein_g",
+      "operator": "avoid_above",
+      "value": 1.3,
+      "unit": "g/kg/day",
+      "basis_chunk_id": "CKD_HIGH_PROTEIN",
+      "use": "educational_reference_not_patient_prescription"
+    },
+    {
+      "reference_id": "REF_DM_SODIUM",
+      "condition": "T2DM",
+      "nutrient": "sodium_mg",
+      "operator": "<",
+      "value": 2300,
+      "unit": "mg/day",
+      "basis_chunk_id": "DM_SODIUM",
+      "use": "educational_reference_not_patient_prescription"
+    },
+    {
+      "reference_id": "REF_DM_FIBER",
+      "condition": "T2DM",
+      "nutrient": "fiber_g",
+      "operator": ">=",
+      "value": 14,
+      "unit": "g/1000kcal",
+      "basis_chunk_id": "DM_FIBER",
+      "use": "educational_reference_not_patient_prescription"
+    },
+    {
+      "reference_id": "REF_CVD_SODIUM",
+      "condition": "CVD",
+      "nutrient": "sodium_mg",
+      "operator": "<=",
+      "value": 2300,
+      "unit": "mg/day",
+      "basis_chunk_id": "CVD_SODIUM",
+      "use": "educational_reference_not_patient_prescription"
+    },
+    {
+      "reference_id": "REF_CVD_SODIUM_OPTIMAL",
+      "condition": "CVD",
+      "nutrient": "sodium_mg",
+      "operator": "<=",
+      "value": 1500,
+      "unit": "mg/day",
+      "basis_chunk_id": "CVD_SODIUM",
+      "use": "optional_reference_not_default_patient_target"
+    },
+    {
+      "reference_id": "REF_CVD_SAT_FAT",
+      "condition": "CVD",
+      "nutrient": "sat_fat_g",
+      "operator": "<",
+      "value": 6,
+      "unit": "percent_energy",
+      "basis_chunk_id": "CVD_SAT_FAT",
+      "use": "educational_reference_not_patient_prescription"
+    }
+  ]
+}

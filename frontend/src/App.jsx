@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AppLayout from './layouts/AppLayout.jsx';
 import HomePage from './features/home/HomePage.jsx';
 import CapturePage from './features/meal_capture/CapturePage.jsx';
+import LocalMealAnalysisPage from './features/meal_capture/LocalMealAnalysisPage.jsx';
+import { localMealAnalysisEnabled } from './services/localMealAnalysis.js';
 import MenuPage from './features/menu_planning/MenuPage.jsx';
 import DiaryPage from './features/meal_diary/DiaryPage.jsx';
 import FamilyPage from './features/family_profiles/FamilyPage.jsx';
@@ -26,6 +28,7 @@ export default function App() {
     <Route element={<Protected />}>
       <Route index element={<HomePage />} />
       <Route path="chup-bua-an" element={<CapturePage />} />
+      {localMealAnalysisEnabled && <Route path="chup-bua-an/vietfood" element={<LocalMealAnalysisPage />} />}
       <Route path="thuc-don" element={<MenuPage />} />
       <Route path="nhat-ky" element={<DiaryPage />} />
       <Route path="gia-dinh" element={<FamilyPage />} />

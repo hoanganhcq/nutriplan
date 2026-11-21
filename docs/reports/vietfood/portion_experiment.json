@@ -1,0 +1,11 @@
+{
+  "initial_checkpoint": "/kaggle/working/vietfood_retrain/portion_mass_finetune_v1/best_mass_head.pt",
+  "manifest": "/kaggle/working/vietfood_retrain/portion_mass_finetune_v1/data/manifest.json",
+  "selected_epoch": 4,
+  "seed": 2026,
+  "trainable_layers": "last convolution and regression Linear layers",
+  "batchnorm_statistics_frozen": true,
+  "validation_reused_for_model_selection": true,
+  "validated_on_vietnamese_crops": false,
+  "validated_as_consumed_mass": false
+}

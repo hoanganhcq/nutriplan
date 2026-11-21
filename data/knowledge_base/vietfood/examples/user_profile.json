@@ -1,0 +1,18 @@
+{
+  "age_years": 50,
+  "conditions": [
+    "CKD",
+    "T2DM"
+  ],
+  "kidney_disease_type": "CKD",
+  "ckd_stage": "G3b",
+  "dialysis": "none",
+  "diabetes_type": "type2",
+  "pregnant": false,
+  "transplant": false,
+  "metabolic_instability": false,
+  "frailty_or_malnutrition": false,
+  "sodium_wasting_nephropathy": false,
+  "recent_labs": [],
+  "clinician_daily_targets": []
+}

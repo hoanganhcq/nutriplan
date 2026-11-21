@@ -1,0 +1,17 @@
+{
+  "request_id": "demo_not_a_real_patient",
+  "items": [
+    {
+      "item_id": "rice",
+      "food_id": "USDA_FDC_168878",
+      "amount": 1,
+      "unit": "reference_serving",
+      "quantity_source": "reference_default",
+      "food_confirmed": true,
+      "quantity_confirmed": false
+    }
+  ],
+  "period": "meal",
+  "day_log_complete": false,
+  "overlap_reviewed": true
+}

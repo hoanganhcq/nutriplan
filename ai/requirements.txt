@@ -1,0 +1,4 @@
+ultralytics==8.3.253
+Pillow>=10
+jsonschema>=4.23,<5
+# Install torch and torchvision separately for the target device.

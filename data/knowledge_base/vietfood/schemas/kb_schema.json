@@ -1,0 +1,1098 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VietFood Nutrition KB v2 definitions",
+  "$defs": {
+    "Nutrients": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "energy_kcal": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "protein_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "fat_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sat_fat_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "carb_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sugar_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "added_sugar_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "fiber_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "sodium_mg": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "potassium_mg": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "phosphorus_mg": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      },
+      "required": [
+        "energy_kcal",
+        "protein_g",
+        "fat_g",
+        "sat_fat_g",
+        "carb_g",
+        "sugar_g",
+        "added_sugar_g",
+        "fiber_g",
+        "sodium_mg",
+        "potassium_mg",
+        "phosphorus_mg"
+      ]
+    },
+    "Food": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "food_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "food_state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nutrition": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "basis_g": {
+              "const": 100
+            },
+            "values": {
+              "$ref": "#/$defs/Nutrients"
+            },
+            "source_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record_url": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_record_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "quality_flags": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "status": {
+              "const": "source_retrieved_not_independently_measured"
+            }
+          },
+          "required": [
+            "basis_g",
+            "values",
+            "source_id",
+            "record_id",
+            "record_url",
+            "source_record_sha256",
+            "quality_flags",
+            "status"
+          ]
+        },
+        "reference_serving": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "grams": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "source_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status": {
+              "enum": [
+                "editable_default_not_population_average",
+                "source_household_measure_not_personal_target"
+              ]
+            },
+            "requires_confirmation": {
+              "const": true
+            }
+          },
+          "required": [
+            "label",
+            "grams",
+            "source_id",
+            "status",
+            "requires_confirmation"
+          ]
+        }
+      },
+      "required": [
+        "food_id",
+        "name_vi",
+        "aliases",
+        "category",
+        "food_state",
+        "nutrition",
+        "reference_serving"
+      ]
+    },
+    "FoodKB": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kb_type": {
+          "const": "food"
+        },
+        "kb_version": {
+          "const": "2.0.0"
+        },
+        "updated_on": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nutrient_units": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "energy_kcal": {
+              "const": "kcal"
+            },
+            "protein_g": {
+              "const": "g"
+            },
+            "fat_g": {
+              "const": "g"
+            },
+            "sat_fat_g": {
+              "const": "g"
+            },
+            "carb_g": {
+              "const": "g"
+            },
+            "sugar_g": {
+              "const": "g"
+            },
+            "added_sugar_g": {
+              "const": "g"
+            },
+            "fiber_g": {
+              "const": "g"
+            },
+            "sodium_mg": {
+              "const": "mg"
+            },
+            "potassium_mg": {
+              "const": "mg"
+            },
+            "phosphorus_mg": {
+              "const": "mg"
+            }
+          },
+          "required": [
+            "energy_kcal",
+            "protein_g",
+            "fat_g",
+            "sat_fat_g",
+            "carb_g",
+            "sugar_g",
+            "added_sugar_g",
+            "fiber_g",
+            "sodium_mg",
+            "potassium_mg",
+            "phosphorus_mg"
+          ]
+        },
+        "foods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Food"
+          }
+        }
+      },
+      "required": [
+        "kb_type",
+        "kb_version",
+        "updated_on",
+        "nutrient_units",
+        "foods"
+      ]
+    },
+    "Chunk": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "CKD",
+              "T2DM",
+              "CVD"
+            ]
+          }
+        },
+        "topic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text_vi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nutrients": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "energy_kcal",
+              "protein_g",
+              "fat_g",
+              "sat_fat_g",
+              "carb_g",
+              "sugar_g",
+              "added_sugar_g",
+              "fiber_g",
+              "sodium_mg",
+              "potassium_mg",
+              "phosphorus_mg"
+            ]
+          }
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "applies_to": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "population": {
+              "const": "adults"
+            },
+            "ckd_stages": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "G1",
+                  "G2",
+                  "G3a",
+                  "G3b",
+                  "G4",
+                  "G5"
+                ]
+              }
+            },
+            "dialysis": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "none",
+                    "hemodialysis",
+                    "peritoneal_dialysis"
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      "none",
+                      "hemodialysis",
+                      "peritoneal_dialysis"
+                    ]
+                  }
+                }
+              ]
+            },
+            "exclude": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "progression_risk": {
+              "type": "boolean"
+            },
+            "sglt2_inhibitor": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "population"
+          ]
+        },
+        "evidence_grade": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "review_status": {
+          "enum": [
+            "source_checked_not_clinically_reviewed",
+            "implementation_policy"
+          ]
+        }
+      },
+      "required": [
+        "chunk_id",
+        "conditions",
+        "topic",
+        "text_vi",
+        "nutrients",
+        "source_id",
+        "locator",
+        "applies_to",
+        "evidence_grade",
+        "review_status"
+      ]
+    },
+    "ClinicalKB": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kb_type": {
+          "const": "clinical"
+        },
+        "kb_version": {
+          "const": "2.0.0"
+        },
+        "updated_on": {
+          "type": "string",
+          "minLength": 1
+        },
+        "clinical_review_status": {
+          "const": "not_clinically_reviewed"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "condition_id": {
+                "enum": [
+                  "CKD",
+                  "T2DM",
+                  "CVD"
+                ]
+              },
+              "name_vi": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nutrients": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "energy_kcal",
+                    "protein_g",
+                    "fat_g",
+                    "sat_fat_g",
+                    "carb_g",
+                    "sugar_g",
+                    "added_sugar_g",
+                    "fiber_g",
+                    "sodium_mg",
+                    "potassium_mg",
+                    "phosphorus_mg"
+                  ]
+                }
+              },
+              "context_fields": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "unsupported_subgroups": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "condition_id",
+              "name_vi",
+              "nutrients",
+              "context_fields",
+              "unsupported_subgroups"
+            ]
+          }
+        },
+        "chunks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Chunk"
+          }
+        },
+        "reference_thresholds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "reference_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "condition": {
+                "enum": [
+                  "CKD",
+                  "T2DM",
+                  "CVD"
+                ]
+              },
+              "nutrient": {
+                "enum": [
+                  "energy_kcal",
+                  "protein_g",
+                  "fat_g",
+                  "sat_fat_g",
+                  "carb_g",
+                  "sugar_g",
+                  "added_sugar_g",
+                  "fiber_g",
+                  "sodium_mg",
+                  "potassium_mg",
+                  "phosphorus_mg"
+                ]
+              },
+              "operator": {
+                "enum": [
+                  "<",
+                  "<=",
+                  ">=",
+                  "target",
+                  "avoid_above"
+                ]
+              },
+              "value": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "unit": {
+                "enum": [
+                  "mg/day",
+                  "g/kg/day",
+                  "g/1000kcal",
+                  "percent_energy"
+                ]
+              },
+              "basis_chunk_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "use": {
+                "enum": [
+                  "educational_reference_not_patient_prescription",
+                  "optional_reference_not_default_patient_target"
+                ]
+              }
+            },
+            "required": [
+              "reference_id",
+              "condition",
+              "nutrient",
+              "operator",
+              "value",
+              "unit",
+              "basis_chunk_id",
+              "use"
+            ]
+          }
+        }
+      },
+      "required": [
+        "kb_type",
+        "kb_version",
+        "updated_on",
+        "clinical_review_status",
+        "scope",
+        "conditions",
+        "chunks",
+        "reference_thresholds"
+      ]
+    },
+    "Sources": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "2.0.0"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "organization": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "composition",
+                  "application_policy",
+                  "clinical_guidance"
+                ]
+              },
+              "retrieved_on": {
+                "type": "string",
+                "minLength": 1
+              },
+              "locator": {
+                "type": "string"
+              },
+              "api_url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "verification": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "source_id",
+              "title",
+              "url",
+              "organization",
+              "kind",
+              "retrieved_on",
+              "locator",
+              "verification"
+            ]
+          }
+        }
+      },
+      "required": [
+        "version",
+        "sources"
+      ]
+    },
+    "ModelMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "const": "2.0.0"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "output_confidence": {
+          "const": 0.6494140625
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "dataset_class_id": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 67
+              },
+              "model_label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name_vi": {
+                "type": "string",
+                "minLength": 1
+              },
+              "supported_output": {
+                "type": "boolean"
+              },
+              "candidate_food_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "status": {
+                "enum": [
+                  "excluded_model_output",
+                  "requires_user_variant_selection",
+                  "no_verified_nutrition_variant"
+                ]
+              },
+              "automatic_mapping": {
+                "const": false
+              }
+            },
+            "required": [
+              "dataset_class_id",
+              "model_label",
+              "name_vi",
+              "supported_output",
+              "candidate_food_ids",
+              "status",
+              "automatic_mapping"
+            ]
+          }
+        }
+      },
+      "required": [
+        "version",
+        "model",
+        "output_confidence",
+        "entries"
+      ]
+    },
+    "MealItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "food_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amount": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "enum": [
+            "g",
+            "reference_serving"
+          ]
+        },
+        "quantity_source": {
+          "enum": [
+            "weighed",
+            "user_entered",
+            "reference_default",
+            "model_estimate"
+          ]
+        },
+        "food_confirmed": {
+          "type": "boolean"
+        },
+        "quantity_confirmed": {
+          "type": "boolean"
+        },
+        "detection_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "parent_item_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "item_id",
+        "food_id",
+        "amount",
+        "unit",
+        "quantity_source",
+        "food_confirmed",
+        "quantity_confirmed"
+      ]
+    },
+    "MealRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MealItem"
+          }
+        },
+        "period": {
+          "enum": [
+            "meal",
+            "day"
+          ]
+        },
+        "day_log_complete": {
+          "type": "boolean"
+        },
+        "overlap_reviewed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "request_id",
+        "items",
+        "period",
+        "day_log_complete",
+        "overlap_reviewed"
+      ]
+    },
+    "DailyTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nutrient": {
+          "enum": [
+            "energy_kcal",
+            "protein_g",
+            "fat_g",
+            "sat_fat_g",
+            "carb_g",
+            "sugar_g",
+            "added_sugar_g",
+            "fiber_g",
+            "sodium_mg",
+            "potassium_mg",
+            "phosphorus_mg"
+          ]
+        },
+        "value": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operator": {
+          "enum": [
+            "<",
+            "<=",
+            ">="
+          ]
+        },
+        "source": {
+          "const": "user_reported_clinician_plan"
+        },
+        "confirmed": {
+          "type": "boolean"
+        },
+        "plan_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "nutrient",
+        "value",
+        "unit",
+        "operator",
+        "source",
+        "confirmed",
+        "plan_reference"
+      ]
+    },
+    "Profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "age_years": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 120
+        },
+        "conditions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "CKD",
+              "T2DM",
+              "CVD"
+            ]
+          }
+        },
+        "kidney_disease_type": {
+          "enum": [
+            "CKD",
+            "AKI",
+            "unknown",
+            null
+          ]
+        },
+        "ckd_stage": {
+          "enum": [
+            "G1",
+            "G2",
+            "G3a",
+            "G3b",
+            "G4",
+            "G5",
+            "unknown",
+            null
+          ]
+        },
+        "dialysis": {
+          "enum": [
+            "none",
+            "hemodialysis",
+            "peritoneal_dialysis",
+            "unknown",
+            null
+          ]
+        },
+        "diabetes_type": {
+          "enum": [
+            "type2",
+            "type1",
+            "gestational",
+            "unknown",
+            null
+          ]
+        },
+        "pregnant": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "heart_failure": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "fluid_restriction": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "insulin_or_secretagogue": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "sglt2_inhibitor": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "progression_risk": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "sodium_wasting_nephropathy": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "transplant": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "metabolic_instability": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "frailty_or_malnutrition": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "recent_labs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "analyte": {
+                "enum": [
+                  "potassium",
+                  "phosphorus"
+                ]
+              },
+              "value": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "unit": {
+                "enum": [
+                  "mmol/L",
+                  "mg/dL"
+                ]
+              },
+              "measured_on": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "analyte",
+              "value",
+              "unit",
+              "measured_on"
+            ]
+          }
+        },
+        "clinician_daily_targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DailyTarget"
+          }
+        }
+      },
+      "required": [
+        "age_years",
+        "conditions",
+        "clinician_daily_targets"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/FoodKB"
+    },
+    {
+      "$ref": "#/$defs/ClinicalKB"
+    },
+    {
+      "$ref": "#/$defs/Sources"
+    },
+    {
+      "$ref": "#/$defs/ModelMapping"
+    },
+    {
+      "$ref": "#/$defs/MealRequest"
+    },
+    {
+      "$ref": "#/$defs/Profile"
+    }
+  ]
+}

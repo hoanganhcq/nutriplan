@@ -1,0 +1,25 @@
+{
+  "package": "vietfood",
+  "files": [
+    {
+      "path": "classes.json",
+      "bytes": 4091,
+      "sha256": "46fd70b3ca5c68c395ed0e6e737eb18588f662233c36c0e6624136e489528b20"
+    },
+    {
+      "path": "config.json",
+      "bytes": 2737,
+      "sha256": "308e1c885a81cf8959d815009031046ae556c55b191d00b2048455e990b39778"
+    },
+    {
+      "path": "models/food_detector.pt",
+      "bytes": 40617452,
+      "sha256": "34a238bddf073565d2bdbed5de38ac39e3c7cb3ef3342426359acc47d4468ba5"
+    },
+    {
+      "path": "models/portion_foodcnn_v2.pt",
+      "bytes": 1743663,
+      "sha256": "a13aeb5ca5f1f51a5cbd9fd50172a1c38d104c622129edfc9f6ee150cef28676"
+    }
+  ]
+}
