@@ -72,6 +72,7 @@ Sau reset, chạy lại `seed` nếu cần demo. Chỉ thực hiện lệnh khi 
 4. Gửi ảnh qua `POST /meals/analyze` với `images`, `householdId` và `memberIds` là chuỗi mảng JSON. Có thể dùng `ENVIRONMENT=demo` và `VISION_PROVIDER=mock` để thử nhận diện mô phỏng; nếu không nhận diện được món, dùng `POST /meals/{mealId}/items`.
 5. Sửa khẩu phần bằng `PATCH /meals/{mealId}/items/{itemId}`, rồi xem `GET /meals/{mealId}`.
 6. Gọi `POST /meals/{mealId}/assessments`. Nếu thiếu bằng chứng đã xác minh, kết quả phải là `INSUFFICIENT_DATA` và `POST /meals/{mealId}/confirm` phải từ chối. Khi có bộ quy tắc hợp lệ, xác nhận rồi đọc `GET /meals?memberId=...`.
+7. Kiểm tra undo bằng cách thêm hoặc sửa món, gọi `POST /meals/{mealId}/undo`, rồi đọc lại `GET /meals/{mealId}`. Migration phải được áp dụng trước để tạo bảng snapshot.
 
 ## Quy trình thủ công UC2
 

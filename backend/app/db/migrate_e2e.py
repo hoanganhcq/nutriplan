@@ -25,6 +25,8 @@ COLUMNS = {
         "image_count": "INTEGER NOT NULL DEFAULT 0",
         "is_estimate": "BOOLEAN NOT NULL DEFAULT TRUE",
         "warnings": "TEXT",
+        "confirmed_at": "DATETIME",
+        "note": "TEXT",
     },
     "MEAL_ITEM": {"seasoning": "TEXT", "confidence": "DECIMAL(4,3)"},
     "ASSESSMENT": {
@@ -40,7 +42,13 @@ COLUMNS = {
     },
 }
 
-NEW_TABLES = ("CONSENT", "CONSENT_HISTORY", "MEAL_MEMBER", "NUTRITION_RULE")
+NEW_TABLES = (
+    "CONSENT",
+    "CONSENT_HISTORY",
+    "MEAL_MEMBER",
+    "NUTRITION_RULE",
+    "MEAL_REVISION_HISTORY",
+)
 INDEXES = {
     "FOOD_ITEM": {
         "idx_food_item_category_food": "(category, food_id)",

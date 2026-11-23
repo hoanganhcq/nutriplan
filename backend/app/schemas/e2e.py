@@ -65,7 +65,21 @@ class MealItemUpdate(CamelModel):
 
 
 class AssessmentInput(CamelModel):
-    member_ids: list[int] = Field(min_length=1)
+    member_ids: list[int] | None = None
+
+
+class UndoInput(CamelModel):
+    steps: int = Field(default=1, ge=1, le=5)
+
+
+class ConfirmInput(CamelModel):
+    eaten_by: list[int] | None = Field(default=None, min_length=1)
+    note: str | None = Field(default=None, max_length=2000)
+
+
+class ExplainInput(CamelModel):
+    style: Literal["simple"] = "simple"
+    max_words: int = Field(default=80, ge=1, le=200)
 
 
 class MenuGenerateInput(CamelModel):
@@ -159,6 +173,7 @@ class MealOutput(CamelModel):
 
 
 class AssessmentOutput(CamelModel):
+    assessment_id: int
     member_id: int
     meal_revision: int
     profile_version: int
@@ -168,6 +183,48 @@ class AssessmentOutput(CamelModel):
     hard_constraints_passed: bool
     key_metrics: NutritionOutput
     alternatives: list[str]
+    stale: bool
+
+
+class JournalLevelOutput(CamelModel):
+    member_id: int
+    level: str
+
+
+class JournalEntryOutput(CamelModel):
+    meal_id: int
+    eaten_at: datetime
+    meal_type: str | None
+    thumbnail_url: str | None
+    item_names: list[str]
+    totals: NutritionOutput
+    levels: list[JournalLevelOutput]
+
+
+class ExplainOutput(CamelModel):
+    assessment_id: int
+    generated_by: Literal["template", "llm"]
+    explanation: str
+    disclaimer: str
+
+
+class MealUndoOutput(CamelModel):
+    revision: int
+    can_undo: bool
+    meal: "MealOutput"
+
+
+class AssessmentRunOutput(CamelModel):
+    meal_id: int
+    assessments: list[AssessmentOutput]
+    warnings: list[str]
+
+
+class ConfirmedMealOutput(CamelModel):
+    meal_id: int
+    status: str
+    confirmed_at: datetime
+    journal_entries: list[JournalLevelOutput]
 
 
 class ValidationOutput(CamelModel):
@@ -220,12 +277,24 @@ class MealResponse(BaseModel):
 
 
 class MealListResponse(BaseModel):
-    data: list[MealOutput]
+    data: list[JournalEntryOutput]
     meta: PageMeta
 
 
+class MealUndoResponse(BaseModel):
+    data: MealUndoOutput
+
+
 class AssessmentResponse(BaseModel):
-    data: list[AssessmentOutput]
+    data: AssessmentRunOutput
+
+
+class ExplainResponse(BaseModel):
+    data: ExplainOutput
+
+
+class ConfirmResponse(BaseModel):
+    data: ConfirmedMealOutput
 
 
 class MenuResponse(BaseModel):

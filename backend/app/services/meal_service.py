@@ -2,7 +2,7 @@ import json
 from datetime import UTC, datetime
 
 from app.core.exceptions import AppException
-from app.repositories import dish_repository, meal_repository
+from app.repositories import assessment_repository, dish_repository, meal_repository
 from app.services import consent_service, nutrition_service, vision_service
 from app.services.ownership import member
 
@@ -205,6 +205,7 @@ def change_item(db, session_id, meal_id, item_id, payload):
     grams = (
         payload.grams or current["confirmed_weight_g"] or current["estimated_weight_g"]
     )
+    _save_revision(db, meal_id, row)
     meal_repository.update_item(
         db,
         meal_id,
@@ -225,6 +226,7 @@ def add_item(db, session_id, meal_id, payload):
         raise AppException("VALIDATION_ERROR", "dishId and grams required", 422)
     if not dish_repository.find(db, payload.dish_id):
         raise AppException("NOT_FOUND", "Dish not found", 404)
+    _save_revision(db, meal_id, row)
     meal_repository.add_item(
         db, meal_id, payload.dish_id, payload.grams, payload.seasoning
     )
@@ -250,14 +252,111 @@ def remove_item(db, session_id, meal_id, item_id):
     return detail(db, session_id, meal_id)
 
 
+def _save_revision(db, meal_id, meal):
+    snapshot = {
+        "eatenAt": str(meal["eaten_at"]),
+        "mealType": meal.get("meal_type"),
+        "imageCount": meal.get("image_count", 0),
+        "isEstimate": bool(meal.get("is_estimate", True)),
+        "warnings": meal.get("warnings") or "[]",
+        "items": [
+            {
+                key: item.get(key)
+                for key in (
+                    "meal_item_id",
+                    "food_id",
+                    "estimated_weight_g",
+                    "confirmed_weight_g",
+                    "seasoning",
+                    "confidence",
+                )
+            }
+            for item in meal_repository.items(db, meal_id)
+        ],
+        "memberIds": meal_repository.member_ids(db, meal_id),
+    }
+    meal_repository.save_revision(
+        db, meal_id, meal["revision"], json.dumps(snapshot, default=str)
+    )
+
+
+def undo(db, session_id, meal_id, steps):
+    meal = owned(db, session_id, meal_id, lock=True)
+    if meal["status"] != "draft":
+        raise AppException("MEAL_LOCKED", "Confirmed meal cannot be undone", 409)
+    target_revision = meal["revision"] - steps
+    snapshot_row = (
+        meal_repository.get_revision(db, meal_id, target_revision)
+        if target_revision >= 1
+        else None
+    )
+    if not snapshot_row:
+        raise AppException("NOTHING_TO_UNDO", "No earlier meal revision", 409)
+    snapshot = json.loads(snapshot_row["snapshot_json"])
+    db.execute(
+        """UPDATE MEAL SET eaten_at = %s, meal_type = %s, revision = %s,
+           image_count = %s, is_estimate = %s, warnings = %s
+           WHERE meal_id = %s""",
+        (
+            snapshot["eatenAt"],
+            snapshot["mealType"],
+            target_revision,
+            snapshot["imageCount"],
+            snapshot["isEstimate"],
+            snapshot["warnings"],
+            meal_id,
+        ),
+    )
+    meal_repository.replace_items(db, meal_id, snapshot["items"])
+    meal_repository.set_member_ids(db, meal_id, snapshot["memberIds"])
+    assessment_repository.invalidate_for_meal(db, meal_id)
+    meal_repository.delete_revisions_from(db, meal_id, target_revision)
+    can_undo = bool(
+        target_revision > 1
+        and meal_repository.get_revision(db, meal_id, target_revision - 1)
+    )
+    return {
+        "revision": target_revision,
+        "canUndo": can_undo,
+        "meal": detail(db, session_id, meal_id),
+    }
+
+
 def journal(db, session_id, member_id, from_date, to_date, limit, cursor):
     if member_id:
         member(db, session_id, member_id)
     rows = meal_repository.list_confirmed(
         db, session_id, member_id, from_date, to_date, limit, cursor
     )
-    data = [detail(db, session_id, row["meal_id"]) for row in rows]
+    data = []
+    for row in rows:
+        items = meal_repository.items(db, row["meal_id"])
+        assessments = assessment_repository.list_for_meal(db, row["meal_id"])
+        data.append(
+            {
+                "mealId": row["meal_id"],
+                "eatenAt": row["eaten_at"],
+                "mealType": row.get("meal_type"),
+                "thumbnailUrl": None,
+                "itemNames": [item["name"] for item in items],
+                "totals": nutrition_service.totals(
+                    [_item(item) for item in items]
+                ),
+                "levels": [
+                    {
+                        "memberId": assessment["member_id"],
+                        "level": assessment["suitability_level"],
+                    }
+                    for assessment in assessments
+                ],
+            }
+        )
     return {
         "data": data,
         "meta": {"nextCursor": rows[-1]["meal_id"] if len(rows) == limit else None},
     }
+
+
+def delete(db, session_id, meal_id):
+    row = owned(db, session_id, meal_id, lock=True)
+    meal_repository.delete_meal(db, row["meal_id"])

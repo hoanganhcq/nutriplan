@@ -63,10 +63,21 @@ CREATE TABLE IF NOT EXISTS MEAL (
     image_count INTEGER NOT NULL DEFAULT 0,
     is_estimate BOOLEAN NOT NULL DEFAULT TRUE,
     warnings TEXT,
+    confirmed_at DATETIME,
+    note TEXT,
     INDEX idx_meal_household_eaten_at (household_id, eaten_at),
     INDEX idx_meal_status_eaten (status, eaten_at),
     FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id),
     FOREIGN KEY (created_by_member_id) REFERENCES MEMBER(member_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS MEAL_REVISION_HISTORY (
+    meal_id INTEGER NOT NULL,
+    revision INTEGER NOT NULL,
+    snapshot_json MEDIUMTEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (meal_id, revision),
+    FOREIGN KEY (meal_id) REFERENCES MEAL(meal_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS MEAL_ITEM (

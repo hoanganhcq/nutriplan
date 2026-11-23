@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import date, datetime
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from pydantic import BaseModel, Field
@@ -11,9 +11,13 @@ from app.dependencies import get_current_session, get_db
 from app.schemas.e2e import (
     AssessmentInput,
     AssessmentResponse,
+    ConfirmInput,
+    ConfirmResponse,
     MealItemUpdate,
     MealListResponse,
     MealResponse,
+    MealUndoResponse,
+    UndoInput,
 )
 from app.schemas.error import ErrorResponse
 from app.services import assessment_service, meal_service
@@ -26,11 +30,14 @@ router = APIRouter(
     },
 )
 
+<<<<<<< Updated upstream
 
 class ClarificationAnswer(BaseModel):
     answer: str = Field(min_length=1, max_length=1000)
 
 # truy vấn các bữa ăn và các mục liên quan đến bữa ăn, bao gồm phân tích hình ảnh, xác nhận và đánh giá
+=======
+>>>>>>> Stashed changes
 @router.post("/analyze", status_code=201, response_model=MealResponse)
 async def analyze_meal(
     images: list[UploadFile] = File(...),
@@ -71,12 +78,11 @@ async def analyze_meal(
     }
 
 
-# truy vấn các bữa ăn đã được xác nhận cho một thành viên cụ thể trong một khoảng thời gian nhất định, với phân trang
 @router.get("", response_model=MealListResponse)
 def list_meals(
     member_id: int | None = Query(None, alias="memberId"),
-    from_date: datetime | None = Query(None, alias="from"),
-    to_date: datetime | None = Query(None, alias="to"),
+    from_date: date | None = Query(None, alias="from"),
+    to_date: date | None = Query(None, alias="to"),
     status: str = "confirmed",
     limit: int = Query(20, ge=1, le=100),
     cursor: int = Query(0, ge=0),
@@ -92,13 +98,11 @@ def list_meals(
     )
 
 
-# truy vấn chi tiết một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.get("/{meal_id}", response_model=MealResponse)
 def get_meal(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
     return {"data": meal_service.detail(db, session["session_id"], meal_id)}
 
 
-# cập nhật chi tiết một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.patch("/{meal_id}/items/{item_id}", response_model=MealResponse)
 def patch_item(
     meal_id: int,
@@ -113,7 +117,6 @@ def patch_item(
         )
     }
 
-# xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.post("/{meal_id}/items", status_code=201, response_model=MealResponse)
 def post_item(
     meal_id: int,
@@ -137,7 +140,6 @@ def delete_item(
     }
 
 
-# xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.post("/{meal_id}/assessments", response_model=AssessmentResponse)
 def assess(
     meal_id: int,
@@ -152,6 +154,7 @@ def assess(
     }
 
 
+<<<<<<< Updated upstream
 # xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.post("/{meal_id}/confirm", response_model=MealResponse)
 def confirm(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
@@ -173,3 +176,56 @@ def answer_clarification(
         raise AppException("MEAL_LOCKED", "Confirmed meal cannot be edited", 409)
     meal_repository.increment_revision(db, meal_id)
     return {"data": meal_service.detail(db, session["session_id"], meal_id)}
+=======
+@router.get("/{meal_id}/assessments", response_model=AssessmentResponse)
+def get_assessments(
+    meal_id: int,
+    member_id: int | None = Query(None, alias="memberId"),
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": assessment_service.get_assessments(
+            db, session["session_id"], meal_id, member_id
+        )
+    }
+
+
+@router.post("/{meal_id}/undo", response_model=MealUndoResponse)
+def undo_meal(
+    meal_id: int,
+    payload: UndoInput = UndoInput(),
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": meal_service.undo(
+            db, session["session_id"], meal_id, payload.steps
+        )
+    }
+
+
+@router.post("/{meal_id}/confirm", response_model=ConfirmResponse)
+def confirm(
+    meal_id: int,
+    payload: ConfirmInput | None = None,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": assessment_service.confirm(
+            db,
+            session["session_id"],
+            meal_id,
+            payload.eaten_by if payload else None,
+            payload.note if payload else None,
+        )
+    }
+
+
+@router.delete("/{meal_id}", status_code=204)
+def delete_meal(
+    meal_id: int, session=Depends(get_current_session), db=Depends(get_db)
+):
+    meal_service.delete(db, session["session_id"], meal_id)
+>>>>>>> Stashed changes

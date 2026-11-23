@@ -1,5 +1,6 @@
 import json
 
+
 # lưu trữ kết quả đánh giá vào CSDL
 def save(db, meal_id, member_id, result, meal_revision, profile_version):
     db.execute(
@@ -29,3 +30,27 @@ def list_for_meal(db, meal_id):
     return db.execute(
         "SELECT * FROM ASSESSMENT WHERE meal_id = %s", (meal_id,)
     ).fetchall()
+
+
+def find_for_meal_member(db, meal_id, member_id):
+    return db.execute(
+        """SELECT * FROM ASSESSMENT
+           WHERE meal_id = %s AND member_id = %s""",
+        (meal_id, member_id),
+    ).fetchone()
+
+
+def find_owned(db, assessment_id, session_id):
+    return db.execute(
+        """SELECT a.*, m.household_id FROM ASSESSMENT a
+           JOIN MEAL m ON m.meal_id = a.meal_id
+           JOIN HOUSEHOLD h ON h.household_id = m.household_id
+           WHERE a.assessment_id = %s AND h.session_id = %s""",
+        (assessment_id, session_id),
+    ).fetchone()
+
+
+def invalidate_for_meal(db, meal_id):
+    db.execute(
+        "UPDATE ASSESSMENT SET meal_revision = 0 WHERE meal_id = %s", (meal_id,)
+    )

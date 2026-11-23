@@ -9,6 +9,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
 from app.core.exceptions import AppException
+from app.routers.assessment_explanations import router as assessment_explanations_router
 from app.routers.consents import router as consents_router
 from app.routers.dishes import router as dishes_router
 from app.routers.health import router as health_router
@@ -103,6 +104,7 @@ app.include_router(household_alias_router)
 app.include_router(sessions_router)
 app.include_router(profiles_router)
 app.include_router(consents_router)
+app.include_router(assessment_explanations_router)
 app.include_router(members_router)
 app.include_router(dishes_router)
 app.include_router(meals_router)
