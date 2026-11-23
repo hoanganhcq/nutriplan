@@ -40,6 +40,7 @@ COLUMNS = {
         "validation_json": "TEXT",
         "soft_score": "DECIMAL(5,2)",
     },
+    "HEALTH_RULE": {"change_log": "TEXT"},
 }
 
 NEW_TABLES = (
@@ -47,7 +48,12 @@ NEW_TABLES = (
     "CONSENT_HISTORY",
     "MEAL_MEMBER",
     "NUTRITION_RULE",
+<<<<<<< Updated upstream
     "MEAL_REVISION_HISTORY",
+=======
+    "RULE_SOURCE",
+    "HEALTH_RULE",
+>>>>>>> Stashed changes
 )
 INDEXES = {
     "FOOD_ITEM": {
@@ -61,6 +67,9 @@ INDEXES = {
     },
     "NUTRITION_RULE": {
         "idx_rule_active_verified": "(active, verified, rule_type, subject)",
+    },
+    "HEALTH_RULE": {
+        "idx_health_rule_enabled_filter": "(enabled, condition_code, nutrient, scope)",
     },
 }
 

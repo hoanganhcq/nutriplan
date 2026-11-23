@@ -19,6 +19,7 @@ from app.routers.meals import router as meals_router
 from app.routers.members import router as members_router
 from app.routers.menu_plans import router as menu_plans_router
 from app.routers.profiles import router as profiles_router
+from app.routers.rules import router as rules_router
 from app.routers.sessions import router as sessions_router
 
 logger = logging.getLogger(__name__)
@@ -109,3 +110,14 @@ app.include_router(members_router)
 app.include_router(dishes_router)
 app.include_router(meals_router)
 app.include_router(menu_plans_router)
+<<<<<<< Updated upstream
+=======
+app.include_router(rules_router)
+
+if settings.local_meal_analysis_enabled and settings.environment in {
+    "development",
+    "demo",
+    "test",
+}:
+    app.include_router(local_meal_analysis_router)
+>>>>>>> Stashed changes

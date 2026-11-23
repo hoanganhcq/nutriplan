@@ -118,11 +118,27 @@ URL-encode các ký tự đó trong `DATABASE_URL`.
 
 Các API hiện dùng các bảng `SESSION`, `HOUSEHOLD`, `MEMBER`, `FOOD_ITEM`,
 `MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN`, `MENU_ITEM`, `CONSENT`,
-`CONSENT_HISTORY`, `MEAL_MEMBER` và `NUTRITION_RULE`. Cấu trúc MySQL
-tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã tạo bảng, hãy đối chiếu tên
-bảng, tên cột, khóa ngoại và kiểu dữ liệu với file này. Endpoint
+`CONSENT_HISTORY`, `MEAL_MEMBER`, `NUTRITION_RULE`, `RULE_SOURCE` và
+`HEALTH_RULE`. Cấu trúc MySQL tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã
+tạo bảng, hãy đối chiếu tên bảng, tên cột, khóa ngoại và kiểu dữ liệu với file
+này. Endpoint
 `http://localhost:8000/health` báo `database: "ok"` khi kết nối được. Dữ liệu
 SQLite cũ trong `meal_analysis.db` không được tự chuyển sang MySQL.
+
+### Rule Engine
+
+`GET /rules` trả quy tắc đang bật theo mặc định; có thể lọc bằng
+`condition`, `nutrient`, `scope`, `enabled`, `limit` và `cursor`.
+`GET /rules/{ruleId}` trả thêm `rationale` và `changeLog`. Quy tắc lưu trong
+`HEALTH_RULE`, nguồn lưu riêng trong `RULE_SOURCE` qua `source_id`; seed từ
+`app/db/rules.seed.json`. Quy tắc chưa có nguồn xác minh phải để
+`enabled: false`. Seed minh hoạ hiện có đang tắt và không được dùng làm ngưỡng
+y khoa.
+
+`POST /rules/evaluate` nhận hồ sơ cùng nutrition và `dishIds`, chỉ chạy ở
+môi trường `development` hoặc `test`, không lưu dữ liệu. Quy tắc scope `meal`
+được áp dụng cho endpoint đánh giá một bữa; nếu không có quy tắc phù hợp thì
+kết quả là `INSUFFICIENT_DATA`.
 
 ### BE-02: phiên và hồ sơ
 

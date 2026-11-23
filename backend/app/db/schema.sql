@@ -178,3 +178,37 @@ CREATE TABLE IF NOT EXISTS NUTRITION_RULE (
     INDEX idx_rule_active_verified (active, verified, rule_type, subject),
     UNIQUE KEY uq_rule_version (rule_type, subject, ruleset_version)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS RULE_SOURCE (
+    source_id INT AUTO_INCREMENT PRIMARY KEY,
+    organization VARCHAR(200) NOT NULL,
+    title VARCHAR(300) NOT NULL,
+    published_year SMALLINT,
+    applicability VARCHAR(300),
+    source_url TEXT,
+    updated_at DATE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS HEALTH_RULE (
+    rule_id INT AUTO_INCREMENT PRIMARY KEY,
+    rule_code VARCHAR(80) NOT NULL UNIQUE,
+    condition_code VARCHAR(20) NOT NULL,
+    nutrient VARCHAR(30) NOT NULL,
+    scope VARCHAR(10) NOT NULL,
+    operator VARCHAR(5) NOT NULL,
+    threshold DECIMAL(10,2) NOT NULL,
+    unit VARCHAR(10) NOT NULL,
+    severity VARCHAR(10) NOT NULL,
+    source_id INT,
+    version VARCHAR(20) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT FALSE,
+    rationale TEXT,
+    change_log TEXT,
+    INDEX idx_health_rule_enabled_filter
+        (enabled, condition_code, nutrient, scope),
+    CONSTRAINT fk_HEALTH_RULE_SOURCE FOREIGN KEY (source_id)
+        REFERENCES RULE_SOURCE(source_id) ON DELETE RESTRICT,
+    CONSTRAINT chk_rule_severity CHECK (severity IN ('YELLOW', 'RED')),
+    CONSTRAINT chk_rule_enabled_has_source
+        CHECK (enabled = FALSE OR source_id IS NOT NULL)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -35,6 +35,8 @@ RESET_ORDER = (
     "SESSION",
     "FOOD_ITEM",
     "NUTRITION_RULE",
+    "HEALTH_RULE",
+    "RULE_SOURCE",
 )
 DISHES = (
     ("DEMO - Món A", "demo", 100, 5, 15, 2, 150, "easy"),
@@ -46,6 +48,7 @@ RULES = (
     ("allergy", "peanut"),
     ("condition", "diabetes"),
 )
+RULE_SEED_FILE = Path(__file__).with_name("rules.seed.json")
 
 
 def connection_options() -> dict:
@@ -121,6 +124,9 @@ def init() -> None:
 
 def seed() -> None:
     connection_options()
+    rule_seed = json.loads(RULE_SEED_FILE.read_text(encoding="utf-8"))
+    if not isinstance(rule_seed, list):
+        raise ValueError("rules.seed.json must contain a list")
     stored_token = (
         DEMO_TOKEN_FILE.read_text(encoding="utf-8").strip()
         if DEMO_TOKEN_FILE.exists()
@@ -164,6 +170,85 @@ def seed() -> None:
                                %s, %s, 0, 0)""",
                     (rule_type, subject, DEMO_SOURCE, DEMO_SOURCE_URL),
                 )
+        for rule in rule_seed:
+            source = rule.get("source")
+            if source and not all(source.get(key) for key in ("org", "title")):
+                raise ValueError(
+                    f"Rule source for {rule.get('ruleId')} needs org and title"
+                )
+            if rule.get("enabled") and (
+                not source
+                or not all(
+                    source.get(key)
+                    for key in ("org", "title", "year", "applicability", "updatedAt")
+                )
+            ):
+                raise ValueError(
+                    f"Enabled rule {rule.get('ruleId')} must have a complete source"
+                )
+            source_id = None
+            if source:
+                source_params = (
+                    source["org"],
+                    source["title"],
+                    source.get("year"),
+                    source.get("applicability"),
+                    source.get("url"),
+                    source.get("updatedAt"),
+                )
+                stored_source = db.execute(
+                    """SELECT source_id FROM RULE_SOURCE
+                       WHERE organization = %s AND title = %s
+                         AND published_year <=> %s AND applicability <=> %s
+                         AND source_url <=> %s AND updated_at <=> %s
+                       LIMIT 1""",
+                    source_params,
+                ).fetchone()
+                if stored_source:
+                    source_id = stored_source["source_id"]
+                else:
+                    source_id = db.execute(
+                        """INSERT INTO RULE_SOURCE
+                           (organization, title, published_year, applicability,
+                            source_url, updated_at)
+                           VALUES (%s, %s, %s, %s, %s, %s)""",
+                        source_params,
+                    ).lastrowid
+            db.execute(
+                """INSERT INTO HEALTH_RULE
+                   (rule_code, condition_code, nutrient, scope, operator,
+                    threshold, unit, severity, source_id, version, enabled,
+                    rationale, change_log)
+                   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                   ON DUPLICATE KEY UPDATE
+                    condition_code = VALUES(condition_code),
+                    nutrient = VALUES(nutrient),
+                    scope = VALUES(scope),
+                    operator = VALUES(operator),
+                    threshold = VALUES(threshold),
+                    unit = VALUES(unit),
+                    severity = VALUES(severity),
+                    source_id = VALUES(source_id),
+                    enabled = VALUES(enabled),
+                    version = VALUES(version),
+                    rationale = VALUES(rationale),
+                    change_log = VALUES(change_log)""",
+                (
+                    rule["ruleId"],
+                    rule.get("condition"),
+                    rule["nutrient"],
+                    rule["scope"],
+                    rule["operator"],
+                    rule["threshold"],
+                    rule.get("unit"),
+                    rule["severityWhenViolated"],
+                    source_id,
+                    rule["version"],
+                    bool(rule.get("enabled", False)),
+                    rule.get("rationale"),
+                    json.dumps(rule.get("changeLog", []), ensure_ascii=False),
+                ),
+            )
 
         session = db.execute(
             "SELECT session_id FROM SESSION WHERE token_hash = %s", (token_hash,)
