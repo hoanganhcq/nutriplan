@@ -301,3 +301,79 @@ def test_reset_refuses_household_with_real_profile(mysql_client):
     response = client.post("/dev/seed-demo", json={"reset": True})
     assert response.status_code == 409
     assert db.execute("SELECT COUNT(*) AS n FROM MEMBER").fetchone()["n"] == 2
+
+
+def test_manual_meal_is_saved_without_vision_and_visible_in_draft_journal(mysql_client):
+    client, db = mysql_client
+    data, headers = seed(client)
+    member_id = db.execute("SELECT member_id FROM MEMBER LIMIT 1").fetchone()[
+        "member_id"
+    ]
+    dish_id = client.get(
+        "/dishes", headers=headers, params={"q": "Cháo yến mạch"}
+    ).json()["data"][0]["dishId"]
+    response = client.post(
+        "/meals",
+        headers=headers,
+        json={
+            "householdId": data["householdId"],
+            "mealType": "lunch",
+            "eatenAt": "2026-11-25T16:00:00+07:00",
+            "memberIds": [member_id],
+            "items": [{"dishId": dish_id, "grams": 125}],
+        },
+    )
+    assert response.status_code == 201, response.text
+    meal = response.json()["data"]
+    assert meal["status"] == "draft"
+    assert meal["isEstimate"] is False
+    assert meal["items"][0]["isEstimate"] is False
+    assert meal["eatenAt"] == "2026-11-25T09:00:00"
+    assert meal["totals"]["kcal"] == 100
+    assert client.get("/meals", headers=headers).json()["data"] == []
+    drafts = client.get("/meals?status=all", headers=headers).json()["data"]
+    assert len(drafts) == 1
+    assert drafts[0]["householdId"] == data["householdId"]
+    assert drafts[0]["status"] == "draft"
+    assessed = client.post(
+        f"/meals/{meal['mealId']}/assessments",
+        headers=headers,
+        json={"memberIds": [member_id]},
+    )
+    assert assessed.json()["data"]["assessments"][0]["level"] == "INSUFFICIENT_DATA"
+    assert (
+        client.post(
+            f"/meals/{meal['mealId']}/confirm",
+            headers=headers,
+            json={"eatenBy": [member_id]},
+        ).status_code
+        == 409
+    )
+
+
+def test_manual_meal_requires_ownership_consent_and_known_dishes(mysql_client):
+    client, db = mysql_client
+    data, headers = seed(client)
+    body = {
+        "householdId": data["householdId"],
+        "items": [{"dishId": 2147483647, "grams": 100}],
+    }
+    assert client.post("/meals", headers=headers, json=body).status_code == 404
+    other = client.post("/sessions").json()
+    assert (
+        client.post(
+            "/meals", headers={"Authorization": f"Bearer {other['token']}"}, json=body
+        ).status_code
+        == 404
+    )
+    client.put(
+        "/consents",
+        headers=headers,
+        json={
+            "householdId": data["householdId"],
+            "policyVersion": "0.1",
+            "consents": {"store_health_profile": False},
+        },
+    )
+    assert client.post("/meals", headers=headers, json=body).status_code == 403
+    assert db.execute("SELECT COUNT(*) AS n FROM MEAL").fetchone()["n"] == 0

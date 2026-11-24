@@ -167,9 +167,14 @@ def member_ids(db, meal_id):
     ]
 
 
-def list_confirmed(db, session_id, member_id, from_date, to_date, limit, cursor):
-    clauses = ["h.session_id = %s", "m.status = 'confirmed'", "m.meal_id > %s"]
+def list_confirmed(
+    db, session_id, member_id, from_date, to_date, limit, cursor, status="confirmed"
+):
+    clauses = ["h.session_id = %s", "m.meal_id > %s"]
     params = [session_id, cursor]
+    if status != "all":
+        clauses.append("m.status = %s")
+        params.append(status)
     if member_id:
         clauses.append(
             "EXISTS (SELECT 1 FROM MEAL_MEMBER mm WHERE mm.meal_id = m.meal_id "

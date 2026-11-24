@@ -93,6 +93,32 @@ def detail(db, session_id, meal_id):
     }
 
 
+def create_manual(db, session_id, payload):
+    consent_service.require(
+        db, session_id, payload.household_id, "store_health_profile"
+    )
+    for member_id in payload.member_ids:
+        if member(db, session_id, member_id)["household_id"] != payload.household_id:
+            raise AppException("NOT_FOUND", "Member not found", 404)
+    for item in payload.items:
+        if not dish_repository.find(db, item.dish_id):
+            raise AppException("NOT_FOUND", "Dish not found", 404)
+    eaten_at = payload.eaten_at or datetime.now(UTC)
+    if eaten_at.tzinfo is not None:
+        eaten_at = eaten_at.astimezone(UTC).replace(tzinfo=None)
+    meal_id = meal_repository.create(
+        db, payload.household_id, payload.meal_type, eaten_at, 0, False, "[]"
+    )
+    for member_id in payload.member_ids:
+        meal_repository.add_member(db, meal_id, member_id)
+    for item in payload.items:
+        item_id = meal_repository.add_item(db, meal_id, item.dish_id, item.grams)
+        meal_repository.update_item(
+            db, meal_id, item_id, item.dish_id, item.grams, None
+        )
+    return detail(db, session_id, meal_id)
+
+
 def analyze(
     db,
     session_id,
@@ -320,11 +346,13 @@ def undo(db, session_id, meal_id, steps):
     }
 
 
-def journal(db, session_id, member_id, from_date, to_date, limit, cursor):
+def journal(
+    db, session_id, member_id, from_date, to_date, limit, cursor, status="confirmed"
+):
     if member_id:
         member(db, session_id, member_id)
     rows = meal_repository.list_confirmed(
-        db, session_id, member_id, from_date, to_date, limit, cursor
+        db, session_id, member_id, from_date, to_date, limit, cursor, status
     )
     data = []
     for row in rows:
@@ -333,6 +361,8 @@ def journal(db, session_id, member_id, from_date, to_date, limit, cursor):
         data.append(
             {
                 "mealId": row["meal_id"],
+                "householdId": row["household_id"],
+                "status": row["status"],
                 "eatenAt": row["eaten_at"],
                 "mealType": row.get("meal_type"),
                 "thumbnailUrl": None,

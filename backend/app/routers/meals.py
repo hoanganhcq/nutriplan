@@ -1,5 +1,6 @@
 import json
 from datetime import date, datetime
+from typing import Literal
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from pydantic import BaseModel, Field
@@ -12,6 +13,7 @@ from app.schemas.e2e import (
     AssessmentResponse,
     ConfirmInput,
     ConfirmResponse,
+    ManualMealInput,
     MealItemUpdate,
     MealListResponse,
     MealResponse,
@@ -32,6 +34,15 @@ router = APIRouter(
 
 class ClarificationAnswer(BaseModel):
     answer: str = Field(min_length=1, max_length=1000)
+
+
+@router.post("", status_code=201, response_model=MealResponse)
+def create_manual_meal(
+    payload: ManualMealInput,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {"data": meal_service.create_manual(db, session["session_id"], payload)}
 
 
 @router.post("/analyze", status_code=201, response_model=MealResponse)
@@ -79,18 +90,21 @@ def list_meals(
     member_id: int | None = Query(None, alias="memberId"),
     from_date: date | None = Query(None, alias="from"),
     to_date: date | None = Query(None, alias="to"),
-    status: str = "confirmed",
+    status: Literal["confirmed", "draft", "all"] = "confirmed",
     limit: int = Query(20, ge=1, le=100),
     cursor: int = Query(0, ge=0),
     session=Depends(get_current_session),
     db=Depends(get_db),
 ):
-    if status != "confirmed":
-        raise AppException(
-            "VALIDATION_ERROR", "Only confirmed journal entries are supported", 422
-        )
     return meal_service.journal(
-        db, session["session_id"], member_id, from_date, to_date, limit, cursor
+        db,
+        session["session_id"],
+        member_id,
+        from_date,
+        to_date,
+        limit,
+        cursor,
+        status,
     )
 
 

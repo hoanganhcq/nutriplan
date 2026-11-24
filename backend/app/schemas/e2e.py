@@ -65,6 +65,26 @@ class MealItemUpdate(CamelModel):
     seasoning: str | None = Field(default=None, max_length=500)
 
 
+class ManualMealItem(CamelModel):
+    dish_id: int = Field(gt=0)
+    grams: float = Field(gt=0, le=10000, allow_inf_nan=False)
+
+
+class ManualMealInput(CamelModel):
+    household_id: int = Field(gt=0)
+    meal_type: Literal["breakfast", "lunch", "dinner", "snack"] = "lunch"
+    eaten_at: datetime | None = None
+    member_ids: list[int] = Field(default_factory=list, max_length=50)
+    items: list[ManualMealItem] = Field(min_length=1, max_length=50)
+
+    @field_validator("member_ids")
+    @classmethod
+    def validate_member_ids(cls, values):
+        if any(value <= 0 for value in values):
+            raise ValueError("memberIds must contain positive IDs")
+        return list(dict.fromkeys(values))
+
+
 class AssessmentInput(CamelModel):
     member_ids: list[int] | None = None
 
@@ -244,6 +264,8 @@ class JournalLevelOutput(CamelModel):
 
 class JournalEntryOutput(CamelModel):
     meal_id: int
+    household_id: int
+    status: str = "confirmed"
     eaten_at: datetime
     meal_type: str | None
     thumbnail_url: str | None
