@@ -1,0 +1,5475 @@
+{
+  "kb_type": "food",
+  "kb_version": "2.0.0",
+  "updated_on": "2026-11-18",
+  "nutrient_units": {
+    "energy_kcal": "kcal",
+    "protein_g": "g",
+    "fat_g": "g",
+    "sat_fat_g": "g",
+    "carb_g": "g",
+    "sugar_g": "g",
+    "added_sugar_g": "g",
+    "fiber_g": "g",
+    "sodium_mg": "mg",
+    "potassium_mg": "mg",
+    "phosphorus_mg": "mg"
+  },
+  "foods": [
+    {
+      "food_id": "NIN_F_15001",
+      "name_vi": "Bánh bao chiên có nhân",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 177.0,
+          "protein_g": 2.3,
+          "fat_g": 10.1,
+          "sat_fat_g": null,
+          "carb_g": 19.31,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.7,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 61.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15001",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "fceb5ecafad7b0290abeeeb344d9a3aeae7eedb984a033eec9596553cf760fa8",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15002",
+      "name_vi": "Bánh bèo",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 118.0,
+          "protein_g": 1.8,
+          "fat_g": 4.2,
+          "sat_fat_g": null,
+          "carb_g": 18.15,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 25.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1538044c10469eccb3fe629a5f4bd4f33448250e29a2e15ab0d1719e48264fcf",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15003",
+      "name_vi": "Bánh bột lọc",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 137.0,
+          "protein_g": 6.8,
+          "fat_g": 4.3,
+          "sat_fat_g": null,
+          "carb_g": 17.74,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 13.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15003",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "951e2f0d8201d64739ee6181783f3cc16bf80841d82a195f4638ce6e0ab021c4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4114",
+      "name_vi": "Cà pháo, muối sổi",
+      "aliases": [
+        "cà pháo muối"
+      ],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 23.0,
+          "protein_g": 1.5,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 4.2,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.7,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4114",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3a8a5fc97f40bf17dbbff07d82f0467322827d8f3eb019773cb6c009ea4b0845",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ muối tham chiếu",
+        "grams": 30,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15006",
+      "name_vi": "Bánh chưng",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 181.0,
+          "protein_g": 4.3,
+          "fat_g": 4.2,
+          "sat_fat_g": null,
+          "carb_g": 31.6,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 49.5
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15006",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "2dfc43a69d5ab4261978a77af1197d33bbd15ef3ff863ca477b74f22a7794ac0",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15007",
+      "name_vi": "Bánh chuối",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 297.0,
+          "protein_g": 2.0,
+          "fat_g": 14.2,
+          "sat_fat_g": null,
+          "carb_g": 40.34,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 13.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15007",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3b9b95a02afb48b26268483f4a1d07406277cbf593a6c62c2ea9422c4d707a61",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15008",
+      "name_vi": "Bánh cốm",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 250.0,
+          "protein_g": 3.4,
+          "fat_g": 0.3,
+          "sat_fat_g": null,
+          "carb_g": 58.5,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 104.7
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15008",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "51dddbe6455ad310b6106d93fc116190ea5e5cb5994b58ed2f646c538ee0a80f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15009",
+      "name_vi": "Bánh cuốn",
+      "aliases": [
+        "bánh cuốn"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 129.0,
+          "protein_g": 3.0,
+          "fat_g": 5.3,
+          "sat_fat_g": null,
+          "carb_g": 17.4,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 29.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15009",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3b21b687088367b50bc16c6ee47e407c0b8f95d107c6edb2a3823d0f756d5620",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15010",
+      "name_vi": "Bánh cuốn nóng nhân thịt",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 102.0,
+          "protein_g": 2.1,
+          "fat_g": 2.6,
+          "sat_fat_g": null,
+          "carb_g": 17.65,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.3,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 17.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15010",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "39d98bad106a68b640e0b87f833d27218534935064e646561ee51cb0581d182e",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15013",
+      "name_vi": "Bánh đúc nguội",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 88.0,
+          "protein_g": 2.0,
+          "fat_g": 2.1,
+          "sat_fat_g": null,
+          "carb_g": 15.36,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.7,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 18.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15013",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ff755e0ad4009a090e7595cee9f84716fbac994143c1795213b0195f761fc3f1",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15014",
+      "name_vi": "Bánh đúc nóng",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 108.0,
+          "protein_g": 3.9,
+          "fat_g": 6.3,
+          "sat_fat_g": null,
+          "carb_g": 8.95,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 9.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15014",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "59184c6a0a8d15602b1b4990bfd1d9a58c9e76ec358f7ba2154bce1364bd76bf",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15015",
+      "name_vi": "Bánh gai",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 251.0,
+          "protein_g": 4.7,
+          "fat_g": 2.5,
+          "sat_fat_g": null,
+          "carb_g": 52.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 44.3
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15015",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3af46b517268bb4f1d4e113fb365a1bf5b2198b8c719dac012105fd789675263",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15016",
+      "name_vi": "Bánh gio",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 173.0,
+          "protein_g": 2.0,
+          "fat_g": 0.4,
+          "sat_fat_g": null,
+          "carb_g": 40.44,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 16.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15016",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e41b8491c376b04166bb032ee4ad6fc9a1354a213412a2e564f960dfc11e941a",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15017",
+      "name_vi": "Bánh giò",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 234.0,
+          "protein_g": 2.8,
+          "fat_g": 17.5,
+          "sat_fat_g": null,
+          "carb_g": 16.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 20.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15017",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "45414cec47a2d4f6874c5f424f638dfb1f7c25df229574caa488c6c78e0c1fcd",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4116",
+      "name_vi": "Dưa cải bẹ",
+      "aliases": [
+        "dưa chua cải bẹ"
+      ],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 25.0,
+          "protein_g": 1.8,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 4.5,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 2.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 21.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4116",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "cd0da0984bd3c88f20d85fbd4e446bd14e369dd517473c3832700c8825292653",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ muối tham chiếu",
+        "grams": 30,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4121",
+      "name_vi": "Kiệu, muối",
+      "aliases": [
+        "củ kiệu muối"
+      ],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 29.0,
+          "protein_g": 1.3,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 5.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.2,
+          "sodium_mg": 812.0,
+          "potassium_mg": 120.0,
+          "phosphorus_mg": 35.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4121",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "0c2dd34b136dd134a2b467c05bba843bbce2df9ad44675ad7f828b0139119f17",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ muối tham chiếu",
+        "grams": 30,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15021",
+      "name_vi": "Bánh khúc",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 249.0,
+          "protein_g": 4.1,
+          "fat_g": 3.8,
+          "sat_fat_g": null,
+          "carb_g": 49.7,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 44.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15021",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "87b2bde66f3eae7b043fa1d7755831d177b6a85bd0861b5b97533ec5a3b87b44",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15023",
+      "name_vi": "Bánh mì xíu mại",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 189.0,
+          "protein_g": 11.3,
+          "fat_g": 7.5,
+          "sat_fat_g": null,
+          "carb_g": 19.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 57.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15023",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "c5118fe07f3178a1c256e3fe0cc058bc5fb89ea39c680fd5ec3724b9862cd8e9",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15024",
+      "name_vi": "Bánh mỳ patê",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 266.0,
+          "protein_g": 9.8,
+          "fat_g": 11.0,
+          "sat_fat_g": null,
+          "carb_g": 31.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 76.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15024",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "453b63f34abf356a01feec10aad9a30213da15f259fa82355968df2775f4702d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15025",
+      "name_vi": "Bánh nếp",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 216.0,
+          "protein_g": 5.0,
+          "fat_g": 3.2,
+          "sat_fat_g": null,
+          "carb_g": 41.77,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 39.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15025",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "58c041e3e25248fe6ec997486b3344adab66b39fae3e2a99ac0ae3998f29ec88",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15026",
+      "name_vi": "Bánh nướng nhân thập cẩm",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 386.0,
+          "protein_g": 5.2,
+          "fat_g": 14.8,
+          "sat_fat_g": null,
+          "carb_g": 58.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.8,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 51.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15026",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "fe36f08a9e4b37b6ee7d79bc47075a491621bab83ee5370ae1651f9a16fa1de3",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15027",
+      "name_vi": "Bánh nướng nhân trứng đỗ xanh",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 371.0,
+          "protein_g": 9.6,
+          "fat_g": 13.9,
+          "sat_fat_g": null,
+          "carb_g": 51.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 2.7,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 392.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15027",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "b83741e89a5f239f9e02787389b91dc22a482b4428806604bfcea98f0252d685",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15029",
+      "name_vi": "Bánh rán bọc đường",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 318.0,
+          "protein_g": 3.7,
+          "fat_g": 9.1,
+          "sat_fat_g": null,
+          "carb_g": 55.42,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 18.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15029",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3e066c03557f7e35d66006ca16548409d97e0dd9be03a0420b556e47f312f092",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15030",
+      "name_vi": "Bánh tẻ",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 104.0,
+          "protein_g": 1.5,
+          "fat_g": 3.2,
+          "sat_fat_g": null,
+          "carb_g": 17.23,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 13.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15030",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "a753d6511de30fad8800a6b7fbc1687d730fe4179b30a1d0cc3c1831b11f1528",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15031",
+      "name_vi": "Bánh tôm",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 204.0,
+          "protein_g": 4.0,
+          "fat_g": 10.8,
+          "sat_fat_g": null,
+          "carb_g": 22.64,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 24.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15031",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "29eeedd161f7e9035268d94142a9092ad425573cffcc38fef3792a2b5efc401e",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15032",
+      "name_vi": "Bánh trôi",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 202.0,
+          "protein_g": 2.8,
+          "fat_g": 0.6,
+          "sat_fat_g": null,
+          "carb_g": 46.37,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 13.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15032",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "8e4c39a0e621afa8852bb44bb5a52a73f50674011e537e07be749d7131d702c7",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15033",
+      "name_vi": "Bún bò Nam bộ",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 81.0,
+          "protein_g": 3.2,
+          "fat_g": 0.6,
+          "sat_fat_g": null,
+          "carb_g": 15.73,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 25.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15033",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "d036d53cea5def8390c87abc899b1db18b7ef9170b68293614990ca5a74134c4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15034",
+      "name_vi": "Bún chả",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 136.0,
+          "protein_g": 6.1,
+          "fat_g": 4.4,
+          "sat_fat_g": null,
+          "carb_g": 17.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 33.3
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15034",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1e324bdcb060ea5b7a2042cb3c1f73b60372a859d06ab9857c130fe4bb2f2722",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15035",
+      "name_vi": "Bún cua",
+      "aliases": [
+        "bún cua"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 53.0,
+          "protein_g": 2.1,
+          "fat_g": 0.9,
+          "sat_fat_g": null,
+          "carb_g": 9.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 23.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15035",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "28ac036529009dce848954d85b1794f0519f61296932be71a63e8bd86becea7d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15036",
+      "name_vi": "Bún đậu",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 151.0,
+          "protein_g": 3.0,
+          "fat_g": 6.4,
+          "sat_fat_g": null,
+          "carb_g": 20.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.7,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 61.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15036",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ac18fd918b25ee4ed7c9b87f96ed6a416e76d87cf894c4bb6d76002a708699b8",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15038",
+      "name_vi": "Bún nem",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 120.0,
+          "protein_g": 3.3,
+          "fat_g": 3.9,
+          "sat_fat_g": null,
+          "carb_g": 17.8,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 27.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15038",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "2df23f26b0e1c9ed7de3c058d6d35b51852091063cfe85a0e49902b9033d5440",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15039",
+      "name_vi": "Bún ốc",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 62.0,
+          "protein_g": 3.1,
+          "fat_g": 0.7,
+          "sat_fat_g": null,
+          "carb_g": 10.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 22.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15039",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "688dedd31ed7609f4ce2423a7f84345c2f1b84201e2dac63f2343199cd1f7a18",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15040",
+      "name_vi": "Caramen",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 109.0,
+          "protein_g": 5.2,
+          "fat_g": 4.1,
+          "sat_fat_g": null,
+          "carb_g": 12.81,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.0,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 75.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15040",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "91f2a6b67137f2650bc7de366db674b21a5c35ea2d7822ba6fd8c001ae66ef19",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15041",
+      "name_vi": "Chả quế",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 339.0,
+          "protein_g": 18.3,
+          "fat_g": 29.0,
+          "sat_fat_g": null,
+          "carb_g": 1.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 301.7
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15041",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "8fe5ca27a35126d1be80cc058d60814118148f2081ef950aed75b837f08aa19c",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15042",
+      "name_vi": "Cháo lòng",
+      "aliases": [
+        "cháo lòng"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 69.0,
+          "protein_g": 1.4,
+          "fat_g": 4.4,
+          "sat_fat_g": null,
+          "carb_g": 6.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 25.5
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15042",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "b071a0da90582e35d82634e4c6393a6b27c1f27d813e3e92c5304f93809adf45",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15043",
+      "name_vi": "Cháo sườn",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 40.0,
+          "protein_g": 1.5,
+          "fat_g": 0.2,
+          "sat_fat_g": null,
+          "carb_g": 8.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 7.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15043",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "0fc89fb2fdc5de927f468116067f027fee08793de608b1dbfa1ba0d25014a0d6",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15044",
+      "name_vi": "Cháo trai",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 49.0,
+          "protein_g": 2.2,
+          "fat_g": 0.7,
+          "sat_fat_g": null,
+          "carb_g": 8.4,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.3,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 39.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15044",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "eea301bd8430233194c3189097dda6a1fd95b685a7a5eaf15a17593c9784531b",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15045",
+      "name_vi": "Chè bưởi",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 73.0,
+          "protein_g": 0.8,
+          "fat_g": 0.41,
+          "sat_fat_g": null,
+          "carb_g": 16.64,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 7.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15045",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "8c1766cfa079a036fcdec3e9e6112c92cbbdd840d21a82411c4d55dea610aec8",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15046",
+      "name_vi": "Chè chuối",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 82.0,
+          "protein_g": 1.37,
+          "fat_g": 0.87,
+          "sat_fat_g": null,
+          "carb_g": 17.08,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.0,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 17.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15046",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "7c272ac7ed1cc81b722658da7273dbf77b7b5531d17832ab4dd58498c1ce17c8",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15048",
+      "name_vi": "Chè đỗ đen",
+      "aliases": [
+        "chè đậu đen"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 79.0,
+          "protein_g": 1.21,
+          "fat_g": 0.26,
+          "sat_fat_g": null,
+          "carb_g": 18.02,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 5.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15048",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "89287a9710fb5fab4e7b397a09b52eeec8b2bea58f43514cbe4f3fed61929979",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15049",
+      "name_vi": "Chè đỗ đỏ",
+      "aliases": [
+        "chè đậu đỏ"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 77.0,
+          "protein_g": 1.85,
+          "fat_g": 0.39,
+          "sat_fat_g": null,
+          "carb_g": 16.51,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 15.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15049",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "a493d227b536e64a8313c7620483a9298be17e0df0fd3190d30321c39b7c3f38",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15050",
+      "name_vi": "Chè đỗ xanh",
+      "aliases": [
+        "chè đậu xanh"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 79.0,
+          "protein_g": 1.35,
+          "fat_g": 0.39,
+          "sat_fat_g": null,
+          "carb_g": 17.54,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 17.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15050",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e7e77e5992543a0dd36bd76e55138421336be1eeda66a2149a22c3b5515dae03",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15051",
+      "name_vi": "Chè hạt sen",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 75.0,
+          "protein_g": 1.25,
+          "fat_g": 0.13,
+          "sat_fat_g": null,
+          "carb_g": 17.12,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 13.3
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15051",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "819bee79366fcdf814b6f119976becf21dc3c0189f01380a6ff15b06e4cb4755",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần hạt tham chiếu",
+        "grams": 25,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15053",
+      "name_vi": "Chè ngô cốm",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 72.0,
+          "protein_g": 0.35,
+          "fat_g": 0.6,
+          "sat_fat_g": null,
+          "carb_g": 16.42,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.0,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 14.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15053",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "b5005b21459fedf393b71fb260b4687ac277b83d16079653ca197c63a8b5d57d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15055",
+      "name_vi": "Chè Thái",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 82.0,
+          "protein_g": 0.72,
+          "fat_g": 0.51,
+          "sat_fat_g": null,
+          "carb_g": 18.53,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.0,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 10.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15055",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "828483bf64185d0303322fe1d264dac39a2daeef29b4cd93edafe1414ceda6b9",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cốc/chén tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15056",
+      "name_vi": "Cơm rang",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 198.0,
+          "protein_g": 6.0,
+          "fat_g": 9.65,
+          "sat_fat_g": null,
+          "carb_g": 21.85,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.0,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 52.7
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15056",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "d40327a7d100764a25bdc99c0f2408f5555d32c17ecc05e33a0e49295e2b41cf",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15057",
+      "name_vi": "Gà tần",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 131.0,
+          "protein_g": 6.7,
+          "fat_g": 7.4,
+          "sat_fat_g": null,
+          "carb_g": 9.4,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.0,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 44.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15057",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "5bda7f2f310ae53c0124af0b55f0a033601c6b70f2df959ff58979fa1c044a3a",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15058",
+      "name_vi": "Miến lươn",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 73.0,
+          "protein_g": 2.4,
+          "fat_g": 2.6,
+          "sat_fat_g": null,
+          "carb_g": 9.92,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 35.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15058",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "919beb553dbcf3e0c50d37628d355a2d17e1fe87411d2d21cae22f705a1e509a",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15059",
+      "name_vi": "Miến ngan",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 65.0,
+          "protein_g": 2.0,
+          "fat_g": 2.4,
+          "sat_fat_g": null,
+          "carb_g": 8.96,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 22.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15059",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "c32727adf674da9a4a7d32a29cafc0ad720f66724fabf3bc1d3d81ba1b50506b",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15060",
+      "name_vi": "Mỳ vằn thắn",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 81.0,
+          "protein_g": 2.6,
+          "fat_g": 3.1,
+          "sat_fat_g": null,
+          "carb_g": 10.58,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 31.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15060",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "9edcd745702d2ad845831b5d377681ff640aaeabb607a997ac107f0e56af3f39",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15061",
+      "name_vi": "Mỳ xào",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 139.0,
+          "protein_g": 5.7,
+          "fat_g": 7.0,
+          "sat_fat_g": null,
+          "carb_g": 13.41,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.9,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 36.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15061",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "61f96a2a0435622a1c214bcb2d06aaf91feb939e4149c60411bd423d77a11c9d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15062",
+      "name_vi": "Nem lụi",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 183.0,
+          "protein_g": 6.7,
+          "fat_g": 13.3,
+          "sat_fat_g": null,
+          "carb_g": 9.07,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.9,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 58.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15062",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "0de71f19a69b172a3bf8ebf51c1eac4c47e8da6ff0adbfb4a5950d833a034e99",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15063",
+      "name_vi": "Nem rán",
+      "aliases": [
+        "chả giò",
+        "nem rán"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 145.0,
+          "protein_g": 4.5,
+          "fat_g": 7.7,
+          "sat_fat_g": null,
+          "carb_g": 14.42,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.3,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 28.7
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15063",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ce6754f32101abe4c5596783babc0dcc8426daa2fd3aad6d1732939d15a8dc64",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15064",
+      "name_vi": "Nộm tai lợn",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 119.0,
+          "protein_g": 6.6,
+          "fat_g": 6.3,
+          "sat_fat_g": null,
+          "carb_g": 8.85,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.3,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 11.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15064",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "bdc6a3a7657ab47adacfc2517a3dcf5c55a07b207dc5a8273d8bfc10dd0b9137",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15065",
+      "name_vi": "Phở bò chín",
+      "aliases": [
+        "phở bò chín"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 73.0,
+          "protein_g": 5.2,
+          "fat_g": 0.9,
+          "sat_fat_g": null,
+          "carb_g": 11.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.3,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 33.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15065",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "de17a53cfe39eee62be6bcd55ee23f7e9669b910d1889d23df348161961fead5",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15066",
+      "name_vi": "Phở bò tái",
+      "aliases": [
+        "phở bò tái"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 67.0,
+          "protein_g": 4.3,
+          "fat_g": 0.3,
+          "sat_fat_g": null,
+          "carb_g": 11.8,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 27.5
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15066",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "9572a2496b5186286b458126aa5dd0c64a3e02b6869e6b8d244bf3a5bdd94e0d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15067",
+      "name_vi": "Phở gà",
+      "aliases": [
+        "phở gà"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 73.0,
+          "protein_g": 3.8,
+          "fat_g": 1.0,
+          "sat_fat_g": null,
+          "carb_g": 12.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 25.2
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15067",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "6f1d7010488fffde6a6326641c19f3a118f44c535e615e550754feb1626a0e31",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 400,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15068",
+      "name_vi": "Thịt xiên nướng",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 322.0,
+          "protein_g": 26.5,
+          "fat_g": 23.8,
+          "sat_fat_g": null,
+          "carb_g": 0.54,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 62.1
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15068",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "158f9d571978a96b563a3482571409dafbb3df7aa5c9ddc37aa15d12d8a04d27",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15069",
+      "name_vi": "Xôi đỗ xanh",
+      "aliases": [
+        "xôi đậu xanh"
+      ],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 230.0,
+          "protein_g": 5.5,
+          "fat_g": 0.4,
+          "sat_fat_g": null,
+          "carb_g": 51.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.3,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 109.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15069",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "8c4d11e1a87047fcd3d55669bf9eb6ce782ed4e55d80f0f36c729f1ea0ed5751",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15070",
+      "name_vi": "Xôi gấc",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 231.0,
+          "protein_g": 3.1,
+          "fat_g": 0.8,
+          "sat_fat_g": null,
+          "carb_g": 52.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 23.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15070",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "9eb4a865c8abe03de26566f44472732f2322166c1f0f1fdfc01aac1999ca309c",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15071",
+      "name_vi": "Xôi lạc",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 246.0,
+          "protein_g": 4.2,
+          "fat_g": 4.3,
+          "sat_fat_g": null,
+          "carb_g": 47.5,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 96.9
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15071",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "521580bb807f26507a0bca0502dd832253326e70539c450c35303c9a5727d4ff",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15072",
+      "name_vi": "Xôi ngô",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 198.0,
+          "protein_g": 4.4,
+          "fat_g": 4.0,
+          "sat_fat_g": null,
+          "carb_g": 36.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 177.6
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15072",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "2c09d7a0602f2f81f6fcdc4a49bc923304d5b66974e93816797d0ff4acb239aa",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15073",
+      "name_vi": "Xôi xéo",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 254.0,
+          "protein_g": 4.3,
+          "fat_g": 3.7,
+          "sat_fat_g": null,
+          "carb_g": 50.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 67.6
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15073",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e33322097da8729fd89ff7b69c86c35b82d10c9dc86533b663fa9342965feeb6",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1009",
+      "name_vi": "Bánh bao, nhân thịt",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 276.0,
+          "protein_g": 10.4,
+          "fat_g": 10.8,
+          "sat_fat_g": null,
+          "carb_g": 34.2,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 88.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1009",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "0c2fa0bbca5328c3594335a5aea00c429b4725543193a5e70cbff5ab4d0c11d4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1010",
+      "name_vi": "Bánh đa nem",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 335.0,
+          "protein_g": 4.0,
+          "fat_g": 0.2,
+          "sat_fat_g": null,
+          "carb_g": 79.4,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 65.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1010",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ee833096005cd92b4b08d8021db33c07a5232e171815f98fb9ce0e2ab8843178",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 20,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1012",
+      "name_vi": "Bánh mỳ",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 250.0,
+          "protein_g": 7.9,
+          "fat_g": 0.8,
+          "sat_fat_g": null,
+          "carb_g": 52.8,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 164.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1012",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ad6bdd0e9f40d41d54bd33f69f47ddebd7baa97e3c5203a56d07222d50b915df",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1013",
+      "name_vi": "Bánh phở",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 146.0,
+          "protein_g": 3.2,
+          "fat_g": 0.9,
+          "sat_fat_g": null,
+          "carb_g": 31.2,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 3.0,
+          "potassium_mg": 15.0,
+          "phosphorus_mg": 64.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1013",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e92e8e8d32c60263ea33c906d8d73fb1534032b7cea104a204de1077916b3ec0",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1020",
+      "name_vi": "Bún, tươi",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 116.0,
+          "protein_g": 1.7,
+          "fat_g": 0.9,
+          "sat_fat_g": null,
+          "carb_g": 25.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 32.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1020",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "80bc7beb62edf57909a1618490fd91cd826c0d39a7e1d4db289c76ec8ec09ccc",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1023",
+      "name_vi": "Ngô, cả bắp, nếp, luộc",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 172.0,
+          "protein_g": 3.9,
+          "fat_g": 2.2,
+          "sat_fat_g": null,
+          "carb_g": 34.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.2,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 146.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1023",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e193219df848e7ba4d3c897c1b476a2356e092020306a2c153cccd023338405e",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1038",
+      "name_vi": "Bánh bao chay",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 221.0,
+          "protein_g": 6.1,
+          "fat_g": 0.5,
+          "sat_fat_g": null,
+          "carb_g": 48.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 88.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1038",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "50c4c2fe3623dc0396cd641e615de7f016bc63a593efdd2a492802076b9ab93f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_1024002",
+      "name_vi": "Xôi nếp cẩm",
+      "aliases": [],
+      "category": "Ngũ cốc và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 235.0,
+          "protein_g": 5.59,
+          "fat_g": 1.71,
+          "sat_fat_g": null,
+          "carb_g": 49.21,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 3.22,
+          "sodium_mg": 1.32,
+          "potassium_mg": 53.95,
+          "phosphorus_mg": 141.45
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "1024002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "fa737e6e1b500b44e56a243d27a5aec3161c70d5b141db7e962a33c2b4dbea58",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4002002",
+      "name_vi": "Bí đao (bí xanh), luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 17.0,
+          "protein_g": 0.63,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 3.58,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.05,
+          "sodium_mg": 13.4,
+          "potassium_mg": 157.69,
+          "phosphorus_mg": 24.21
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4002002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "cabb4f0d20961a43955d70ba659d11e1ca6420690fc5d317a376a344c22c8ef4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4003002",
+      "name_vi": "Bí ngô, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 35.0,
+          "protein_g": 0.34,
+          "fat_g": 0.34,
+          "sat_fat_g": 0.06,
+          "carb_g": 7.75,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.79,
+          "sodium_mg": 9.44,
+          "potassium_mg": 391.57,
+          "phosphorus_mg": 17.98
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4003002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1f58188396470141ace5ff91658cbc951507f1ff97443a9f3cf436c3dba8ed3d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4007002",
+      "name_vi": "Cà rốt (củ đỏ, vàng), luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 47.0,
+          "protein_g": 1.6,
+          "fat_g": 0.21,
+          "sat_fat_g": 0.04,
+          "carb_g": 9.79,
+          "sugar_g": 4.83,
+          "added_sugar_g": null,
+          "fiber_g": 1.28,
+          "sodium_mg": 55.32,
+          "potassium_mg": 282.45,
+          "phosphorus_mg": 41.49
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4007002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "fe42b786dc38199d959f6c6526b455b8c0b0b44dc79e4a1abad206e071c72b8d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4010002",
+      "name_vi": "Cải bắp, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 41.0,
+          "protein_g": 1.96,
+          "fat_g": 0.33,
+          "sat_fat_g": 0.02,
+          "carb_g": 7.61,
+          "sugar_g": 3.89,
+          "added_sugar_g": null,
+          "fiber_g": 1.74,
+          "sodium_mg": 30.76,
+          "potassium_mg": 205.98,
+          "phosphorus_mg": 33.7
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4010002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "7c5103bbe739b647dc099dbe3ed92469ac697b8026414fad8633788fddcd5edc",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4015002",
+      "name_vi": "Cải thìa (cải trắng), luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 28.0,
+          "protein_g": 1.57,
+          "fat_g": 0.22,
+          "sat_fat_g": 0.03,
+          "carb_g": 4.94,
+          "sugar_g": 1.33,
+          "added_sugar_g": null,
+          "fiber_g": 2.02,
+          "sodium_mg": 28.09,
+          "potassium_mg": 224.72,
+          "phosphorus_mg": 33.71
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4015002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "4e47b33f1ff5552feec29f89eb36b71bdf7e638d34afcd6ec8f6740c37ddc698",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4016002",
+      "name_vi": "Cải xanh, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 26.0,
+          "protein_g": 1.81,
+          "fat_g": 0.21,
+          "sat_fat_g": 0.01,
+          "carb_g": 4.15,
+          "sugar_g": 1.7,
+          "added_sugar_g": null,
+          "fiber_g": 1.91,
+          "sodium_mg": 30.43,
+          "potassium_mg": 234.89,
+          "phosphorus_mg": 14.36
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4016002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1cccabdd618f9789c50abd2ffd2d1a080b2be003956840d11ad5f3dce84ba5e2",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4021002",
+      "name_vi": "Củ cải trắng, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 33.0,
+          "protein_g": 1.74,
+          "fat_g": 0.23,
+          "sat_fat_g": 0.03,
+          "carb_g": 6.05,
+          "sugar_g": 2.91,
+          "added_sugar_g": null,
+          "fiber_g": 1.74,
+          "sodium_mg": 11.63,
+          "potassium_mg": 281.4,
+          "phosphorus_mg": 47.67
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4021002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "0d4ac53e3a6afe2ef7a8d554632d4e4ae4c568bb9e2ce670132a37103c07a742",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4029002",
+      "name_vi": "Đậu cô ve, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 85.0,
+          "protein_g": 5.38,
+          "fat_g": 0.22,
+          "sat_fat_g": null,
+          "carb_g": 15.38,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.08,
+          "sodium_mg": 102.9,
+          "potassium_mg": 272.58,
+          "phosphorus_mg": 131.18
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4029002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "4a7a1e70b86802d0524f6dcf4ecf6d40f6f43abb8c54890fa95c97037b59e398",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4036002",
+      "name_vi": "Giá đậu xanh, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 58.0,
+          "protein_g": 6.04,
+          "fat_g": 0.22,
+          "sat_fat_g": 0.05,
+          "carb_g": 8.02,
+          "sugar_g": 4.54,
+          "added_sugar_g": null,
+          "fiber_g": 2.2,
+          "sodium_mg": 25.3,
+          "potassium_mg": 180.23,
+          "phosphorus_mg": 100.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4036002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e5a5be885519b812e50ac87d80c125b69c673ec68c60ac7daf71616c75194574",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4055002",
+      "name_vi": "Mướp đắng, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 21.0,
+          "protein_g": 0.91,
+          "fat_g": 0.1,
+          "sat_fat_g": null,
+          "carb_g": 4.14,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.11,
+          "sodium_mg": 5.05,
+          "potassium_mg": 298.99,
+          "phosphorus_mg": 29.29
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4055002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "699f2c1c62b17871f730d90555a2ff5d3abae3bd23a4ae80d182c705385c4002",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4080002",
+      "name_vi": "Rau mồng tơi, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 24.0,
+          "protein_g": 2.04,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 3.98,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 2.55,
+          "sodium_mg": 38.27,
+          "potassium_mg": 398.78,
+          "phosphorus_mg": 34.39
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4080002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "51dac37090001d91f00241d0d8347b7f87b11df6a618abe833a6b95ccfc3eb9c",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4083002",
+      "name_vi": "Rau muống, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 27.0,
+          "protein_g": 3.27,
+          "fat_g": null,
+          "sat_fat_g": 0.06,
+          "carb_g": 3.57,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.02,
+          "sodium_mg": 38.16,
+          "potassium_mg": 337.24,
+          "phosphorus_mg": 37.76
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4083002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "bdedb8e22bcdb6a3033c35bf61d90e98b74cef562e64658bfdf9ca1fbc25b030",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4100002",
+      "name_vi": "Súp lơ xanh, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 34.0,
+          "protein_g": 2.57,
+          "fat_g": 0.26,
+          "sat_fat_g": 0.04,
+          "carb_g": 5.29,
+          "sugar_g": 2.63,
+          "added_sugar_g": null,
+          "fiber_g": 2.78,
+          "sodium_mg": 20.0,
+          "potassium_mg": 260.87,
+          "phosphorus_mg": 53.91
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4100002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "717f61ac65a79de450648e511fb010d2cc22af84a692e355096124624d28d36f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4108002",
+      "name_vi": "Cải ngọt, luộc",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 19.0,
+          "protein_g": 1.57,
+          "fat_g": 0.11,
+          "sat_fat_g": null,
+          "carb_g": 2.94,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 198.43
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4108002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "4c2d0e0633b28e51a8943908342a9625757fbebe6aed2bebf83d5b5dc6cd9b0c",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7085002",
+      "name_vi": "Thịt lợn nạc thăn, luộc",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 100.0,
+          "protein_g": 19.49,
+          "fat_g": 2.46,
+          "sat_fat_g": null,
+          "carb_g": 0.03,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 345.51
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7085002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "051183af844aa664181c9b4d480948532223cea793ac2b71fe591429a32027e7",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7018002",
+      "name_vi": "Thịt lợn nửa nạc, nửa mỡ, luộc",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 220.0,
+          "protein_g": 13.98,
+          "fat_g": 18.22,
+          "sat_fat_g": 6.18,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 46.61,
+          "potassium_mg": 241.53,
+          "phosphorus_mg": 150.85
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7018002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "f7aca6c8e7ea7f5cac4eb1b7a76acc31e622e6413326e07e6020384954fa213f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7106002",
+      "name_vi": "Thịt gà, ta, lườn, đùi, luộc",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 186.0,
+          "protein_g": 31.75,
+          "fat_g": 6.5,
+          "sat_fat_g": null,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 483.19
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7106002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "58eac8efd1d08739c80910cc08ed1ecebba498923ae34d693920553edb35bbfc",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7028002",
+      "name_vi": "Thịt vịt, luộc",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 371.0,
+          "protein_g": 24.72,
+          "fat_g": 30.28,
+          "sat_fat_g": 18.36,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 87.5,
+          "potassium_mg": 290.28,
+          "phosphorus_mg": 201.39
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7028002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1d5dfcaa543644829732c5a7859e4e21e9ef7cc1ebe39cb809dc992969d513f3",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7113002",
+      "name_vi": "Thịt vịt, lườn, luộc",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 163.0,
+          "protein_g": 27.57,
+          "fat_g": 5.9,
+          "sat_fat_g": 1.83,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 79.17,
+          "potassium_mg": 372.22,
+          "phosphorus_mg": 258.33
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7113002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "eb1f1ef4c74d5e82a45ee031c0500815106aed7054d89a854176132d58ef42a3",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7047002",
+      "name_vi": "Lòng lợn (ruột non), luộc",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 55.0,
+          "protein_g": 9.0,
+          "fat_g": 1.63,
+          "sat_fat_g": null,
+          "carb_g": 1.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 60.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7047002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "7c8a88b71789f767b607bf442f8d38829c3d65bf43bb7080242ead633810a72e",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7069",
+      "name_vi": "Giò lụa, chín",
+      "aliases": [
+        "chả lụa",
+        "giò lụa"
+      ],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 205.0,
+          "protein_g": 16.9,
+          "fat_g": 15.0,
+          "sat_fat_g": null,
+          "carb_g": 1.8,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7069",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "b070376d5709c8bd1eb1aea62b6a2fa3a9c00c55dc6c304f2134f5903ac03490",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_7086",
+      "name_vi": "Thịt lợn nửa nạc, nửa mỡ, nướng",
+      "aliases": [],
+      "category": "Thịt và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 401.0,
+          "protein_g": 20.5,
+          "fat_g": 35.2,
+          "sat_fat_g": null,
+          "carb_g": 0.56,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 521.4
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "7086",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "508be9d5f852c1fb50520fc31f5b892194934670939932681d67b7e40354e30d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thịt ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_8020002",
+      "name_vi": "Cá nục, luộc",
+      "aliases": [],
+      "category": "Thủy sản và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 133.0,
+          "protein_g": 24.34,
+          "fat_g": 3.98,
+          "sat_fat_g": 1.54,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 125.3,
+          "potassium_mg": 461.45,
+          "phosphorus_mg": 192.77
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "8020002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "d85c783fb2fff21e46a5bd0404bafe2395a9aa032e14c7e454d15b7f317971a9",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thủy sản ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_8024008",
+      "name_vi": "Cá rô phi, chiên giòn",
+      "aliases": [],
+      "category": "Thủy sản và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 131.0,
+          "protein_g": 25.92,
+          "fat_g": 3.03,
+          "sat_fat_g": null,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 194.08
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "8024008",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "56e36d01da5b7bd8e6022db2f9fb8aa9a313489e5396907f7b4540b0f81e2d57",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thủy sản ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_8051002",
+      "name_vi": "Tôm biển, luộc",
+      "aliases": [],
+      "category": "Thủy sản và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 82.0,
+          "protein_g": 17.6,
+          "fat_g": 0.9,
+          "sat_fat_g": 0.33,
+          "carb_g": 0.9,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 148.0,
+          "potassium_mg": 185.0,
+          "phosphorus_mg": 184.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "8051002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "e55bedd957161263f6e41367fe9474f4e70ac7c2094c31708473401547b7fa54",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thủy sản ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_8040003",
+      "name_vi": "Mực tươi, hấp",
+      "aliases": [],
+      "category": "Thủy sản và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 115.0,
+          "protein_g": 25.47,
+          "fat_g": 1.41,
+          "sat_fat_g": 0.56,
+          "carb_g": null,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 68.75,
+          "potassium_mg": 426.56,
+          "phosphorus_mg": 234.38
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "8040003",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "7fd60a068a446f0d35cf2621e4fd9c7cb6d7fe62643b250382d3aee4e9fd1266",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thủy sản ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_8064008",
+      "name_vi": "Chả cá basa, rán",
+      "aliases": [],
+      "category": "Thủy sản và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 186.0,
+          "protein_g": 11.1,
+          "fat_g": 13.0,
+          "sat_fat_g": null,
+          "carb_g": 6.12,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 506.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "8064008",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1368ce86043ce83f8f7c3086358386e5b37c831d1ac8d493fa2a427125c2e2fb",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần thủy sản ăn được",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3017011",
+      "name_vi": "Lạc rang dầu",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 1.0,
+          "protein_g": null,
+          "fat_g": 44.5,
+          "sat_fat_g": 6.83,
+          "carb_g": 18.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 2.5,
+          "sodium_mg": 4.0,
+          "potassium_mg": 421.0,
+          "phosphorus_mg": 420.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3017011",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "c1e34a0ebf548f43c16d0a3e6fb2f62cb8f7ee1a73d22884d408e5a6b04840cc",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần hạt tham chiếu",
+        "grams": 25,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3030",
+      "name_vi": "Hạt điều khô, chiên dầu",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 585.0,
+          "protein_g": 18.3,
+          "fat_g": 49.3,
+          "sat_fat_g": 5.5,
+          "carb_g": 17.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.7,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 411.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3030",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "cef92c55ea87f52ffa0642218d9a98f2cfa61eea06bfe8ddb61444a3fdd0c254",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần hạt tham chiếu",
+        "grams": 25,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3041011",
+      "name_vi": "Hạt hướng dương rang",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 652.0,
+          "protein_g": 21.65,
+          "fat_g": 53.6,
+          "sat_fat_g": 4.64,
+          "carb_g": 20.83,
+          "sugar_g": 2.73,
+          "added_sugar_g": null,
+          "fiber_g": 8.96,
+          "sodium_mg": 9.38,
+          "potassium_mg": 671.88,
+          "phosphorus_mg": 687.5
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3041011",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "af42c2b8c9aeea1dfd53ae03e1a1e55d289d443a367360a5b2d398506b56abb6",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần hạt tham chiếu",
+        "grams": 25,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3042011",
+      "name_vi": "Hạt hạnh nhân rang",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 652.0,
+          "protein_g": 21.23,
+          "fat_g": 55.17,
+          "sat_fat_g": 4.21,
+          "carb_g": 17.68,
+          "sugar_g": 4.55,
+          "added_sugar_g": null,
+          "fiber_g": 10.5,
+          "sodium_mg": 339.0,
+          "potassium_mg": 699.0,
+          "phosphorus_mg": 466.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3042011",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "d5924507e9502acbaaa74e3066663cddc95292b85bcb6aa1bc1442073b41564e",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần hạt tham chiếu",
+        "grams": 25,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3043011",
+      "name_vi": "Hạt óc chó rang",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 703.0,
+          "protein_g": 15.23,
+          "fat_g": 65.21,
+          "sat_fat_g": 6.13,
+          "carb_g": 13.71,
+          "sugar_g": 2.61,
+          "added_sugar_g": null,
+          "fiber_g": 6.7,
+          "sodium_mg": 2.0,
+          "potassium_mg": 441.0,
+          "phosphorus_mg": 346.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3043011",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "a2c67f39b76cda020430690e4b7b9b7d1927a09e20f046ad305c252d3888004f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần hạt tham chiếu",
+        "grams": 25,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3025002",
+      "name_vi": "Đậu phụ luộc",
+      "aliases": [
+        "đậu hũ luộc"
+      ],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 98.0,
+          "protein_g": 11.01,
+          "fat_g": 5.45,
+          "sat_fat_g": 0.7,
+          "carb_g": 1.11,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": 7.07,
+          "potassium_mg": 122.22,
+          "phosphorus_mg": 85.86
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3025002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "573aadf3928db5a04ab2d6a7d4e5a4b905d8f5a4bcb3236c4572e9902a89482b",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3027",
+      "name_vi": "Đậu phụ, nướng",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 116.0,
+          "protein_g": 13.4,
+          "fat_g": 6.4,
+          "sat_fat_g": null,
+          "carb_g": 1.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 167.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3027",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3115f79c9fae0b2a8473ab43a81a30791e550101cafa105efbb7df916c869205",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3032",
+      "name_vi": "Sữa đậu nành (100g đậu/lít)",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 29.0,
+          "protein_g": 3.1,
+          "fat_g": 1.6,
+          "sat_fat_g": 0.23,
+          "carb_g": 0.5,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.1,
+          "sodium_mg": 55.0,
+          "potassium_mg": 124.0,
+          "phosphorus_mg": 36.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3032",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "86b07036206885b98ab114a64dbf3aa57fb5bc683cc0ff96eb319823e6a3328d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_3033",
+      "name_vi": "Tào phớ",
+      "aliases": [],
+      "category": "Hạt, quả giàu đạm, béo và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 46.0,
+          "protein_g": 3.8,
+          "fat_g": 1.2,
+          "sat_fat_g": null,
+          "carb_g": 4.7,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.2,
+          "sodium_mg": 33.0,
+          "potassium_mg": 85.0,
+          "phosphorus_mg": 150.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "3033",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "750fa0e7e8696f7553c5caee7646bb2a4088bac383d93efe0c1587217208b9b9",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_10001",
+      "name_vi": "Sữa bò tươi",
+      "aliases": [],
+      "category": "Sữa và sản phẩm chế biến",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 74.0,
+          "protein_g": 3.9,
+          "fat_g": 4.4,
+          "sat_fat_g": 1.87,
+          "carb_g": 4.8,
+          "sugar_g": 5.26,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 352.54,
+          "potassium_mg": 132.67,
+          "phosphorus_mg": 88.14
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "10001",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "50a340223888428f3bb9314ba75a2c0bceb96b3f8ebbf7319477433b594c3970",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_10004",
+      "name_vi": "Sữa chua",
+      "aliases": [],
+      "category": "Sữa và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 61.0,
+          "protein_g": 3.3,
+          "fat_g": 3.7,
+          "sat_fat_g": 2.1,
+          "carb_g": 3.6,
+          "sugar_g": 4.66,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 46.0,
+          "potassium_mg": 155.0,
+          "phosphorus_mg": 95.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "10004",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "c4787d7c6f9df3338069909ef9c4f49b477ed1a0af16ac60fca48fa6c03b3903",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_10005",
+      "name_vi": "Sữa chua vớt béo",
+      "aliases": [],
+      "category": "Sữa và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 26.0,
+          "protein_g": 3.4,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 3.1,
+          "sugar_g": 14.97,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 68.98,
+          "potassium_mg": 173.21,
+          "phosphorus_mg": 109.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "10005",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ada461bbf491f7530a8bf02c9ee3cebf7f2a4a321adbc051fa25421455e172fc",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_10009",
+      "name_vi": "Phó mát",
+      "aliases": [
+        "phô mai",
+        "pho mai"
+      ],
+      "category": "Sữa và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 380.0,
+          "protein_g": 25.5,
+          "fat_g": 30.9,
+          "sat_fat_g": 19.67,
+          "carb_g": null,
+          "sugar_g": 0.52,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 621.0,
+          "potassium_mg": 98.0,
+          "phosphorus_mg": 424.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "10009",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1cadd46f62163ed64e98c89d92975eeb24a798ab510cb98472d82887060925ae",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 tô tham chiếu",
+        "grams": 20,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_10036",
+      "name_vi": "Sữa chua, đặc, không đường",
+      "aliases": [],
+      "category": "Sữa và sản phẩm chế biến",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 61.0,
+          "protein_g": 3.3,
+          "fat_g": 3.7,
+          "sat_fat_g": 2.1,
+          "carb_g": 3.6,
+          "sugar_g": 3.24,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 46.0,
+          "potassium_mg": 155.0,
+          "phosphorus_mg": 95.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "10036",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "03abbba4b2885fbf7fda0c59ee2c3a7bfc6a3dbecf4dce95ee7dd45b9d7c16b1",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5001",
+      "name_vi": "Bưởi, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 33.0,
+          "protein_g": 0.2,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 8.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.7,
+          "sodium_mg": 2.6,
+          "potassium_mg": 158.7,
+          "phosphorus_mg": 18.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5001",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "ff694d994174ec46012c553950a5205846053b0b939d4a0b69b7e70ec5ffda4f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5002",
+      "name_vi": "Cam, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 43.0,
+          "protein_g": 0.9,
+          "fat_g": 0.06,
+          "sat_fat_g": 0.02,
+          "carb_g": 9.74,
+          "sugar_g": 9.35,
+          "added_sugar_g": null,
+          "fiber_g": 1.4,
+          "sodium_mg": 3.5,
+          "potassium_mg": 108.1,
+          "phosphorus_mg": 23.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5002",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "696579c20ac87356124b0fb4cc33f1a293b47ee3a4026a777abba2d714f59ad0",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5003",
+      "name_vi": "Chanh, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 29.0,
+          "protein_g": 0.9,
+          "fat_g": 0.14,
+          "sat_fat_g": 0.04,
+          "carb_g": 5.96,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.3,
+          "sodium_mg": 3.0,
+          "potassium_mg": 145.0,
+          "phosphorus_mg": 22.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5003",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "3823f1acd2b2b09ef7cc5609ab5eb05f313b52778a2dfadef514dfb860e636a4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần chanh ăn được tham chiếu",
+        "grams": 10,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5006",
+      "name_vi": "Chuối tây, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 66.0,
+          "protein_g": 0.9,
+          "fat_g": 0.3,
+          "sat_fat_g": 0.11,
+          "carb_g": 15.0,
+          "sugar_g": 12.23,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 17.1,
+          "potassium_mg": 285.5,
+          "phosphorus_mg": 25.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5006",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "c379993099223ba3ba63427a5d279c970d7c98b437be9a0afb9ded45876db53b",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5007",
+      "name_vi": "Chuối tiêu, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 100.0,
+          "protein_g": 1.5,
+          "fat_g": 0.2,
+          "sat_fat_g": null,
+          "carb_g": 23.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.8,
+          "sodium_mg": 19.3,
+          "potassium_mg": 329.4,
+          "phosphorus_mg": 28.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5007",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "5b5d98c831ade0e2ec531cdb7801400b062fb1ec65bf856257dd48ec20662490",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5009",
+      "name_vi": "Dâu tây, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 59.0,
+          "protein_g": 1.8,
+          "fat_g": 0.4,
+          "sat_fat_g": null,
+          "carb_g": 12.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 4.0,
+          "sodium_mg": 37.0,
+          "potassium_mg": 292.0,
+          "phosphorus_mg": 23.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5009",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "45307a833426324ae1b0c203232a4acd8c5ef269bd69cce9a6ee59427ae8492b",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5011",
+      "name_vi": "Dưa hấu, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 18.0,
+          "protein_g": 1.2,
+          "fat_g": 0.2,
+          "sat_fat_g": 0.02,
+          "carb_g": 2.8,
+          "sugar_g": 6.2,
+          "added_sugar_g": null,
+          "fiber_g": 0.5,
+          "sodium_mg": 4.5,
+          "potassium_mg": 187.2,
+          "phosphorus_mg": 13.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5011",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "9c137b3f11415686dba024736a7e28b997c84dd78b6ba600bbfeb4cc833d7d13",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5014",
+      "name_vi": "Dứa ta, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 32.0,
+          "protein_g": 0.8,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 7.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.8,
+          "sodium_mg": 24.2,
+          "potassium_mg": 156.9,
+          "phosphorus_mg": 17.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5014",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1fd4c6a35af2cfa5e42e7a7a11898dc912fb8d8bb490078de55318cfe7311678",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5017",
+      "name_vi": "Đu đủ chín, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 38.0,
+          "protein_g": 1.0,
+          "fat_g": 0.11,
+          "sat_fat_g": 0.04,
+          "carb_g": 8.19,
+          "sugar_g": 5.9,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": 4.3,
+          "potassium_mg": 220.5,
+          "phosphorus_mg": 32.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5017",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "07bf55e0907957d8559d297b02148c6c23d40e7721792ca74658866baf1e2a67",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5023",
+      "name_vi": "Lê, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 48.0,
+          "protein_g": 0.7,
+          "fat_g": 0.2,
+          "sat_fat_g": 0.01,
+          "carb_g": 10.8,
+          "sugar_g": 9.8,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": 5.0,
+          "potassium_mg": 88.4,
+          "phosphorus_mg": 16.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5023",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "26627c11c7d9d21efaa6a295258b55fb0efb4f6d3af9bbffb5593347a6ff2665",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5028",
+      "name_vi": "Mít dai, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 54.0,
+          "protein_g": 0.6,
+          "fat_g": 0.19,
+          "sat_fat_g": 0.06,
+          "carb_g": 12.41,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.2,
+          "sodium_mg": 2.5,
+          "potassium_mg": 367.5,
+          "phosphorus_mg": 28.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5028",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "c37b75891015bc7a2da3ead5d80dac2a030b8f2643c982822012bfdfc628db05",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5034",
+      "name_vi": "Na, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 69.0,
+          "protein_g": 1.6,
+          "fat_g": 0.2,
+          "sat_fat_g": 0.05,
+          "carb_g": 15.1,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.8,
+          "sodium_mg": 22.3,
+          "potassium_mg": 259.5,
+          "phosphorus_mg": 45.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5034",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "9cbbca89ada6519d55003915da5e973fe6a67cf6c993f474a3ff0f220e9ac513",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5035",
+      "name_vi": "Nhãn, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 52.0,
+          "protein_g": 0.9,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 12.0,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.0,
+          "sodium_mg": 25.5,
+          "potassium_mg": 257.1,
+          "phosphorus_mg": 12.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5035",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "b75f0fddb985ad8c41061e151c92a536dc86421eee5a968f7db8db734e846d57",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5037",
+      "name_vi": "Nho ngọt, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 71.0,
+          "protein_g": 0.4,
+          "fat_g": 0.11,
+          "sat_fat_g": 0.05,
+          "carb_g": 16.99,
+          "sugar_g": 15.48,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": 2.0,
+          "potassium_mg": 191.0,
+          "phosphorus_mg": 22.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5037",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1c9108b04cc614fc286331e8d02e8d6a3999a4ad8821f271e454cad92e6cae12",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5040",
+      "name_vi": "Ổi, quả chín, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 61.0,
+          "protein_g": 0.6,
+          "fat_g": 0.76,
+          "sat_fat_g": 0.27,
+          "carb_g": 12.94,
+          "sugar_g": 8.92,
+          "added_sugar_g": null,
+          "fiber_g": 6.0,
+          "sodium_mg": 4.0,
+          "potassium_mg": 291.0,
+          "phosphorus_mg": 16.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5040",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "afb541991e63db91505e822a3aa89e570c67083c1c6b84c20d6d6ae0aed2e7a7",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5041",
+      "name_vi": "Quả bơ vỏ tím, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 76.0,
+          "protein_g": 1.8,
+          "fat_g": 6.2,
+          "sat_fat_g": null,
+          "carb_g": 3.2,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 69.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5041",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "2420de118586625ad3b9ba477997bfcaaed58a42b7a4af1cbcd71e1a507d4fa4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5044",
+      "name_vi": "Quả thanh long, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 47.0,
+          "protein_g": 1.3,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 10.5,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.8,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 10.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5044",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "632a93b886866b344c092be9cbee7830fd1a313364676d6431380c45b7145d3f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5047",
+      "name_vi": "Quít, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 40.0,
+          "protein_g": 0.8,
+          "fat_g": null,
+          "sat_fat_g": 0.04,
+          "carb_g": 9.2,
+          "sugar_g": 10.58,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": 3.6,
+          "potassium_mg": 110.9,
+          "phosphorus_mg": 17.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5047",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "bb1284e49ad7a6c24c4de86ba3d24059ef329cb199148b72d6ece8c0fa9e345c",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5048",
+      "name_vi": "Sầu riêng, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 138.0,
+          "protein_g": 2.5,
+          "fat_g": 1.6,
+          "sat_fat_g": null,
+          "carb_g": 28.3,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.4,
+          "sodium_mg": 1.0,
+          "potassium_mg": 601.0,
+          "phosphorus_mg": 63.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5048",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "d67e8af3eb0a35123a861f2b9d9c1899dd62a7c086c87fff39b4dde3a620a89d",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5051",
+      "name_vi": "Táo tây, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 50.0,
+          "protein_g": 0.5,
+          "fat_g": 0.09,
+          "sat_fat_g": 0.03,
+          "carb_g": 11.71,
+          "sugar_g": 10.39,
+          "added_sugar_g": null,
+          "fiber_g": 0.6,
+          "sodium_mg": 15.2,
+          "potassium_mg": 101.9,
+          "phosphorus_mg": 13.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5051",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "5b2c34a487d706ba7848c514d81fd0e4aef6297b245a56cf4d3867696de066c5",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5052",
+      "name_vi": "Vải, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 49.0,
+          "protein_g": 0.7,
+          "fat_g": 0.35,
+          "sat_fat_g": 0.1,
+          "carb_g": 10.75,
+          "sugar_g": 15.23,
+          "added_sugar_g": null,
+          "fiber_g": 1.1,
+          "sodium_mg": 1.0,
+          "potassium_mg": 171.0,
+          "phosphorus_mg": 34.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5052",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "06b97c5a8d08822093f08dc49c78e985ea6fb20970a8315a73fdf82966a123b5",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5055",
+      "name_vi": "Xoài chín, tươi",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 69.0,
+          "protein_g": 0.6,
+          "fat_g": 0.3,
+          "sat_fat_g": 0.07,
+          "carb_g": 15.9,
+          "sugar_g": 14.8,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 2.1,
+          "potassium_mg": 114.1,
+          "phosphorus_mg": 13.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5055",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "0935b82136ae13ab59e6ebe0047bd20abe1f9371d9e9bdb84fef22d8ca2fa45f",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_5060",
+      "name_vi": "Dưa lưới",
+      "aliases": [],
+      "category": "Quả chín",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 38.0,
+          "protein_g": 0.84,
+          "fat_g": 0.19,
+          "sat_fat_g": 0.05,
+          "carb_g": 8.16,
+          "sugar_g": 7.86,
+          "added_sugar_g": null,
+          "fiber_g": 0.9,
+          "sodium_mg": 16.0,
+          "potassium_mg": 267.0,
+          "phosphorus_mg": 15.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "5060",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "882850de77e50a358ef726948a1fd70e509958acc150627be31bbb9a776f4b08",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần quả ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_14004",
+      "name_vi": "Coca cola",
+      "aliases": [],
+      "category": "Nước giải khát",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 42.0,
+          "protein_g": null,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 10.4,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 15.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "14004",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "4dfa198f3d4910732f15611b56b53ef631073779dc5e781e3e46c2b4bb3a5159",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ uống cân theo gram",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_14005",
+      "name_vi": "Nước cam tươi",
+      "aliases": [],
+      "category": "Nước giải khát",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 23.0,
+          "protein_g": 0.7,
+          "fat_g": 0.2,
+          "sat_fat_g": null,
+          "carb_g": 4.7,
+          "sugar_g": 8.4,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 1.0,
+          "potassium_mg": 200.0,
+          "phosphorus_mg": 16.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "14005",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "390d1f44118f3a3e819a896304fa36a94edcbfe9ba46f8d22cd9f07ff4fbeab4",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ uống cân theo gram",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_14006",
+      "name_vi": "Nước dừa non tươi",
+      "aliases": [],
+      "category": "Nước giải khát",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 21.0,
+          "protein_g": 0.4,
+          "fat_g": 0.1,
+          "sat_fat_g": 0.02,
+          "carb_g": 4.7,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 29.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "14006",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "45a99d69e89fcf11d3f5ee58bd46ecc6156d84fbd51cb14169ba7c55e906b881",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ uống cân theo gram",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_14040",
+      "name_vi": "Nước mía",
+      "aliases": [],
+      "category": "Nước giải khát",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 79.6,
+          "protein_g": null,
+          "fat_g": null,
+          "sat_fat_g": null,
+          "carb_g": 20.2,
+          "sugar_g": 20.2,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 43.0,
+          "potassium_mg": 11.0,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "14040",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "2ba66a8f92f41e05f676aee1b3551d565239a61de1ab8acb974e59700b0bfb33",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần đồ uống cân theo gram",
+        "grams": 200,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4005",
+      "name_vi": "Quả cà chua, tươi",
+      "aliases": [],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 24.0,
+          "protein_g": 0.6,
+          "fat_g": 0.23,
+          "sat_fat_g": 0.05,
+          "carb_g": 4.77,
+          "sugar_g": 2.63,
+          "added_sugar_g": null,
+          "fiber_g": 0.8,
+          "sodium_mg": 12.2,
+          "potassium_mg": 275.2,
+          "phosphorus_mg": 26.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4005",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "f4c772542bf8cffc4fdbf74c637619df5220d54fd9a13eb4a32385908d8da758",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4027",
+      "name_vi": "Dưa chuột, tươi",
+      "aliases": [
+        "dưa leo"
+      ],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 18.0,
+          "protein_g": 0.8,
+          "fat_g": 0.09,
+          "sat_fat_g": 0.03,
+          "carb_g": 3.61,
+          "sugar_g": 1.67,
+          "added_sugar_g": null,
+          "fiber_g": 0.7,
+          "sodium_mg": 13.3,
+          "potassium_mg": 168.8,
+          "phosphorus_mg": 27.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4027",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "fb4100a151766338f07d634d2b6e41da20b8b18e01f0fc33b8dbec0c3805efff",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_4063",
+      "name_vi": "Ớt xanh to, tươi",
+      "aliases": [
+        "ớt chuông xanh"
+      ],
+      "category": "Rau, quả, củ dùng làm rau",
+      "food_state": "raw_edible",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 31.0,
+          "protein_g": 1.3,
+          "fat_g": 0.13,
+          "sat_fat_g": 0.06,
+          "carb_g": 6.07,
+          "sugar_g": 2.4,
+          "added_sugar_g": null,
+          "fiber_g": 1.5,
+          "sodium_mg": 3.0,
+          "potassium_mg": 175.0,
+          "phosphorus_mg": 25.0
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "4063",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "1b02ec422edb9b157449b1e82761868578006f382b6d8f1a43ba877767ba4164",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần rau ăn được",
+        "grams": 150,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_12005",
+      "name_vi": "Bánh đậu xanh",
+      "aliases": [],
+      "category": "Đồ ngọt (đường, bánh, mứt, kẹo)",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 420.0,
+          "protein_g": 15.6,
+          "fat_g": 11.5,
+          "sat_fat_g": null,
+          "carb_g": 63.5,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 1.1,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": 272.8
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "12005",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "5e8954189cebce2f4a43ae93686a802fa0ec4813779f3b18c876828df0d2d23b",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_12084",
+      "name_vi": "Bánh bông lan",
+      "aliases": [],
+      "category": "Đồ ngọt (đường, bánh, mứt, kẹo)",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 489.0,
+          "protein_g": 5.1,
+          "fat_g": 29.5,
+          "sat_fat_g": null,
+          "carb_g": 50.8,
+          "sugar_g": 28.6,
+          "added_sugar_g": null,
+          "fiber_g": null,
+          "sodium_mg": 206.0,
+          "potassium_mg": null,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "12084",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "290a550295fe94fa24a1708ad6e4b1f34b3c39c32a82cc5242422521add19bdb",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_12090",
+      "name_vi": "Bánh rán nhân đỗ",
+      "aliases": [],
+      "category": "Đồ ngọt (đường, bánh, mứt, kẹo)",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 318.0,
+          "protein_g": 3.7,
+          "fat_g": 9.1,
+          "sat_fat_g": null,
+          "carb_g": 55.42,
+          "sugar_g": 35.4,
+          "added_sugar_g": null,
+          "fiber_g": 0.18,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "12090",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "37b07101883b5d4583db395ccb976edde41e2705533b1df2f971ee524ce323ab",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_12091",
+      "name_vi": "Bánh tiêu",
+      "aliases": [],
+      "category": "Đồ ngọt (đường, bánh, mứt, kẹo)",
+      "food_state": "as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 318.0,
+          "protein_g": 3.7,
+          "fat_g": 9.1,
+          "sat_fat_g": null,
+          "carb_g": 55.42,
+          "sugar_g": 35.4,
+          "added_sugar_g": null,
+          "fiber_g": 0.18,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "12091",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "53dcc65bc494ba82f0e3c7af654d11aeabbacd815c5904a8e35c9ff38dc7aab1",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "NIN_F_15077",
+      "name_vi": "Bánh dày",
+      "aliases": [],
+      "category": "Thức ăn truyền thống",
+      "food_state": "prepared_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 156.0,
+          "protein_g": 3.3,
+          "fat_g": 3.1,
+          "sat_fat_g": null,
+          "carb_g": 28.71,
+          "sugar_g": null,
+          "added_sugar_g": null,
+          "fiber_g": 0.38,
+          "sodium_mg": null,
+          "potassium_mg": null,
+          "phosphorus_mg": null
+        },
+        "source_id": "NIN_FOOD",
+        "record_id": "15077",
+        "record_url": "https://viendinhduong.vn/vi/cong-cu-va-tien-ich/gia-tri-dinh-duong-thuc-pham",
+        "source_record_sha256": "99b9c5fa12924e70a43788a634eaa3197f5dc775d728817ebeed370541834a93",
+        "quality_flags": [],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần tham chiếu",
+        "grams": 100,
+        "source_id": "PORTION_UI_V2",
+        "status": "editable_default_not_population_average",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "USDA_FDC_168878",
+      "name_vi": "Cơm trắng chín, gạo hạt dài",
+      "aliases": [
+        "cơm trắng",
+        "cơm"
+      ],
+      "category": "Món chế biến / USDA",
+      "food_state": "cooked_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 130.0,
+          "protein_g": 2.69,
+          "fat_g": 0.28,
+          "sat_fat_g": 0.077,
+          "carb_g": 28.17,
+          "sugar_g": 0.05,
+          "added_sugar_g": null,
+          "fiber_g": 0.4,
+          "sodium_mg": 1.0,
+          "potassium_mg": 35.0,
+          "phosphorus_mg": 43.0
+        },
+        "source_id": "USDA_FDC",
+        "record_id": "168878",
+        "record_url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+        "source_record_sha256": "d61aa4c9093f2c9ae06e75919db18b642f59dd2c3f0bf4009762239a012d678f",
+        "quality_flags": [
+          "foreign_reference_variant_confirm_recipe"
+        ],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 cup cơm theo nguồn USDA",
+        "grams": 158.0,
+        "source_id": "USDA_FDC",
+        "status": "source_household_measure_not_personal_target",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "USDA_FDC_170693",
+      "name_vi": "Hamburger một miếng thịt, loại nhỏ, không sốt",
+      "aliases": [
+        "hamburger",
+        "burger"
+      ],
+      "category": "Món chế biến / USDA",
+      "food_state": "cooked_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 297.0,
+          "protein_g": 16.52,
+          "fat_g": 12.01,
+          "sat_fat_g": 4.493,
+          "carb_g": 31.5,
+          "sugar_g": 4.88,
+          "added_sugar_g": null,
+          "fiber_g": 1.7,
+          "sodium_mg": 331.0,
+          "potassium_mg": 197.0,
+          "phosphorus_mg": 134.0
+        },
+        "source_id": "USDA_FDC",
+        "record_id": "170693",
+        "record_url": "https://fdc.nal.usda.gov/food-details/170693/nutrients",
+        "source_record_sha256": "017ae011955a8c868bdff1c9aaa40dae5964d0625a001e90cafad4e4ec3526a0",
+        "quality_flags": [
+          "foreign_reference_variant_confirm_recipe"
+        ],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 hamburger nhỏ theo nguồn USDA",
+        "grams": 78.0,
+        "source_id": "USDA_FDC",
+        "status": "source_household_measure_not_personal_target",
+        "requires_confirmation": true
+      }
+    },
+    {
+      "food_id": "USDA_FDC_170698",
+      "name_vi": "Khoai tây chiên dầu thực vật",
+      "aliases": [
+        "khoai tây chiên"
+      ],
+      "category": "Món chế biến / USDA",
+      "food_state": "cooked_as_named",
+      "nutrition": {
+        "basis_g": 100,
+        "values": {
+          "energy_kcal": 312.0,
+          "protein_g": 3.43,
+          "fat_g": 14.73,
+          "sat_fat_g": 2.336,
+          "carb_g": 41.44,
+          "sugar_g": 0.3,
+          "added_sugar_g": null,
+          "fiber_g": 3.8,
+          "sodium_mg": 210.0,
+          "potassium_mg": 579.0,
+          "phosphorus_mg": 125.0
+        },
+        "source_id": "USDA_FDC",
+        "record_id": "170698",
+        "record_url": "https://fdc.nal.usda.gov/food-details/170698/nutrients",
+        "source_record_sha256": "3b8babbf50f75e96e92519e4bfc269a3f3a64b452b8c9b8c63e7b994afca7cd6",
+        "quality_flags": [
+          "foreign_reference_variant_confirm_recipe"
+        ],
+        "status": "source_retrieved_not_independently_measured"
+      },
+      "reference_serving": {
+        "label": "1 phần khoai chiên cỡ vừa theo nguồn USDA",
+        "grams": 117.0,
+        "source_id": "USDA_FDC",
+        "status": "source_household_measure_not_personal_target",
+        "requires_confirmation": true
+      }
+    }
+  ]
+}
