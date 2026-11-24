@@ -24,3 +24,11 @@ def list_dishes(
     db=Depends(get_db),
 ):
     return dish_service.search(db, q, category, limit, cursor)
+
+@router.get("/{dish_id}", response_model=dict)
+def get_dish(
+    dish_id: int,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return dish_service.detail(db, dish_id)

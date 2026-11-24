@@ -6,8 +6,9 @@ from fastapi import UploadFile
 
 from app.core.config import settings
 from app.core.exceptions import AppException
-from app.schemas.e2e import MenuGenerateInput
+from app.schemas.e2e import MenuGenerateInput, UndoInput
 from app.services import (
+    assessment_service,
     meal_service,
     menu_plan_service,
     nutrition_service,
@@ -173,3 +174,66 @@ def test_household_ownership_hides_other_sessions(monkeypatch):
     with pytest.raises(AppException) as error:
         ownership.household(None, 9, 3)
     assert error.value.status_code == 404
+
+
+def test_undo_steps_default_and_bounds():
+    assert UndoInput().steps == 1
+    with pytest.raises(ValueError):
+        UndoInput(steps=0)
+    with pytest.raises(ValueError):
+        UndoInput(steps=6)
+
+
+def test_assessment_explanation_uses_template(monkeypatch):
+    monkeypatch.setattr(
+        "app.repositories.assessment_repository.find_owned",
+        lambda *args: {"assessment_id": 4, "suitability_level": "RED"},
+    )
+    result = assessment_service.explain(None, 1, 4, 80)
+    assert result["generatedBy"] == "template"
+    assert "ràng buộc cứng" in result["explanation"]
+
+
+def test_confirm_recalculates_missing_assessment(monkeypatch):
+    meal = {"meal_id": 8, "household_id": 3, "status": "draft", "revision": 2}
+    assessment = {
+        "assessment_id": 9,
+        "member_id": 7,
+        "meal_revision": 2,
+        "profile_version": 4,
+        "suitability_level": "GREEN",
+        "ruleset_version": "v1",
+    }
+    monkeypatch.setattr("app.services.meal_service.owned", lambda *args, **kwargs: meal)
+    monkeypatch.setattr(
+        "app.repositories.assessment_repository.list_for_meal", lambda *args: []
+    )
+    monkeypatch.setattr(
+        "app.services.assessment_service.member",
+        lambda *args: {"household_id": 3, "profile_version": 4},
+    )
+    monkeypatch.setattr("app.repositories.meal_repository.items", lambda *args: [])
+    monkeypatch.setattr(
+        "app.services.rule_engine.evaluate",
+        lambda *args: {"level": "GREEN", "reasons": [], "rulesetVersion": "v1"},
+    )
+    saved = []
+    monkeypatch.setattr(
+        "app.repositories.assessment_repository.save",
+        lambda *args: saved.append(args),
+    )
+    monkeypatch.setattr(
+        "app.repositories.assessment_repository.find_for_meal_member",
+        lambda *args: assessment,
+    )
+    monkeypatch.setattr(
+        "app.repositories.meal_repository.set_member_ids", lambda *args: None
+    )
+    monkeypatch.setattr(
+        "app.repositories.meal_repository.set_confirmation",
+        lambda *args: "2026-11-20T10:00:00",
+    )
+
+    result = assessment_service.confirm(None, 1, 8, [7])
+    assert saved
+    assert result["journalEntries"] == [{"memberId": 7, "level": "GREEN"}]

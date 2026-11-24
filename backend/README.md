@@ -2,6 +2,11 @@
 
 Backend API của NutriPlan, xây dựng bằng FastAPI.
 
+Nhóm H (`GET /health`, `POST /dev/seed-demo`, `POST /events`) đã được bổ sung.
+Xem [hướng dẫn API hỗ trợ hệ thống](../docs/SYSTEM_SUPPORT_API.md) để cập nhật
+schema, cấu hình và thử request. Health trả `services.db`, `services.vision`,
+`services.llm`, `version`, `rulesetVersion`; DB lỗi trả HTTP 503.
+
 ## Cấu trúc
 
 ```text
@@ -118,11 +123,59 @@ URL-encode các ký tự đó trong `DATABASE_URL`.
 
 Các API hiện dùng các bảng `SESSION`, `HOUSEHOLD`, `MEMBER`, `FOOD_ITEM`,
 `MEAL`, `MEAL_ITEM`, `ASSESSMENT`, `MENU_PLAN`, `MENU_ITEM`, `CONSENT`,
-`CONSENT_HISTORY`, `MEAL_MEMBER` và `NUTRITION_RULE`. Cấu trúc MySQL
-tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã tạo bảng, hãy đối chiếu tên
-bảng, tên cột, khóa ngoại và kiểu dữ liệu với file này. Endpoint
-`http://localhost:8000/health` báo `database: "ok"` khi kết nối được. Dữ liệu
+`CONSENT_HISTORY`, `MEAL_MEMBER`, `NUTRITION_RULE`, `RULE_SOURCE` và
+`HEALTH_RULE`. Cấu trúc MySQL tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã
+tạo bảng, hãy đối chiếu tên bảng, tên cột, khóa ngoại và kiểu dữ liệu với file
+này. Endpoint
+`http://localhost:8000/health` báo `services.db: "ok"` khi truy vấn DB được. Dữ liệu
 SQLite cũ trong `meal_analysis.db` không được tự chuyển sang MySQL.
+
+### Rule Engine
+
+`GET /rules` trả quy tắc đang bật theo mặc định; có thể lọc bằng
+`condition`, `nutrient`, `scope`, `enabled`, `limit` và `cursor`.
+`GET /rules/{ruleId}` trả thêm `rationale` và `changeLog`. Quy tắc lưu trong
+`HEALTH_RULE`, nguồn lưu riêng trong `RULE_SOURCE` qua `source_id`; seed từ
+`app/db/rules.seed.json`. Quy tắc chưa có nguồn xác minh phải để
+`enabled: false`. Seed minh hoạ hiện có đang tắt và không được dùng làm ngưỡng
+y khoa.
+
+`POST /rules/evaluate` nhận hồ sơ cùng nutrition và `dishIds`, chỉ chạy ở
+môi trường `development` hoặc `test`, không lưu dữ liệu. Quy tắc scope `meal`
+được áp dụng cho endpoint đánh giá một bữa; nếu không có quy tắc phù hợp thì
+kết quả là `INSUFFICIENT_DATA`.
+
+### Đề xuất thực đơn
+
+Các API thực đơn dùng ID số nguyên của thành viên, món và thực đơn. Quy trình
+hỗ trợ sinh thực đơn tối đa 3 ngày, xem danh sách/chi tiết, lấy món thay thế,
+đổi món, khoá món, sinh lại phần chưa khoá, hoàn tác tối đa 5 bước, kiểm tra,
+xuất PDF/HTML và xoá thực đơn:
+
+- `POST /menu-plans/generate`
+- `GET /menu-plans` và `GET /menu-plans/{planId}`
+- `GET /menu-plans/{planId}/items/{itemId}/alternatives`
+- `PATCH /menu-plans/{planId}/items/{itemId}`
+- `PUT /menu-plans/{planId}/items/{itemId}/lock`
+- `POST /menu-plans/{planId}/regenerate`
+- `POST /menu-plans/{planId}/undo`
+- `POST /menu-plans/{planId}/validate`
+- `GET /menu-plans/{planId}/export`
+- `DELETE /menu-plans/{planId}`
+
+Sinh thực đơn yêu cầu hồ sơ thành viên có mục tiêu năng lượng, đồng ý lưu hồ sơ
+sức khỏe, cùng món ăn có khẩu phần, dữ liệu dinh dưỡng và thông tin nguồn cần
+thiết. Các ràng buộc cứng không tự được nới lỏng; nếu thiếu dữ liệu/rule hoặc
+không tìm được thực đơn phù hợp, API trả lỗi thay vì tạo thực đơn không hợp lệ.
+Rule dinh dưỡng lấy từ `HEALTH_RULE` và `RULE_SOURCE`; không bật rule thiếu
+nguồn. Lịch sử hoàn tác thực đơn được lưu riêng trong
+`MENU_PLAN_REVISION_HISTORY`; lịch sử bữa ăn dùng `MEAL_REVISION_HISTORY`.
+
+Nếu database đã tồn tại, rà soát trước các thay đổi schema bằng lệnh
+`.\.venv\Scripts\python.exe -m app.db.migrate_e2e --check`, sau đó chạy
+`.\.venv\Scripts\python.exe -m app.db.dev_db init` để bổ sung bảng/cột còn
+thiếu. Migration không xoá dữ liệu hay tự sửa cột đã tồn tại; đối chiếu cấu
+trúc bảng hiện hữu với `app/db/schema.sql` trước khi chạy.
 
 ### BE-02: phiên và hồ sơ
 

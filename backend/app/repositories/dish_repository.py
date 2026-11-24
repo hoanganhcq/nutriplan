@@ -16,18 +16,24 @@ def search(db, q=None, category=None, limit=20, cursor=0):
         tuple(params),
     ).fetchall()
 
+
 # truy vấn một món ăn cụ thể theo ID
 def find(db, dish_id):
     return db.execute(
         "SELECT * FROM FOOD_ITEM WHERE food_id = %s", (dish_id,)
     ).fetchone()
 
+
 # truy vấn tất cả các món ăn có nguồn gốc được xác định
 def list_candidates(db):
     return db.execute(
-        "SELECT * FROM FOOD_ITEM WHERE source_name IS NOT NULL "
-        "AND source_name <> '' ORDER BY food_id"
+        """SELECT * FROM FOOD_ITEM
+           WHERE entity_type = 'DISH'
+             AND (category IS NULL OR LOWER(category) <> 'ingredient')
+             AND source_name IS NOT NULL AND source_name <> ''
+           ORDER BY food_id"""
     ).fetchall()
+
 
 # truy vấn một món ăn cụ thể theo tên hoặc bí danh
 def match_name(db, name):

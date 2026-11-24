@@ -1,0 +1,17 @@
+[
+  {
+    "ruleId": "rule_htn_sodium_meal",
+    "condition": "HTN",
+    "nutrient": "sodium_mg",
+    "scope": "meal",
+    "operator": "lte",
+    "threshold": 800,
+    "unit": "mg",
+    "severityWhenViolated": "YELLOW",
+    "enabled": false,
+    "version": "2026.11.1",
+    "source": null,
+    "rationale": "Ngưỡng minh hoạ trong đặc tả; chưa có nguồn xác minh, không dùng để đánh giá y khoa.",
+    "changeLog": []
+  }
+]
