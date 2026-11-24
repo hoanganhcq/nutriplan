@@ -7,10 +7,12 @@ from app.core.config import settings
 from app.db.database import get_connection
 from app.repositories import health_repository
 from app.schemas.health import HealthResponse, ServiceHealth
-from app.services import vision_service
+from app.services import vietfood, vision_service
 
 
 def vision_status():
+    if vision_service.mode() == "vietfood":
+        return "ok" if vietfood.available() else "degraded"
     # An inference URL alone does not establish that a provider is reachable.
     if (
         vision_service.mode() != "http"

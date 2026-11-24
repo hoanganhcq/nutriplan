@@ -63,6 +63,7 @@ class MealItemUpdate(CamelModel):
     dish_id: int | None = Field(default=None, gt=0)
     grams: float | None = Field(default=None, gt=0, le=10000)
     seasoning: str | None = Field(default=None, max_length=500)
+    confirm_weight: bool = False
 
 
 class ManualMealItem(CamelModel):
@@ -228,6 +229,18 @@ class MealItemOutput(CamelModel):
     nutrition: NutritionOutput
 
 
+class RecognitionDish(CamelModel):
+    dish_id: int
+    name: str
+
+
+class RecognitionSuggestion(CamelModel):
+    name: str
+    confidence: float
+    grams: float | None
+    dishes: list[RecognitionDish]
+
+
 class MealOutput(CamelModel):
     meal_id: int
     household_id: int
@@ -241,6 +254,7 @@ class MealOutput(CamelModel):
     member_ids: list[int]
     is_estimate: bool
     warnings: list[str]
+    recognition: list[RecognitionSuggestion] | None = None
 
 
 class AssessmentOutput(CamelModel):

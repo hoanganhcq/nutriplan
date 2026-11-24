@@ -4,6 +4,7 @@ from typing import Literal
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from pydantic import BaseModel, Field
+from starlette.concurrency import run_in_threadpool
 
 from app.core.exceptions import AppException
 from app.dependencies import get_current_session, get_db
@@ -70,7 +71,8 @@ async def analyze_meal(
         ) from exc
     validated = await meal_service.validate_images(images)
     return {
-        "data": meal_service.analyze(
+        "data": await run_in_threadpool(
+            meal_service.analyze,
             db,
             session["session_id"],
             household_id,

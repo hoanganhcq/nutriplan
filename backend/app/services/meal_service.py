@@ -3,7 +3,7 @@ from datetime import UTC, datetime
 
 from app.core.exceptions import AppException
 from app.repositories import assessment_repository, dish_repository, meal_repository
-from app.services import consent_service, nutrition_service, vision_service
+from app.services import consent_service, nutrition_service, vietfood, vision_service
 from app.services.ownership import member
 
 MAGIC = {
@@ -145,9 +145,14 @@ def analyze(
         consent_service.require(
             db, session_id, household_id, "send_image_to_ai_provider"
         )
-    detections, warnings = vision_service.recognize(
-        images, reference_object, portion_method
-    )
+    recognition = None
+    if vision_service.mode() == "vietfood":
+        recognition, warnings = vietfood.recognize(db, images)
+        detections = []
+    else:
+        detections, warnings = vision_service.recognize(
+            images, reference_object, portion_method
+        )
     meal_id = meal_repository.create(
         db,
         household_id,
@@ -198,13 +203,13 @@ def analyze(
             if isinstance(confidence, (int, float)) and 0 <= confidence <= 1
             else None,
         )
-    if not detections:
+    if not detections and not recognition:
         warnings.append("No dishes recognized; add items manually")
     db.execute(
         "UPDATE MEAL SET warnings = %s WHERE meal_id = %s",
         (json.dumps(warnings), meal_id),
     )
-    return detail(db, session_id, meal_id)
+    return detail(db, session_id, meal_id) | {"recognition": recognition}
 
 
 def change_item(db, session_id, meal_id, item_id, payload):
@@ -249,9 +254,13 @@ def add_item(db, session_id, meal_id, payload):
     if not dish_repository.find(db, payload.dish_id):
         raise AppException("NOT_FOUND", "Dish not found", 404)
     _save_revision(db, meal_id, row, "add_item")
-    meal_repository.add_item(
+    item_id = meal_repository.add_item(
         db, meal_id, payload.dish_id, payload.grams, payload.seasoning
     )
+    if payload.confirm_weight:
+        meal_repository.update_item(
+            db, meal_id, item_id, payload.dish_id, payload.grams, payload.seasoning
+        )
     meal_repository.increment_revision(db, meal_id)
     return detail(db, session_id, meal_id)
 

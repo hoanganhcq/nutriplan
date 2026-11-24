@@ -73,9 +73,8 @@ def evaluate(db, profile, foods):
         }
     matched = []
     for food in foods:
-        ingredients = {
-            part.strip().casefold() for part in _values(food.get("allergen_codes"))
-        }
+        allergen_codes = _values(food.get("allergen_codes")) or []
+        ingredients = {part.strip().casefold() for part in allergen_codes}
         for allergy in allergies:
             if allergy.casefold() in ingredients:
                 matched.append(f"Allergen {allergy} in {food['name']}")

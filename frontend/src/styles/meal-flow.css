@@ -1,0 +1,48 @@
+.meal-flow {
+  max-width: 56rem;
+  margin-inline: auto;
+}
+
+.meal-flow__controls {
+  display: grid;
+  gap: 1rem;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  margin: 0 0 1rem;
+}
+
+.meal-panel {
+  display: grid;
+  gap: .75rem;
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: .75rem;
+  background: var(--color-surface);
+}
+
+.meal-panel :is(h2, h3, p) { margin-block: 0; }
+.meal-panel article + article { border-top: 1px solid var(--color-line); padding-top: .75rem; }
+.meal-panel article { display: grid; gap: .5rem; min-width: 0; }
+.meal-row, .meal-checkbox { display: flex; gap: .75rem; align-items: end; flex-wrap: wrap; }
+.meal-checkbox { align-items: center; }
+.meal-flow label:not(.meal-checkbox) { display: grid; gap: .25rem; max-width: 100%; }
+.meal-flow :is(input:not([type="checkbox"]), select, button) {
+  min-height: 2.5rem;
+  max-width: 100%;
+  border: 1px solid var(--color-line);
+  border-radius: .5rem;
+  padding: .35rem .65rem;
+  font: inherit;
+}
+.meal-flow button {
+  justify-self: start;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+.meal-flow button:enabled { cursor: pointer; }
+.meal-flow button:disabled { opacity: .55; }
+.meal-totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: .75rem; }
+.meal-totals dd { margin: 0; font-weight: 650; }
+.meal-error { color: #942123; }

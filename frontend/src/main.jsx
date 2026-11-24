@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './styles/tokens.css';
 import './components/components.css';
 import './layouts/layout.css';
+import './styles/meal-flow.css';
 import App from './App.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(

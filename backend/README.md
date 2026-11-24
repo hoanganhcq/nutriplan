@@ -56,6 +56,42 @@ uvicorn app.main:app --reload
 Ứng dụng kết nối đến MySQL theo `DATABASE_URL`. Các bảng cần được tạo sẵn;
 backend không tự tạo hoặc tự sửa schema khi khởi động.
 
+### Chụp bữa ăn bằng VietFood
+
+Luồng giao diện dùng phiên và hồ sơ thật, gửi một ảnh qua `POST /meals/analyze`,
+rồi dùng các API bữa ăn hiện có để xác nhận món, sửa gram và đánh giá hồ sơ.
+Chọn `VISION_PROVIDER=vietfood` trong `backend/.env` để chạy hai checkpoint
+trên CPU. MySQL lấy cấu hình từ `DATABASE_URL` của bạn.
+
+Chạy từ thư mục gốc dự án sau khi đã tạo venv và cài backend.
+
+```powershell
+$python = 'backend/.venv/Scripts/python.exe'
+& $python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+& $python -m pip install -r ai/requirements.txt
+npm.cmd --prefix frontend ci
+```
+
+Khởi động MySQL rồi chạy từ thư mục `backend`. Lệnh `init` bổ sung cấu trúc
+còn thiếu. Lệnh nhập danh mục có thể chạy lại và dùng ID ổn định của KB.
+
+```powershell
+Set-Location backend
+& ./.venv/Scripts/python.exe -m app.db.dev_db init
+& ./.venv/Scripts/python.exe -m app.db.vietfood_catalog
+& ./.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Trong terminal khác ở thư mục gốc, chạy
+`npm.cmd --prefix frontend run dev -- --host 127.0.0.1 --port 5173 --strictPort`.
+Mở [NutriPlan](http://127.0.0.1:5173), vào **Gia đình** để tạo phiên, cấp quyền
+lưu hồ sơ và thêm thành viên. Sau đó vào **Chụp bữa ăn**. Danh mục MySQL cho
+phép bổ sung món thủ công. **Nhật ký** hiển thị bữa đã xác nhận và bản nháp.
+
+Bộ quy tắc hiện có quyết định bữa ăn có thể xác nhận hay cần giữ nháp.
+Giải thích lấy từ endpoint mẫu của backend. Hồ sơ y khoa cần dữ liệu và
+quy tắc đã xác minh để đánh giá.
+
 ## Database development và dữ liệu demo
 
 Giai đoạn hiện tại chỉ dùng database MySQL `nutriplan` cho phát triển, kiểm thử

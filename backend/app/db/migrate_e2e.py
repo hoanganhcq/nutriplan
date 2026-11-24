@@ -11,6 +11,7 @@ COLUMNS = {
         "profile_version": "INTEGER NOT NULL DEFAULT 1",
     },
     "FOOD_ITEM": {
+        "vietfood_food_id": "VARCHAR(80) UNIQUE",
         "entity_type": "VARCHAR(20) NOT NULL DEFAULT 'DISH'",
         "aliases": "TEXT",
         "default_portion_g": "DECIMAL(8,2)",
