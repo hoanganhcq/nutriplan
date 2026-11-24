@@ -84,8 +84,9 @@ Set-Location backend
 
 Trong terminal khác ở thư mục gốc, chạy
 `npm.cmd --prefix frontend run dev -- --host 127.0.0.1 --port 5173 --strictPort`.
-Mở [NutriPlan](http://127.0.0.1:5173), vào **Gia đình** để tạo phiên, cấp quyền
-lưu hồ sơ và thêm thành viên. Sau đó vào **Chụp bữa ăn**. Danh mục MySQL cho
+Mở [NutriPlan](http://127.0.0.1:5173), chọn **Bắt đầu trải nghiệm** để tạo phiên.
+Bật **Lưu hồ sơ sức khỏe** trong **Cài đặt** rồi thêm thành viên ở **Gia đình**.
+Sau đó vào **Chụp bữa ăn**. Danh mục MySQL cho
 phép bổ sung món thủ công. **Nhật ký** hiển thị bữa đã xác nhận và bản nháp.
 
 Bộ quy tắc hiện có quyết định bữa ăn có thể xác nhận hay cần giữ nháp.

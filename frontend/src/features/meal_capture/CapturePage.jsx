@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { currentSession, levels, nutrients, request } from '../../services/api.js';
 import useRequest from '../../services/useRequest.js';
+import Icon from '../../components/Icon.jsx';
 
 function DishForm({ dishes, grams, button, onSubmit }) {
   function submit(event) {
@@ -47,7 +48,16 @@ export default function CapturePage() {
   const [recognitionEmpty, setRecognitionEmpty] = useState(false);
   const [assessment, setAssessment] = useState(null);
   const [explanation, setExplanation] = useState(null);
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState('');
   const action = useRequest();
+
+  useEffect(() => {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
 
   useEffect(() => {
     if (!session) return;
@@ -143,14 +153,24 @@ export default function CapturePage() {
   if (!session) return <><h1>Chụp bữa ăn</h1><p>Tạo phiên tại <Link to="/gia-dinh">Gia đình</Link> để bắt đầu.</p></>;
   const confirmed = meal?.status === 'confirmed';
   const hasEstimates = meal?.items.some((item) => item.isEstimate);
+  const step = assessment || confirmed ? 2 : meal ? 1 : 0;
 
-  return <section className="meal-flow">
-    <h1>Chụp bữa ăn</h1>
+  return <section className="page capture-page meal-flow">
+    <div className="page-top">
+      <div><h1>Chụp bữa ăn</h1><p>Tải ảnh, xác nhận các món và xem đánh giá theo hồ sơ.</p></div>
+    </div>
+    <ol className="stepper">{['Chụp ảnh', 'Xác nhận món', 'Đánh giá'].map((label, index) =>
+      <li key={label} className={index <= step ? 'active' : ''} aria-current={index === step ? 'step' : undefined}>
+        <span>{index + 1}</span>{label}
+      </li>)}
+    </ol>
     {action.error && <p className="meal-error" role="alert">{action.error}</p>}
     {action.busy && <p role="status">Đang xử lý…</p>}
     {!action.busy && !members.length && <p>Hãy thêm thành viên ở <Link to="/gia-dinh">Gia đình</Link>.</p>}
     <fieldset className="meal-flow__controls" disabled={action.busy || !members.length || confirmed}>
-      <section className="meal-panel">
+      <div className="capture-grid">
+      <section className="panel meal-panel">
+        <h2>{meal ? 'Thông tin bữa ăn' : 'Tải ảnh bữa ăn'}</h2>
         <label>Thành viên
           <select value={memberId} disabled={Boolean(meal)} onChange={(event) => setMemberId(event.target.value)}>
             {members.map((person) => <option key={person.memberId} value={person.memberId}>{person.name}</option>)}
@@ -162,11 +182,23 @@ export default function CapturePage() {
             <option value="dinner">Bữa tối</option><option value="snack">Bữa phụ</option>
           </select>
         </label>}
-        {!meal && !draftId && <form onSubmit={upload} className="meal-row">
-          <label>Ảnh JPEG, PNG hoặc WebP<input name="images" type="file" accept="image/jpeg,image/png,image/webp" required /></label>
-          <button type="submit">Nhận diện món ăn</button>
+        {!meal && !draftId && <form onSubmit={upload} className="stack-form">
+          <label className="upload-zone">
+            <input name="images" type="file" accept="image/jpeg,image/png,image/webp" required
+              onChange={(event) => { setFile(event.target.files[0] || null); }} />
+            <span className="upload-icon"><Icon name="camera" size={32} /></span>
+            <b>{file?.name || 'Chọn ảnh bữa ăn'}</b>
+            <small>JPEG, PNG hoặc WebP · Tối đa 8 MB</small>
+          </label>
+          <button className="button button--primary" type="submit" disabled={!file}>Nhận diện món ăn</button>
         </form>}
       </section>
+      {(!meal || file) && <div className="preview-panel panel">
+        {file && preview
+          ? <img src={preview} alt="Ảnh bữa ăn đã chọn" />
+          : <div className="preview-empty"><Icon name="plate" size={68} /><p>Ảnh của bạn sẽ hiển thị ở đây</p></div>}
+      </div>}
+      </div>
       {recognitionEmpty && <p>Ảnh chưa có món nhận diện được. Bạn có thể thêm từ danh mục.</p>}
       {suggestions.length > 0 && <section className="meal-panel">
         <h2>Gợi ý từ ảnh</h2>
@@ -221,6 +253,6 @@ export default function CapturePage() {
         </div>}
       </section>}
     </fieldset>
-    {meal && <Link to="/nhat-ky">Mở nhật ký</Link>}
+    {meal && <Link className="button button--outline" to="/nhat-ky">Mở nhật ký</Link>}
   </section>;
 }

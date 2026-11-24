@@ -6,7 +6,11 @@ export function currentSession() {
   catch { return null; }
 }
 
-export async function request(path, { method = 'GET', body, token = currentSession()?.token } = {}) {
+export function clearSession() {
+  localStorage.removeItem(sessionKey);
+}
+
+export async function request(path, { method = 'GET', body, token = currentSession()?.token, raw = false } = {}) {
   const multipart = body instanceof FormData;
   const headers = {};
   if (token) headers.Authorization = `Bearer ${token}`;
@@ -19,18 +23,23 @@ export async function request(path, { method = 'GET', body, token = currentSessi
   } catch {
     throw new Error('Không kết nối được API NutriPlan.');
   }
+  if (response.ok && raw) return response;
   if (response.status === 204) return null;
   const result = await response.json().catch(() => null);
   if (!response.ok) {
     const code = result?.error?.code;
-    if (response.status === 401) localStorage.removeItem(sessionKey);
+    if (response.status === 401) clearSession();
     const messages = {
       VISION_UNAVAILABLE: 'Chưa kết nối được model nhận diện. Bạn có thể nhập món thủ công.',
       INVALID_IMAGE: 'Ảnh không hợp lệ. Hãy thử một ảnh JPEG, PNG hoặc WebP khác.',
-      CONSENT_REQUIRED: 'Cần đồng ý lưu hồ sơ sức khỏe trong mục Gia đình.',
+      CONSENT_REQUIRED: 'Cần đồng ý lưu hồ sơ sức khỏe trong Cài đặt & quyền riêng tư.',
+      PROFILE_INCOMPLETE: 'Hồ sơ thành viên chưa đủ thông tin. Kiểm tra mục tiêu năng lượng trong Gia đình.',
+      CONSTRAINT_UNSATISFIABLE: 'Danh mục và bộ quy tắc hiện có chưa đủ để tạo thực đơn phù hợp.',
       HARD_CONSTRAINT_VIOLATION: 'Chưa đủ căn cứ để xác nhận bữa ăn. Bữa ăn vẫn ở bản nháp.',
     };
-    throw new Error(messages[code] || result?.error?.message || `API trả lỗi ${response.status}.`);
+    const error = new Error(messages[code] || result?.error?.message || `API trả lỗi ${response.status}.`);
+    error.status = response.status;
+    throw error;
   }
   return result;
 }
