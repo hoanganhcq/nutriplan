@@ -1,7 +1,8 @@
-from datetime import date, datetime
+from datetime import date as Date
+from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.schemas.profiles import ALLOWED_ALLERGIES, ALLOWED_CONDITIONS
 
@@ -84,12 +85,62 @@ class ExplainInput(CamelModel):
 
 class MenuGenerateInput(CamelModel):
     member_id: int = Field(gt=0)
-    days: Literal[1] = 1
-    start_date: date
-    meals_per_day: int = Field(default=3, ge=1, le=6)
+    days: int = Field(default=1, ge=1, le=3)
+    start_date: Date
+    meals_per_day: (
+        list[Literal["breakfast", "lunch", "dinner", "snack", "snack2", "snack3"]] | int
+    ) = Field(default_factory=lambda: ["breakfast", "lunch", "dinner"])
     prefer_dish_ids: list[int] = Field(default_factory=list)
     exclude_dish_ids: list[int] = Field(default_factory=list)
     max_cooking_effort: Literal["easy", "medium", "hard"] | None = None
+    seed: int | None = None
+
+    @field_validator("meals_per_day")
+    @classmethod
+    def validate_meals_per_day(cls, value):
+        if isinstance(value, int):
+            if not 1 <= value <= 6:
+                raise ValueError("mealsPerDay count must be between 1 and 6")
+        elif not value or len(value) > 6 or len(set(value)) != len(value):
+            raise ValueError("mealsPerDay must contain 1 to 6 unique meal types")
+        return value
+
+    @property
+    def meal_types(self):
+        if isinstance(self.meals_per_day, int):
+            return ["breakfast", "lunch", "dinner", "snack", "snack2", "snack3"][
+                : self.meals_per_day
+            ]
+        return self.meals_per_day
+
+
+class MenuItemUpdate(CamelModel):
+    dish_id: int = Field(gt=0)
+    grams: float = Field(gt=0, le=10000, allow_inf_nan=False)
+
+
+class MenuItemLock(CamelModel):
+    locked: bool
+
+
+class MenuRegenerateInput(CamelModel):
+    scope: Literal["all_unlocked", "day", "meal", "item"] = "all_unlocked"
+    date: Date | None = None
+    meal_type: (
+        Literal["breakfast", "lunch", "dinner", "snack", "snack2", "snack3"] | None
+    ) = None
+    item_id: int | None = Field(default=None, gt=0)
+    seed: int | None = None
+
+    @model_validator(mode="after")
+    def validate_scope_fields(self):
+        if self.scope == "day" and self.date is None:
+            raise ValueError("date is required for day scope")
+        if self.scope == "meal" and (self.date is None or self.meal_type is None):
+            raise ValueError("date and mealType are required for meal scope")
+        if self.scope == "item" and self.item_id is None:
+            raise ValueError("itemId is required for item scope")
+        return self
 
 
 class PageMeta(CamelModel):
@@ -245,7 +296,7 @@ class MenuItemOutput(CamelModel):
 class MenuOutput(CamelModel):
     plan_id: int
     member_id: int
-    start_date: date
+    start_date: Date
     days: int
     status: str
     revision: int

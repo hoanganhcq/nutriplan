@@ -41,8 +41,14 @@ CREATE TABLE IF NOT EXISTS FOOD_ITEM (
     fat_per_100g DECIMAL(8,2),
     source_name VARCHAR(150),
     source_url TEXT,
+    entity_type VARCHAR(20) NOT NULL DEFAULT 'DISH',
     aliases TEXT,
     default_portion_g DECIMAL(8,2),
+    sugar_per_100g DECIMAL(8,2),
+    fiber_per_100g DECIMAL(8,2),
+    sodium_mg_per_100g DECIMAL(8,2),
+    potassium_mg_per_100g DECIMAL(8,2),
+    phosphorus_mg_per_100g DECIMAL(8,2),
     ingredients TEXT,
     allergen_codes TEXT,
     allergen_verified BOOLEAN NOT NULL DEFAULT FALSE,
@@ -72,13 +78,16 @@ CREATE TABLE IF NOT EXISTS MEAL (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS MEAL_REVISION_HISTORY (
-    meal_id INTEGER NOT NULL,
-    revision INTEGER NOT NULL,
-    snapshot_json MEDIUMTEXT NOT NULL,
+    revision_id INT AUTO_INCREMENT PRIMARY KEY,
+    meal_id INT NOT NULL,
+    revision_no INT NOT NULL,
+    action VARCHAR(30) NOT NULL,
+    snapshot_json JSON NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (meal_id, revision),
-    FOREIGN KEY (meal_id) REFERENCES MEAL(meal_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    CONSTRAINT fk_MEAL_REVISION_MEAL FOREIGN KEY (meal_id)
+        REFERENCES MEAL(meal_id) ON DELETE CASCADE,
+    CONSTRAINT unique_meal_revision UNIQUE (meal_id, revision_no)
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS MEAL_ITEM (
     meal_item_id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -119,7 +128,10 @@ CREATE TABLE IF NOT EXISTS MENU_PLAN (
     status VARCHAR(30) DEFAULT 'draft',
     revision INTEGER NOT NULL DEFAULT 1,
     validation_json TEXT,
+    soft_score_json TEXT,
+    generation_json TEXT,
     soft_score DECIMAL(5,2),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_menu_plan_member_start_date (member_id, start_date),
     FOREIGN KEY (member_id) REFERENCES MEMBER(member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -130,9 +142,20 @@ CREATE TABLE IF NOT EXISTS MENU_ITEM (
     food_id INTEGER NOT NULL,
     meal_type VARCHAR(30) NOT NULL,
     portion_g DECIMAL(8,2),
+    day_index TINYINT NOT NULL DEFAULT 1,
+    locked BOOLEAN NOT NULL DEFAULT FALSE,
     INDEX idx_menu_item_menu_plan (menu_plan_id),
     FOREIGN KEY (menu_plan_id) REFERENCES MENU_PLAN(menu_plan_id),
     FOREIGN KEY (food_id) REFERENCES FOOD_ITEM(food_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS MENU_PLAN_REVISION_HISTORY (
+    menu_plan_id INTEGER NOT NULL,
+    revision INTEGER NOT NULL,
+    snapshot_json MEDIUMTEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (menu_plan_id, revision),
+    FOREIGN KEY (menu_plan_id) REFERENCES MENU_PLAN(menu_plan_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS CONSENT (

@@ -140,6 +140,38 @@ môi trường `development` hoặc `test`, không lưu dữ liệu. Quy tắc s
 được áp dụng cho endpoint đánh giá một bữa; nếu không có quy tắc phù hợp thì
 kết quả là `INSUFFICIENT_DATA`.
 
+### Đề xuất thực đơn
+
+Các API thực đơn dùng ID số nguyên của thành viên, món và thực đơn. Quy trình
+hỗ trợ sinh thực đơn tối đa 3 ngày, xem danh sách/chi tiết, lấy món thay thế,
+đổi món, khoá món, sinh lại phần chưa khoá, hoàn tác tối đa 5 bước, kiểm tra,
+xuất PDF/HTML và xoá thực đơn:
+
+- `POST /menu-plans/generate`
+- `GET /menu-plans` và `GET /menu-plans/{planId}`
+- `GET /menu-plans/{planId}/items/{itemId}/alternatives`
+- `PATCH /menu-plans/{planId}/items/{itemId}`
+- `PUT /menu-plans/{planId}/items/{itemId}/lock`
+- `POST /menu-plans/{planId}/regenerate`
+- `POST /menu-plans/{planId}/undo`
+- `POST /menu-plans/{planId}/validate`
+- `GET /menu-plans/{planId}/export`
+- `DELETE /menu-plans/{planId}`
+
+Sinh thực đơn yêu cầu hồ sơ thành viên có mục tiêu năng lượng, đồng ý lưu hồ sơ
+sức khỏe, cùng món ăn có khẩu phần, dữ liệu dinh dưỡng và thông tin nguồn cần
+thiết. Các ràng buộc cứng không tự được nới lỏng; nếu thiếu dữ liệu/rule hoặc
+không tìm được thực đơn phù hợp, API trả lỗi thay vì tạo thực đơn không hợp lệ.
+Rule dinh dưỡng lấy từ `HEALTH_RULE` và `RULE_SOURCE`; không bật rule thiếu
+nguồn. Lịch sử hoàn tác thực đơn được lưu riêng trong
+`MENU_PLAN_REVISION_HISTORY`; lịch sử bữa ăn dùng `MEAL_REVISION_HISTORY`.
+
+Nếu database đã tồn tại, rà soát trước các thay đổi schema bằng lệnh
+`.\.venv\Scripts\python.exe -m app.db.migrate_e2e --check`, sau đó chạy
+`.\.venv\Scripts\python.exe -m app.db.dev_db init` để bổ sung bảng/cột còn
+thiếu. Migration không xoá dữ liệu hay tự sửa cột đã tồn tại; đối chiếu cấu
+trúc bảng hiện hữu với `app/db/schema.sql` trước khi chạy.
+
 ### BE-02: phiên và hồ sơ
 
 Tạo phiên ẩn danh và giữ token gốc ở client:

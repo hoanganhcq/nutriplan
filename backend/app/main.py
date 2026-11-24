@@ -46,10 +46,12 @@ app.add_middleware(
 # 3. Xử lý lỗi nghiệp vụ
 @app.exception_handler(AppException)
 async def app_exception_handler(request: Request, exc: AppException):
-
+    error = {"code": exc.code, "message": exc.message}
+    if exc.details is not None:
+        error["details"] = jsonable_encoder(exc.details)
     return JSONResponse(
         status_code=exc.status_code,
-        content={"error": {"code": exc.code, "message": exc.message}},
+        content={"error": error},
     )
 
 
@@ -110,14 +112,4 @@ app.include_router(members_router)
 app.include_router(dishes_router)
 app.include_router(meals_router)
 app.include_router(menu_plans_router)
-<<<<<<< Updated upstream
-=======
 app.include_router(rules_router)
-
-if settings.local_meal_analysis_enabled and settings.environment in {
-    "development",
-    "demo",
-    "test",
-}:
-    app.include_router(local_meal_analysis_router)
->>>>>>> Stashed changes

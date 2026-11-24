@@ -21,6 +21,7 @@ DEMO_TOKEN_FILE = Path(__file__).resolve().parents[2] / ".demo-session-token"
 DEMO_SOURCE = "DEMO_SYNTHETIC_UNVERIFIED"
 DEMO_SOURCE_URL = "https://example.invalid/nutriplan-demo"
 RESET_ORDER = (
+    "MENU_PLAN_REVISION_HISTORY",
     "MENU_ITEM",
     "MENU_PLAN",
     "ASSESSMENT",
@@ -63,8 +64,7 @@ def connection_options() -> dict:
         or parsed.fragment
     ):
         raise SystemExit(
-            "Chỉ chạy khi ENVIRONMENT=development và "
-            "DATABASE_URL trỏ đến nutriplan"
+            "Chỉ chạy khi ENVIRONMENT=development và DATABASE_URL trỏ đến nutriplan"
         )
     return {
         "host": parsed.hostname,
@@ -150,8 +150,18 @@ def seed() -> None:
                         texture, cooking_effort)
                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 0, %s, %s)""",
                     (
-                        name, category, kcal, protein, carb, fat, DEMO_SOURCE,
-                        None, portion, json.dumps([]), "normal", effort,
+                        name,
+                        category,
+                        kcal,
+                        protein,
+                        carb,
+                        fat,
+                        DEMO_SOURCE,
+                        None,
+                        portion,
+                        json.dumps([]),
+                        "normal",
+                        effort,
                     ),
                 )
         for rule_type, subject in RULES:
@@ -283,8 +293,11 @@ def seed() -> None:
                     is_simulated)
                    VALUES (%s, %s, 30, %s, %s, %s, 2000, 'normal', 1)""",
                 (
-                    household_id, "Thành viên mô phỏng",
-                    json.dumps(["none"]), json.dumps(["none"]), json.dumps([]),
+                    household_id,
+                    "Thành viên mô phỏng",
+                    json.dumps(["none"]),
+                    json.dumps(["none"]),
+                    json.dumps([]),
                 ),
             )
         consent = db.execute(
@@ -344,4 +357,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

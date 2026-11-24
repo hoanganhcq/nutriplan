@@ -11,8 +11,14 @@ COLUMNS = {
         "profile_version": "INTEGER NOT NULL DEFAULT 1",
     },
     "FOOD_ITEM": {
+        "entity_type": "VARCHAR(20) NOT NULL DEFAULT 'DISH'",
         "aliases": "TEXT",
         "default_portion_g": "DECIMAL(8,2)",
+        "sugar_per_100g": "DECIMAL(8,2)",
+        "fiber_per_100g": "DECIMAL(8,2)",
+        "sodium_mg_per_100g": "DECIMAL(8,2)",
+        "potassium_mg_per_100g": "DECIMAL(8,2)",
+        "phosphorus_mg_per_100g": "DECIMAL(8,2)",
         "ingredients": "TEXT",
         "allergen_codes": "TEXT",
         "allergen_verified": "BOOLEAN NOT NULL DEFAULT FALSE",
@@ -38,7 +44,14 @@ COLUMNS = {
     "MENU_PLAN": {
         "revision": "INTEGER NOT NULL DEFAULT 1",
         "validation_json": "TEXT",
+        "soft_score_json": "TEXT",
+        "generation_json": "TEXT",
         "soft_score": "DECIMAL(5,2)",
+        "created_at": "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP",
+    },
+    "MENU_ITEM": {
+        "day_index": "TINYINT NOT NULL DEFAULT 1",
+        "locked": "BOOLEAN NOT NULL DEFAULT FALSE",
     },
     "HEALTH_RULE": {"change_log": "TEXT"},
 }
@@ -48,12 +61,10 @@ NEW_TABLES = (
     "CONSENT_HISTORY",
     "MEAL_MEMBER",
     "NUTRITION_RULE",
-<<<<<<< Updated upstream
     "MEAL_REVISION_HISTORY",
-=======
     "RULE_SOURCE",
     "HEALTH_RULE",
->>>>>>> Stashed changes
+    "MENU_PLAN_REVISION_HISTORY",
 )
 INDEXES = {
     "FOOD_ITEM": {
@@ -72,6 +83,7 @@ INDEXES = {
         "idx_health_rule_enabled_filter": "(enabled, condition_code, nutrient, scope)",
     },
 }
+
 
 # hàm migrate() thực hiện việc thêm các cột mới và tạo các bảng mới trong cơ sở dữ liệu.
 def migrate(db, dry_run=False):

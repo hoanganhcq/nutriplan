@@ -36,11 +36,7 @@ async def validate_images(files):
 
 def _item(row):
     grams = float(row["confirmed_weight_g"] or row["estimated_weight_g"] or 0)
-    confidence = (
-        float(row["confidence"])
-        if row.get("confidence") is not None
-        else None
-    )
+    confidence = float(row["confidence"]) if row.get("confidence") is not None else None
     return {
         "itemId": row["meal_item_id"],
         "dishId": row["food_id"],
@@ -205,7 +201,7 @@ def change_item(db, session_id, meal_id, item_id, payload):
     grams = (
         payload.grams or current["confirmed_weight_g"] or current["estimated_weight_g"]
     )
-    _save_revision(db, meal_id, row)
+    _save_revision(db, meal_id, row, "update_item")
     meal_repository.update_item(
         db,
         meal_id,
@@ -226,12 +222,13 @@ def add_item(db, session_id, meal_id, payload):
         raise AppException("VALIDATION_ERROR", "dishId and grams required", 422)
     if not dish_repository.find(db, payload.dish_id):
         raise AppException("NOT_FOUND", "Dish not found", 404)
-    _save_revision(db, meal_id, row)
+    _save_revision(db, meal_id, row, "add_item")
     meal_repository.add_item(
         db, meal_id, payload.dish_id, payload.grams, payload.seasoning
     )
     meal_repository.increment_revision(db, meal_id)
     return detail(db, session_id, meal_id)
+
 
 def remove_item(db, session_id, meal_id, item_id):
     row = owned(db, session_id, meal_id, lock=True)
@@ -247,12 +244,13 @@ def remove_item(db, session_id, meal_id, item_id):
     )
     if not current:
         raise AppException("NOT_FOUND", "Meal item not found", 404)
+    _save_revision(db, meal_id, row, "delete_item")
     meal_repository.delete_item(db, meal_id, item_id)
     meal_repository.increment_revision(db, meal_id)
     return detail(db, session_id, meal_id)
 
 
-def _save_revision(db, meal_id, meal):
+def _save_revision(db, meal_id, meal, action):
     snapshot = {
         "eatenAt": str(meal["eaten_at"]),
         "mealType": meal.get("meal_type"),
@@ -276,7 +274,7 @@ def _save_revision(db, meal_id, meal):
         "memberIds": meal_repository.member_ids(db, meal_id),
     }
     meal_repository.save_revision(
-        db, meal_id, meal["revision"], json.dumps(snapshot, default=str)
+        db, meal_id, meal["revision"], action, json.dumps(snapshot, default=str)
     )
 
 
@@ -339,9 +337,7 @@ def journal(db, session_id, member_id, from_date, to_date, limit, cursor):
                 "mealType": row.get("meal_type"),
                 "thumbnailUrl": None,
                 "itemNames": [item["name"] for item in items],
-                "totals": nutrition_service.totals(
-                    [_item(item) for item in items]
-                ),
+                "totals": nutrition_service.totals([_item(item) for item in items]),
                 "levels": [
                     {
                         "memberId": assessment["member_id"],

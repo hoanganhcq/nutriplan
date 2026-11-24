@@ -47,6 +47,7 @@ def update_item(db, meal_id, item_id, food_id, grams, seasoning):
         (food_id, grams, seasoning, meal_id, item_id),
     )
 
+
 def delete_item(db, meal_id, item_id):
     db.execute(
         "DELETE FROM MEAL_ITEM WHERE meal_id = %s AND meal_item_id = %s",
@@ -58,20 +59,22 @@ def increment_revision(db, meal_id):
     db.execute("UPDATE MEAL SET revision = revision + 1 WHERE meal_id = %s", (meal_id,))
 
 
-def save_revision(db, meal_id, revision, snapshot_json):
+def save_revision(db, meal_id, revision, action, snapshot_json):
     db.execute(
-        """INSERT INTO MEAL_REVISION_HISTORY (meal_id, revision, snapshot_json)
-           VALUES (%s, %s, %s)
-           ON DUPLICATE KEY UPDATE snapshot_json = VALUES(snapshot_json),
+        """INSERT INTO MEAL_REVISION_HISTORY
+           (meal_id, revision_no, action, snapshot_json)
+           VALUES (%s, %s, %s, %s)
+           ON DUPLICATE KEY UPDATE action = VALUES(action),
+             snapshot_json = VALUES(snapshot_json),
              created_at = CURRENT_TIMESTAMP""",
-        (meal_id, revision, snapshot_json),
+        (meal_id, revision, action, snapshot_json),
     )
     db.execute(
         """DELETE FROM MEAL_REVISION_HISTORY
-           WHERE meal_id = %s AND revision NOT IN (
-             SELECT revision FROM (
-               SELECT revision FROM MEAL_REVISION_HISTORY
-               WHERE meal_id = %s ORDER BY revision DESC LIMIT 20
+           WHERE meal_id = %s AND revision_no NOT IN (
+             SELECT revision_no FROM (
+               SELECT revision_no FROM MEAL_REVISION_HISTORY
+               WHERE meal_id = %s ORDER BY revision_no DESC LIMIT 20
              ) AS recent_revisions
            )""",
         (meal_id, meal_id),
@@ -81,14 +84,14 @@ def save_revision(db, meal_id, revision, snapshot_json):
 def get_revision(db, meal_id, revision):
     return db.execute(
         """SELECT snapshot_json FROM MEAL_REVISION_HISTORY
-           WHERE meal_id = %s AND revision = %s""",
+           WHERE meal_id = %s AND revision_no = %s""",
         (meal_id, revision),
     ).fetchone()
 
 
 def delete_revisions_from(db, meal_id, revision):
     db.execute(
-        "DELETE FROM MEAL_REVISION_HISTORY WHERE meal_id = %s AND revision >= %s",
+        "DELETE FROM MEAL_REVISION_HISTORY WHERE meal_id = %s AND revision_no >= %s",
         (meal_id, revision),
     )
 

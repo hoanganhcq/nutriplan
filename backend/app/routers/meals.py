@@ -4,10 +4,9 @@ from datetime import date, datetime
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
 from pydantic import BaseModel, Field
 
-from app.repositories import meal_repository
-
 from app.core.exceptions import AppException
 from app.dependencies import get_current_session, get_db
+from app.repositories import meal_repository
 from app.schemas.e2e import (
     AssessmentInput,
     AssessmentResponse,
@@ -30,14 +29,11 @@ router = APIRouter(
     },
 )
 
-<<<<<<< Updated upstream
 
 class ClarificationAnswer(BaseModel):
     answer: str = Field(min_length=1, max_length=1000)
 
-# truy vấn các bữa ăn và các mục liên quan đến bữa ăn, bao gồm phân tích hình ảnh, xác nhận và đánh giá
-=======
->>>>>>> Stashed changes
+
 @router.post("/analyze", status_code=201, response_model=MealResponse)
 async def analyze_meal(
     images: list[UploadFile] = File(...),
@@ -117,6 +113,7 @@ def patch_item(
         )
     }
 
+
 @router.post("/{meal_id}/items", status_code=201, response_model=MealResponse)
 def post_item(
     meal_id: int,
@@ -126,6 +123,7 @@ def post_item(
 ):
     return {"data": meal_service.add_item(db, session["session_id"], meal_id, payload)}
 
+
 @router.delete("/{meal_id}/items/{item_id}", response_model=MealResponse)
 def delete_item(
     meal_id: int,
@@ -134,9 +132,7 @@ def delete_item(
     db=Depends(get_db),
 ):
     return {
-        "data": meal_service.remove_item(
-            db, session["session_id"], meal_id, item_id
-        )
+        "data": meal_service.remove_item(db, session["session_id"], meal_id, item_id)
     }
 
 
@@ -154,29 +150,6 @@ def assess(
     }
 
 
-<<<<<<< Updated upstream
-# xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
-@router.post("/{meal_id}/confirm", response_model=MealResponse)
-def confirm(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
-    return {"data": assessment_service.confirm(db, session["session_id"], meal_id)}
-
-@router.post(
-    "/{meal_id}/clarifications/{question_id}/answer",
-    response_model=MealResponse,
-)
-def answer_clarification(
-    meal_id: int,
-    question_id: int,
-    payload: ClarificationAnswer,
-    session=Depends(get_current_session),
-    db=Depends(get_db),
-):
-    row = meal_service.owned(db, session["session_id"], meal_id, lock=True)
-    if row["status"] != "draft":
-        raise AppException("MEAL_LOCKED", "Confirmed meal cannot be edited", 409)
-    meal_repository.increment_revision(db, meal_id)
-    return {"data": meal_service.detail(db, session["session_id"], meal_id)}
-=======
 @router.get("/{meal_id}/assessments", response_model=AssessmentResponse)
 def get_assessments(
     meal_id: int,
@@ -199,9 +172,7 @@ def undo_meal(
     db=Depends(get_db),
 ):
     return {
-        "data": meal_service.undo(
-            db, session["session_id"], meal_id, payload.steps
-        )
+        "data": meal_service.undo(db, session["session_id"], meal_id, payload.steps)
     }
 
 
@@ -223,9 +194,24 @@ def confirm(
     }
 
 
-@router.delete("/{meal_id}", status_code=204)
-def delete_meal(
-    meal_id: int, session=Depends(get_current_session), db=Depends(get_db)
+@router.post(
+    "/{meal_id}/clarifications/{question_id}/answer",
+    response_model=MealResponse,
+)
+def answer_clarification(
+    meal_id: int,
+    question_id: int,
+    payload: ClarificationAnswer,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
 ):
+    row = meal_service.owned(db, session["session_id"], meal_id, lock=True)
+    if row["status"] != "draft":
+        raise AppException("MEAL_LOCKED", "Confirmed meal cannot be edited", 409)
+    meal_repository.increment_revision(db, meal_id)
+    return {"data": meal_service.detail(db, session["session_id"], meal_id)}
+
+
+@router.delete("/{meal_id}", status_code=204)
+def delete_meal(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
     meal_service.delete(db, session["session_id"], meal_id)
->>>>>>> Stashed changes
