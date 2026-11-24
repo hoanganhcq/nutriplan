@@ -7,12 +7,6 @@ demo. Xem [hướng dẫn backend](./backend/README.md) để khởi tạo schem
 liệu mẫu, chạy API và reset có xác nhận; xem [hướng dẫn E2E](./docs/E2E_TESTING.md)
 để chạy kiểm thử với giao dịch rollback.
 
-Xem [kiến trúc hệ thống hiện tại](./docs/architecture/system-architecture.md) để
-phân biệt phần đã triển khai với các năng lực dự kiến và các bước tích hợp FE–BE.
-
-Xem [cài đặt và đánh giá MVP VietFood](./docs/VIETFOOD_MVP.md) để chạy nhận diện,
-xác nhận khẩu phần, tính dinh dưỡng và truy xuất tài liệu trên hồ sơ mẫu.
-
 
 ## Cấu trúc thư mục
 
@@ -21,7 +15,6 @@ nutriplan/
 ├── ai/
 │   ├── config/
 │   ├── experiments/
-│   ├── models/
 │   ├── src/
 │   │   ├── vision/
 │   │   ├── portion_estimation/

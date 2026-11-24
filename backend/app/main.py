@@ -17,7 +17,6 @@ from app.routers.events import router as events_router
 from app.routers.health import router as health_router
 from app.routers.households import alias_router as household_alias_router
 from app.routers.households import router as households_router
-from app.routers.local_meal_analysis import router as local_meal_analysis_router
 from app.routers.meals import router as meals_router
 from app.routers.members import router as members_router
 from app.routers.menu_plans import router as menu_plans_router
@@ -118,11 +117,3 @@ app.include_router(menu_plans_router)
 app.include_router(rules_router)
 app.include_router(dev_router)
 app.include_router(events_router)
-
-if settings.local_meal_analysis_enabled and settings.environment in {
-    "dev",
-    "development",
-    "demo",
-    "test",
-}:
-    app.include_router(local_meal_analysis_router)

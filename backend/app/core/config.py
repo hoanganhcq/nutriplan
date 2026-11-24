@@ -1,5 +1,4 @@
 from functools import lru_cache
-from pathlib import Path
 
 from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -21,8 +20,6 @@ class Settings(BaseSettings):
     vision_mock_detections: str = "[]"
     vision_health_url: str | None = None
     vision_health_timeout_seconds: float = Field(default=1.0, gt=0, le=5)
-    local_meal_analysis_enabled: bool = False
-    local_meal_analysis_device: str = "cpu"
 
     cors_origins: list[str] = [
         "http://localhost:5173",
@@ -30,7 +27,7 @@ class Settings(BaseSettings):
     ]
 
     model_config = SettingsConfigDict(
-        env_file=(".env", Path(__file__).resolve().parents[2] / ".env"),
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )

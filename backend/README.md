@@ -56,11 +56,6 @@ uvicorn app.main:app --reload
 Ứng dụng kết nối đến MySQL theo `DATABASE_URL`. Các bảng cần được tạo sẵn;
 backend không tự tạo hoặc tự sửa schema khi khởi động.
 
-Backend đọc `backend/.env` khi chạy từ thư mục gốc hoặc thư mục `backend`.
-Nếu dùng container MySQL cục bộ đã được tạo, khởi động container trước khi
-chạy API cần cơ sở dữ liệu. Hướng dẫn bật luồng VietFood nằm trong
-[tài liệu MVP](../docs/VIETFOOD_MVP.md).
-
 ## Database development và dữ liệu demo
 
 Giai đoạn hiện tại chỉ dùng database MySQL `nutriplan` cho phát triển, kiểm thử
