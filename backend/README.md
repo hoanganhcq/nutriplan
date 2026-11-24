@@ -2,6 +2,11 @@
 
 Backend API của NutriPlan, xây dựng bằng FastAPI.
 
+Nhóm H (`GET /health`, `POST /dev/seed-demo`, `POST /events`) đã được bổ sung.
+Xem [hướng dẫn API hỗ trợ hệ thống](../docs/SYSTEM_SUPPORT_API.md) để cập nhật
+schema, cấu hình và thử request. Health trả `services.db`, `services.vision`,
+`services.llm`, `version`, `rulesetVersion`; DB lỗi trả HTTP 503.
+
 ## Cấu trúc
 
 ```text
@@ -122,7 +127,7 @@ Các API hiện dùng các bảng `SESSION`, `HOUSEHOLD`, `MEMBER`, `FOOD_ITEM`,
 `HEALTH_RULE`. Cấu trúc MySQL tham khảo nằm ở `app/db/schema.sql`; nếu bạn đã
 tạo bảng, hãy đối chiếu tên bảng, tên cột, khóa ngoại và kiểu dữ liệu với file
 này. Endpoint
-`http://localhost:8000/health` báo `database: "ok"` khi kết nối được. Dữ liệu
+`http://localhost:8000/health` báo `services.db: "ok"` khi truy vấn DB được. Dữ liệu
 SQLite cũ trong `meal_analysis.db` không được tự chuyển sang MySQL.
 
 ### Rule Engine

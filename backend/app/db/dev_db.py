@@ -21,6 +21,8 @@ DEMO_TOKEN_FILE = Path(__file__).resolve().parents[2] / ".demo-session-token"
 DEMO_SOURCE = "DEMO_SYNTHETIC_UNVERIFIED"
 DEMO_SOURCE_URL = "https://example.invalid/nutriplan-demo"
 RESET_ORDER = (
+    "USAGE_EVENT",
+    "DEMO_DATASET",
     "MENU_PLAN_REVISION_HISTORY",
     "MENU_ITEM",
     "MENU_PLAN",

@@ -1,9 +1,11 @@
-"""Kiểm thử tích hợp trên nutriplan bằng giao dịch rollback cho từng test."""
+"""Kiểm thử tích hợp trên database development bằng giao dịch rollback."""
 
 import os
 from urllib.parse import unquote, urlsplit
 
 import pytest
+
+DEVELOPMENT_DATABASES = {"nutriplan", "nutrition_ai"}
 
 
 def pytest_configure(config):
@@ -15,8 +17,10 @@ def pytest_configure(config):
     from app.core.config import settings
 
     parsed = urlsplit(settings.database_url)
-    if unquote(parsed.path.lstrip("/")) != "nutriplan":
-        raise pytest.UsageError("Pytest chỉ được dùng database development nutriplan")
+    if unquote(parsed.path.lstrip("/")) not in DEVELOPMENT_DATABASES:
+        raise pytest.UsageError(
+            "Pytest chỉ được dùng database development nutriplan hoặc nutrition_ai"
+        )
     settings.environment = "test"
     settings.vision_provider = "mock"
 
@@ -34,7 +38,10 @@ def rollback_integration_data(request):
     db = get_connection()
     try:
         actual = db.execute("SELECT DATABASE() AS name").fetchone()["name"]
-        if actual != "nutriplan":
+        from app.core.config import settings
+
+        configured = unquote(urlsplit(settings.database_url).path.lstrip("/"))
+        if actual not in DEVELOPMENT_DATABASES or actual != configured:
             raise pytest.UsageError("Kết nối sai database; dừng trước khi ghi test")
 
         def transactional_db():

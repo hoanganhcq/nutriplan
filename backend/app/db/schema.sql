@@ -235,3 +235,24 @@ CREATE TABLE IF NOT EXISTS HEALTH_RULE (
     CONSTRAINT chk_rule_enabled_has_source
         CHECK (enabled = FALSE OR source_id IS NOT NULL)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS USAGE_EVENT (
+    event_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    session_id INTEGER NOT NULL,
+    study_session_id VARCHAR(64) NOT NULL,
+    participant_id VARCHAR(5) NOT NULL,
+    event_type VARCHAR(30) NOT NULL,
+    task VARCHAR(30),
+    occurred_at DATETIME(6) NOT NULL,
+    meta_json JSON NOT NULL,
+    received_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    INDEX idx_usage_event_session_time (session_id, occurred_at),
+    INDEX idx_usage_event_study_task (study_session_id, participant_id, task, occurred_at),
+    FOREIGN KEY (session_id) REFERENCES SESSION(session_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS DEMO_DATASET (
+    dataset_key VARCHAR(64) PRIMARY KEY,
+    household_id INTEGER UNIQUE,
+    FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

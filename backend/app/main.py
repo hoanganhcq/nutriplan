@@ -11,7 +11,9 @@ from app.core.config import settings
 from app.core.exceptions import AppException
 from app.routers.assessment_explanations import router as assessment_explanations_router
 from app.routers.consents import router as consents_router
+from app.routers.dev import router as dev_router
 from app.routers.dishes import router as dishes_router
+from app.routers.events import router as events_router
 from app.routers.health import router as health_router
 from app.routers.households import alias_router as household_alias_router
 from app.routers.households import router as households_router
@@ -28,7 +30,7 @@ logger = logging.getLogger(__name__)
 # 1. Khởi tạo FastAPI
 app = FastAPI(
     title=settings.app_name,
-    version="0.1.0",
+    version=settings.app_version,
     description="Backend API for AI Meal Analysis System",
 )
 
@@ -113,3 +115,5 @@ app.include_router(dishes_router)
 app.include_router(meals_router)
 app.include_router(menu_plans_router)
 app.include_router(rules_router)
+app.include_router(dev_router)
+app.include_router(events_router)
