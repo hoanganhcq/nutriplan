@@ -14,18 +14,14 @@ Trọng số và cấu hình nằm ở `ai/models/vietfood/`, adapter ở `ai/sr
 mã truy xuất ở `ai/src/rag/` và KB ở `data/knowledge_base/vietfood/`.
 Cặp PyTorch bên dưới dùng CPU.
 
-Nếu mới clone dự án, chép các tệp sau từ bộ tài nguyên VietFood bạn được cấp
-vào đúng đường dẫn trước khi bật MVP. Các tệp này được giữ cục bộ qua
-`.gitignore`.
+Nhánh `Vanh` đã chứa trọng số và bảng thành phần VietFood tại các đường dẫn sau.
 
 - `ai/models/vietfood/models/food_detector.pt`
 - `ai/models/vietfood/models/portion_foodcnn_v2.pt`
 - `data/knowledge_base/vietfood/data/food_kb.json`
 
-Để chạy lại ví dụ ảnh hoặc kiểm tra hồ sơ nguồn, đặt ảnh mẫu ở
-`tests/fixtures/vietfood_demo.jpg` và bản ghi nguồn ở
-`data/knowledge_base/vietfood/provenance/selected_nutrition_source_records.json`.
-Các kiểm thử cần dữ liệu cục bộ sẽ được bỏ qua khi tệp tương ứng chưa có.
+Ảnh mẫu `tests/fixtures/vietfood_demo.jpg` được giữ cục bộ. Bạn có thể dùng ảnh
+bữa ăn JPEG, PNG hoặc WebP khác cho bước nhận diện.
 
 ```powershell
 py -3.14 -m venv backend/.venv
@@ -35,19 +31,20 @@ $python = 'backend/.venv/Scripts/python.exe'
 npm.cmd --prefix frontend ci
 ```
 
-Terminal backend. Chuỗi `DATABASE_URL` bên dưới chỉ là cấu hình khởi động khi
-chạy riêng MVP. Các API của luồng bữa ăn và hồ sơ hiện tại vẫn cần MySQL.
+Tạo `backend/.env` từ `backend/.env.example` nếu chưa có và đặt
+`LOCAL_MEAL_ANALYSIS_ENABLED=true`. Điền `DATABASE_URL` thật để dùng các API
+bữa ăn và hồ sơ. MVP VietFood có thể chạy khi MySQL đang tắt. Từ thư mục gốc,
+chạy backend bằng lệnh sau.
 
 ```powershell
-$env:DATABASE_URL = 'mysql://nutriplan_user:change_me@127.0.0.1:3306/nutriplan'
-$env:LOCAL_MEAL_ANALYSIS_ENABLED = 'true'
 & backend/.venv/Scripts/python.exe -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
 ```
 
-Terminal frontend.
+Trong terminal frontend, tạo `frontend/.env.local` từ `frontend/.env.example`
+nếu chưa có và bỏ dấu chú thích ở dòng `VITE_LOCAL_MEAL_API_URL`. Sau đó chạy
+từ thư mục gốc.
 
 ```powershell
-$env:VITE_LOCAL_MEAL_API_URL = 'http://127.0.0.1:8000'
 npm.cmd --prefix frontend run dev -- --host 127.0.0.1 --port 5173 --strictPort
 ```
 

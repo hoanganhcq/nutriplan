@@ -3,7 +3,7 @@
 Backend API của NutriPlan, xây dựng bằng FastAPI.
 
 Nhóm H (`GET /health`, `POST /dev/seed-demo`, `POST /events`) đã được bổ sung.
-Xem [hướng dẫn API hỗ trợ hệ thống](../docs/SYSTEM_SUPPORT_API.md) để cập nhật
+Xem [hướng dẫn API hỗ trợ hệ thống](../docs/API_E2E.md) để cập nhật
 schema, cấu hình và thử request. Health trả `services.db`, `services.vision`,
 `services.llm`, `version`, `rulesetVersion`; DB lỗi trả HTTP 503.
 
@@ -55,6 +55,11 @@ uvicorn app.main:app --reload
 
 Ứng dụng kết nối đến MySQL theo `DATABASE_URL`. Các bảng cần được tạo sẵn;
 backend không tự tạo hoặc tự sửa schema khi khởi động.
+
+Backend đọc `backend/.env` khi chạy từ thư mục gốc hoặc thư mục `backend`.
+Nếu dùng container MySQL cục bộ đã được tạo, khởi động container trước khi
+chạy API cần cơ sở dữ liệu. Hướng dẫn bật luồng VietFood nằm trong
+[tài liệu MVP](../docs/VIETFOOD_MVP.md).
 
 ## Database development và dữ liệu demo
 
