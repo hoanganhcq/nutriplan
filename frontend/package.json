@@ -10,7 +10,7 @@
     "dev": "vite",
     "dev:demo": "vite --open /demo",
     "build": "vite build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test tests/api.test.js"
   },
   "keywords": [],
   "author": "",
