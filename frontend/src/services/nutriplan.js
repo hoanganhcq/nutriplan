@@ -1,127 +1,139 @@
-import { seed } from '../mocks/seed.js';
+import { clearSession, createSession, currentSession, request as fetchApi } from './api.js';
+export { levels as assessmentLabels } from './api.js';
 
-const mode = import.meta.env.VITE_DATA_MODE || 'mock';
-const storageKey = 'nutriplan-demo-v1';
-const clone = (value) => JSON.parse(JSON.stringify(value));
-const delay = () => new Promise((resolve) => setTimeout(resolve, 280));
-
-function read() {
-  try {
-    return { ...clone(seed), ...JSON.parse(localStorage.getItem(storageKey) || '{}') };
-  } catch {
-    return clone(seed);
-  }
+async function request(path, options) {
+  const result = await fetchApi(path, options);
+  if (options?.raw || (result && Object.hasOwn(result, 'data'))) return result;
+  return { data: result };
 }
 
-function write(state) {
-  localStorage.setItem(storageKey, JSON.stringify(state));
+export const mealLabels = {
+  breakfast: 'Bữa sáng', lunch: 'Bữa trưa', dinner: 'Bữa tối',
+  snack: 'Bữa phụ', snack2: 'Bữa phụ 2', snack3: 'Bữa phụ 3',
+};
+function mapMember(member) {
+  return {
+    ...member,
+    id: String(member.memberId ?? member.member_id),
+    avatar: member.name.trim().split(/\s+/).slice(-2).map((word) => word[0]).join('').toUpperCase(),
+    color: '#e5eee6',
+    relation: 'Thành viên',
+    energyGoalKcal: member.energyGoalKcal ?? member.energy_target_kcal,
+    goal: (member.energyGoalKcal ?? member.energy_target_kcal)
+      ? `${member.energyGoalKcal ?? member.energy_target_kcal} kcal/ngày` : '',
+  };
 }
 
-async function request(action) {
-  await delay();
-  if (mode !== 'mock') {
-    throw new Error('Chế độ API thật chưa được cấu hình. Hãy dùng VITE_DATA_MODE=mock cho bản demo.');
-  }
-  try {
-    return { data: action(), error: null };
-  } catch (error) {
-    throw new Error(error.message || 'Không thể hoàn tất thao tác.');
-  }
+function mapMeal(meal) {
+  const memberIds = meal.levels.map(({ memberId }) => String(memberId));
+  return {
+    ...meal,
+    id: String(meal.mealId),
+    memberIds,
+    date: meal.eatenAt.slice(0, 10),
+    meal: mealLabels[meal.mealType] || 'Bữa ăn',
+    name: meal.itemNames.join(', ') || 'Bữa ăn',
+    score: meal.totals.kcal != null ? `${meal.totals.kcal} kcal` : 'Chưa đủ dữ liệu năng lượng',
+    icon: 'plate',
+  };
 }
+
+const householdId = () => currentSession()?.householdId;
+const getSettings = () => request(`/consents?householdId=${householdId()}`);
 
 export const service = {
-  mode,
-  getSession: () => request(() => read().session || null),
-  login: ({ email, password }) => request(() => {
-    if (!email.trim() || !password.trim()) throw new Error('Vui lòng nhập email và mật khẩu.');
-    const state = read();
-    state.session = { name: 'Minh Anh', email: email.trim() };
-    write(state);
-    return state.session;
+  async getSession() {
+    const session = currentSession();
+    if (!session) return { data: null };
+    try {
+      await request(`/households/${session.householdId}`);
+      return { data: session };
+    } catch (error) {
+      if (![401, 404].includes(error.status)) throw error;
+      clearSession();
+      return { data: null };
+    }
+  },
+  async login({ householdName }) {
+    return { data: await createSession(householdName.trim()) };
+  },
+  async logout() {
+    clearSession();
+    return { data: null };
+  },
+  async getFamily() {
+    const { data } = await request(`/members?householdId=${householdId()}`);
+    return { data: data.map(mapMember) };
+  },
+  async addMember(member) {
+    const { data } = await request('/members', { method: 'POST', body: {
+      householdId: householdId(), name: member.name.trim(), age: member.age,
+      conditions: member.conditions, allergies: member.allergies,
+      energyGoalKcal: member.energyGoalKcal,
+    } });
+    return { data: mapMember(data) };
+  },
+  async updateMember(id, changes) {
+    const { data: previous } = await request(`/profiles/${id}`);
+    const { data } = await request(`/profiles/${id}`, { method: 'PUT', body: {
+      ...previous, name: changes.name.trim(), age: changes.age,
+      conditions: changes.conditions, allergies: changes.allergies,
+      energy_target_kcal: changes.energyGoalKcal,
+    } });
+    return { data: mapMember(data) };
+  },
+  async removeMember(id) {
+    await request(`/profiles/${id}`, { method: 'DELETE' });
+    return { data: true };
+  },
+  async getDiary(memberId) {
+    const rows = [];
+    const filter = memberId && memberId !== 'all' ? `&memberId=${encodeURIComponent(memberId)}` : '';
+    let cursor = 0;
+    do {
+      const { data, meta } = await request(`/meals?status=all&limit=100&cursor=${cursor}${filter}`);
+      rows.push(...data);
+      cursor = meta?.nextCursor;
+    } while (cursor != null);
+    return { data: rows.map(mapMeal).reverse() };
+  },
+  async removeDiary(id) {
+    await request(`/meals/${id}`, { method: 'DELETE' });
+    return { data: true };
+  },
+  async getDiaryDetails(id) {
+    const [meal, assessment] = await Promise.all([
+      request(`/meals/${id}`), request(`/meals/${id}/assessments`),
+    ]);
+    return { data: { items: meal.data.items, assessments: assessment.data.assessments } };
+  },
+  getSettings,
+  async updateSettings(changes) {
+    const { data } = await getSettings();
+    return request('/consents', { method: 'PUT', body: {
+      householdId: householdId(), policyVersion: data.policyVersion, consents: changes,
+    } });
+  },
+  listPlans: () => request('/menu-plans'),
+  getPlan: (planId) => request(`/menu-plans/${planId}`),
+  generateMenu: (memberId, startDate, days) => request('/menu-plans/generate', {
+    method: 'POST', body: { memberId: Number(memberId), startDate, days: Number(days) },
   }),
-  logout: () => request(() => {
-    const state = read();
-    state.session = null;
-    write(state);
-    return null;
+  getAlternatives: (planId, itemId) => request(`/menu-plans/${planId}/items/${itemId}/alternatives`),
+  replaceMenuItem: (planId, itemId, dishId, grams) => request(`/menu-plans/${planId}/items/${itemId}`, {
+    method: 'PATCH', body: { dishId: Number(dishId), grams: Number(grams) },
   }),
-  getFamily: () => request(() => read().family),
-  addMember: (member) => request(() => {
-    const state = read();
-    const item = { ...member, id: crypto.randomUUID(), avatar: member.name.trim().split(' ').slice(-2).map((part) => part[0]).join('').toUpperCase(), color: '#e5eee6' };
-    state.family.push(item);
-    write(state);
-    return item;
+  lockMenuItem: (planId, itemId, locked) => request(`/menu-plans/${planId}/items/${itemId}/lock`, {
+    method: 'PUT', body: { locked },
   }),
-  updateMember: (id, changes) => request(() => {
-    const state = read();
-    const index = state.family.findIndex((item) => item.id === id);
-    if (index < 0) throw new Error('Không tìm thấy thành viên.');
-    state.family[index] = { ...state.family[index], ...changes };
-    write(state);
-    return state.family[index];
+  regenerateMenu: (planId) => request(`/menu-plans/${planId}/regenerate`, {
+    method: 'POST', body: { scope: 'all_unlocked' },
   }),
-  removeMember: (id) => request(() => {
-    const state = read();
-    state.family = state.family.filter((item) => item.id !== id);
-    write(state);
-    return id;
-  }),
-  getDiary: () => request(() => read().diary),
-  addDiary: (entry) => request(() => {
-    const state = read();
-    const item = { ...entry, id: crypto.randomUUID() };
-    state.diary.unshift(item);
-    write(state);
-    return item;
-  }),
-  removeDiary: (id) => request(() => {
-    const state = read();
-    state.diary = state.diary.filter((item) => item.id !== id);
-    write(state);
-    return id;
-  }),
-  getMenu: () => request(() => read().menu),
-  getAlternatives: () => request(() => clone(seed.alternatives)),
-  updateMenu: (id, changes) => request(() => {
-    const state = read();
-    const index = state.menu.findIndex((item) => item.id === id);
-    if (index < 0) throw new Error('Không tìm thấy bữa ăn.');
-    state.menu[index] = { ...state.menu[index], ...changes };
-    write(state);
-    return state.menu[index];
-  }),
-  generateMenu: () => request(() => {
-    const state = read();
-    const choices = clone(seed.alternatives);
-    state.menuGeneration = (state.menuGeneration || 0) + 1;
-    state.menu = state.menu.map((item, index) => {
-      if (item.locked) return item;
-      const choice = choices[(index + state.menuGeneration - 1) % choices.length];
-      return { ...item, dish: choice.name, detail: choice.detail };
-    });
-    write(state);
-    return state.menu;
-  }),
-  analyzePhoto: (file) => request(() => {
-    if (!file || !file.type.startsWith('image/')) throw new Error('Vui lòng chọn một tệp ảnh.');
-    if (file.size > 5 * 1024 * 1024) throw new Error('Ảnh phải nhỏ hơn 5 MB.');
-    return { dishes: [{ name: 'Cơm', portion: '1 chén' }, { name: 'Rau xanh', portion: '1 phần' }, { name: 'Món chính', portion: '1 phần' }], note: 'Nhận diện mô phỏng. Hãy chỉnh lại tên món và khẩu phần trước khi lưu.' };
-  }),
-  assessMeal: ({ dishes, memberId }) => request(() => {
-    if (!memberId || dishes.some((dish) => !dish.name.trim())) throw new Error('Vui lòng chọn thành viên và điền tên các món.');
-    return { title: 'Đánh giá minh họa', summary: 'Bữa ăn đã được ghi nhận với các món bạn xác nhận. Hãy tham khảo sự đa dạng thực phẩm và điều chỉnh theo nhu cầu cá nhân.', tags: ['Dữ liệu demo', 'Không phải tư vấn y tế'] };
-  }),
-  getSettings: () => request(() => read().settings || { notifications: true, photoConsent: false }),
-  updateSettings: (changes) => request(() => {
-    const state = read();
-    state.settings = { ...(state.settings || { notifications: true, photoConsent: false }), ...changes };
-    write(state);
-    return state.settings;
-  }),
-  resetDemo: () => request(() => {
-    const session = read().session;
-    write({ ...clone(seed), session });
-    return true;
-  }),
+  undoMenu: (planId) => request(`/menu-plans/${planId}/undo`, { method: 'POST', body: { steps: 1 } }),
+  validateMenu: (planId) => request(`/menu-plans/${planId}/validate`, { method: 'POST' }),
+  exportMenu: (planId, format) => request(`/menu-plans/${planId}/export?format=${format}`, { raw: true }),
+  async removePlan(planId) {
+    await request(`/menu-plans/${planId}`, { method: 'DELETE' });
+    return { data: true };
+  },
 };

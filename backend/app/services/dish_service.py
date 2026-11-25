@@ -6,6 +6,9 @@ def serialize(row):
         "dishId": row["food_id"],
         "name": row["name"],
         "category": row.get("category"),
+        "entityType": "INGREDIENT"
+        if str(row.get("category") or "").casefold() == "ingredient"
+        else "DISH",
         "defaultPortionG": float(row["default_portion_g"])
         if row.get("default_portion_g") is not None
         else None,
@@ -29,3 +32,11 @@ def search(db, q, category, limit, cursor):
         "data": [serialize(row) for row in rows],
         "meta": {"nextCursor": rows[-1]["food_id"] if len(rows) == limit else None},
     }
+
+def detail(db, dish_id):
+    from app.core.exceptions import AppException
+
+    row = dish_repository.find(db, dish_id)
+    if not row:
+        raise AppException("NOT_FOUND", "Dish not found", 404)
+    return {"data": serialize(row)}

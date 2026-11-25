@@ -13,7 +13,7 @@ import { useSession } from './hooks/sessionContext.js';
 
 function Protected() {
   const { session, loading, error } = useSession();
-  if (loading) return <div className="state">Đang tải phiên demo…</div>;
+  if (loading) return <div className="state">Đang tải phiên…</div>;
   if (error) return <div className="state state--error" role="alert">{error}</div>;
   return session ? <AppLayout /> : <Navigate to="/welcome" replace />;
 }
@@ -22,7 +22,7 @@ export default function App() {
   const { session } = useSession();
   return <Routes>
     <Route path="/welcome" element={session ? <Navigate to="/" replace /> : <LandingPage />} />
-    <Route path="/dang-nhap" element={session ? <Navigate to="/" replace /> : <LoginPage />} />
+    <Route path="/dang-nhap" element={session ? <Navigate to="/gia-dinh" replace /> : <LoginPage />} />
     <Route element={<Protected />}>
       <Route index element={<HomePage />} />
       <Route path="chup-bua-an" element={<CapturePage />} />

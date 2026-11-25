@@ -1,0 +1,10 @@
+{
+  "adapter_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "model_release_status": "experimental",
+  "source_model_zip": "vietfood_portion_experimental_20261115T083714550335Z.zip",
+  "source_zip_sha256": "59be624a542f0d3af537a4d05a0f4ebac436270d4d7ed8d97de57a817fcda8e9",
+  "weights_modified": false,
+  "inference_test_in_this_build": false,
+  "documentation_basis": "user-provided experiment outputs"
+}

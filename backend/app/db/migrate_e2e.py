@@ -11,8 +11,15 @@ COLUMNS = {
         "profile_version": "INTEGER NOT NULL DEFAULT 1",
     },
     "FOOD_ITEM": {
+        "vietfood_food_id": "VARCHAR(80) UNIQUE",
+        "entity_type": "VARCHAR(20) NOT NULL DEFAULT 'DISH'",
         "aliases": "TEXT",
         "default_portion_g": "DECIMAL(8,2)",
+        "sugar_per_100g": "DECIMAL(8,2)",
+        "fiber_per_100g": "DECIMAL(8,2)",
+        "sodium_mg_per_100g": "DECIMAL(8,2)",
+        "potassium_mg_per_100g": "DECIMAL(8,2)",
+        "phosphorus_mg_per_100g": "DECIMAL(8,2)",
         "ingredients": "TEXT",
         "allergen_codes": "TEXT",
         "allergen_verified": "BOOLEAN NOT NULL DEFAULT FALSE",
@@ -25,6 +32,8 @@ COLUMNS = {
         "image_count": "INTEGER NOT NULL DEFAULT 0",
         "is_estimate": "BOOLEAN NOT NULL DEFAULT TRUE",
         "warnings": "TEXT",
+        "confirmed_at": "DATETIME",
+        "note": "TEXT",
     },
     "MEAL_ITEM": {"seasoning": "TEXT", "confidence": "DECIMAL(4,3)"},
     "ASSESSMENT": {
@@ -36,11 +45,30 @@ COLUMNS = {
     "MENU_PLAN": {
         "revision": "INTEGER NOT NULL DEFAULT 1",
         "validation_json": "TEXT",
+        "soft_score_json": "TEXT",
+        "generation_json": "TEXT",
         "soft_score": "DECIMAL(5,2)",
+        "created_at": "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP",
     },
+    "MENU_ITEM": {
+        "day_index": "TINYINT NOT NULL DEFAULT 1",
+        "locked": "BOOLEAN NOT NULL DEFAULT FALSE",
+    },
+    "HEALTH_RULE": {"change_log": "TEXT"},
 }
 
-NEW_TABLES = ("CONSENT", "CONSENT_HISTORY", "MEAL_MEMBER", "NUTRITION_RULE")
+NEW_TABLES = (
+    "CONSENT",
+    "CONSENT_HISTORY",
+    "MEAL_MEMBER",
+    "NUTRITION_RULE",
+    "MEAL_REVISION_HISTORY",
+    "RULE_SOURCE",
+    "HEALTH_RULE",
+    "MENU_PLAN_REVISION_HISTORY",
+    "USAGE_EVENT",
+    "DEMO_DATASET",
+)
 INDEXES = {
     "FOOD_ITEM": {
         "idx_food_item_category_food": "(category, food_id)",
@@ -54,7 +82,11 @@ INDEXES = {
     "NUTRITION_RULE": {
         "idx_rule_active_verified": "(active, verified, rule_type, subject)",
     },
+    "HEALTH_RULE": {
+        "idx_health_rule_enabled_filter": "(enabled, condition_code, nutrient, scope)",
+    },
 }
+
 
 # hàm migrate() thực hiện việc thêm các cột mới và tạo các bảng mới trong cơ sở dữ liệu.
 def migrate(db, dry_run=False):

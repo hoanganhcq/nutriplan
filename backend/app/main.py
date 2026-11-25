@@ -9,14 +9,19 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
 from app.core.exceptions import AppException
+from app.routers.assessment_explanations import router as assessment_explanations_router
 from app.routers.consents import router as consents_router
+from app.routers.dev import router as dev_router
 from app.routers.dishes import router as dishes_router
+from app.routers.events import router as events_router
 from app.routers.health import router as health_router
+from app.routers.households import alias_router as household_alias_router
 from app.routers.households import router as households_router
 from app.routers.meals import router as meals_router
 from app.routers.members import router as members_router
 from app.routers.menu_plans import router as menu_plans_router
 from app.routers.profiles import router as profiles_router
+from app.routers.rules import router as rules_router
 from app.routers.sessions import router as sessions_router
 
 logger = logging.getLogger(__name__)
@@ -25,7 +30,7 @@ logger = logging.getLogger(__name__)
 # 1. Khởi tạo FastAPI
 app = FastAPI(
     title=settings.app_name,
-    version="0.1.0",
+    version=settings.app_version,
     description="Backend API for AI Meal Analysis System",
 )
 
@@ -43,10 +48,12 @@ app.add_middleware(
 # 3. Xử lý lỗi nghiệp vụ
 @app.exception_handler(AppException)
 async def app_exception_handler(request: Request, exc: AppException):
-
+    error = {"code": exc.code, "message": exc.message}
+    if exc.details is not None:
+        error["details"] = jsonable_encoder(exc.details)
     return JSONResponse(
         status_code=exc.status_code,
-        content={"error": {"code": exc.code, "message": exc.message}},
+        content={"error": error},
     )
 
 
@@ -98,10 +105,15 @@ async def unexpected_exception_handler(request: Request, exc: Exception):
 # 7. Đăng ký router
 app.include_router(health_router)
 app.include_router(households_router)
+app.include_router(household_alias_router)
 app.include_router(sessions_router)
 app.include_router(profiles_router)
 app.include_router(consents_router)
+app.include_router(assessment_explanations_router)
 app.include_router(members_router)
 app.include_router(dishes_router)
 app.include_router(meals_router)
 app.include_router(menu_plans_router)
+app.include_router(rules_router)
+app.include_router(dev_router)
+app.include_router(events_router)

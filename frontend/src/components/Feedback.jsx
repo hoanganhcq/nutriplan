@@ -10,7 +10,7 @@ export function Notice({ message, onClose }) {
 }
 
 export function ResourceState({ loading, error, empty, onRetry }) {
-  if (loading) return <div className="state" role="status">Đang tải dữ liệu demo…</div>;
+  if (loading) return <div className="state" role="status">Đang tải dữ liệu…</div>;
   if (error) return <div className="state state--error" role="alert">{error} <button type="button" className="text-button" onClick={onRetry}>Thử lại</button></div>;
   if (empty) return <div className="state">Chưa có dữ liệu. Hãy thêm mục đầu tiên để bắt đầu.</div>;
   return null;
@@ -43,8 +43,4 @@ export function Modal({ title, children, onClose }) {
       {children}
     </section>
   </div>;
-}
-
-export function DemoLabel() {
-  return <span className="demo-label">DỮ LIỆU MINH HỌA</span>;
 }

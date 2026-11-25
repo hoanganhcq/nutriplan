@@ -1,0 +1,274 @@
+[
+  {
+    "dataset_class_id": 0,
+    "label": "Banh canh"
+  },
+  {
+    "dataset_class_id": 1,
+    "label": "Banh chung"
+  },
+  {
+    "dataset_class_id": 2,
+    "label": "Banh cuon"
+  },
+  {
+    "dataset_class_id": 3,
+    "label": "Banh khot"
+  },
+  {
+    "dataset_class_id": 4,
+    "label": "Banh mi"
+  },
+  {
+    "dataset_class_id": 5,
+    "label": "Banh trang"
+  },
+  {
+    "dataset_class_id": 6,
+    "label": "Banh trang tron"
+  },
+  {
+    "dataset_class_id": 7,
+    "label": "Banh xeo"
+  },
+  {
+    "dataset_class_id": 8,
+    "label": "Bo kho"
+  },
+  {
+    "dataset_class_id": 9,
+    "label": "Bo la lot"
+  },
+  {
+    "dataset_class_id": 10,
+    "label": "Bong cai"
+  },
+  {
+    "dataset_class_id": 11,
+    "label": "Bun"
+  },
+  {
+    "dataset_class_id": 12,
+    "label": "Bun bo Hue"
+  },
+  {
+    "dataset_class_id": 13,
+    "label": "Bun cha"
+  },
+  {
+    "dataset_class_id": 14,
+    "label": "Bun dau"
+  },
+  {
+    "dataset_class_id": 15,
+    "label": "Bun mam"
+  },
+  {
+    "dataset_class_id": 16,
+    "label": "Bun rieu"
+  },
+  {
+    "dataset_class_id": 17,
+    "label": "Ca"
+  },
+  {
+    "dataset_class_id": 18,
+    "label": "Ca chua"
+  },
+  {
+    "dataset_class_id": 19,
+    "label": "Ca phao"
+  },
+  {
+    "dataset_class_id": 20,
+    "label": "Ca rot"
+  },
+  {
+    "dataset_class_id": 21,
+    "label": "Canh"
+  },
+  {
+    "dataset_class_id": 22,
+    "label": "Cha"
+  },
+  {
+    "dataset_class_id": 23,
+    "label": "Cha gio"
+  },
+  {
+    "dataset_class_id": 24,
+    "label": "Chanh"
+  },
+  {
+    "dataset_class_id": 25,
+    "label": "Com"
+  },
+  {
+    "dataset_class_id": 26,
+    "label": "Com tam"
+  },
+  {
+    "dataset_class_id": 27,
+    "label": "Con nguoi"
+  },
+  {
+    "dataset_class_id": 28,
+    "label": "Cu kieu"
+  },
+  {
+    "dataset_class_id": 29,
+    "label": "Cua"
+  },
+  {
+    "dataset_class_id": 30,
+    "label": "Dau hu"
+  },
+  {
+    "dataset_class_id": 31,
+    "label": "Dua chua"
+  },
+  {
+    "dataset_class_id": 32,
+    "label": "Dua leo"
+  },
+  {
+    "dataset_class_id": 33,
+    "label": "Goi cuon"
+  },
+  {
+    "dataset_class_id": 34,
+    "label": "Hamburger"
+  },
+  {
+    "dataset_class_id": 35,
+    "label": "Heo quay"
+  },
+  {
+    "dataset_class_id": 36,
+    "label": "Hu tieu"
+  },
+  {
+    "dataset_class_id": 37,
+    "label": "Kho qua thit"
+  },
+  {
+    "dataset_class_id": 38,
+    "label": "Khoai tay chien"
+  },
+  {
+    "dataset_class_id": 39,
+    "label": "Lau"
+  },
+  {
+    "dataset_class_id": 40,
+    "label": "Long heo"
+  },
+  {
+    "dataset_class_id": 41,
+    "label": "Mi"
+  },
+  {
+    "dataset_class_id": 42,
+    "label": "Muc"
+  },
+  {
+    "dataset_class_id": 43,
+    "label": "Nam"
+  },
+  {
+    "dataset_class_id": 44,
+    "label": "Oc"
+  },
+  {
+    "dataset_class_id": 45,
+    "label": "Ot chuong"
+  },
+  {
+    "dataset_class_id": 46,
+    "label": "Pho"
+  },
+  {
+    "dataset_class_id": 47,
+    "label": "Pho mai"
+  },
+  {
+    "dataset_class_id": 48,
+    "label": "Rau"
+  },
+  {
+    "dataset_class_id": 49,
+    "label": "Salad"
+  },
+  {
+    "dataset_class_id": 50,
+    "label": "Thit bo"
+  },
+  {
+    "dataset_class_id": 51,
+    "label": "Thit ga"
+  },
+  {
+    "dataset_class_id": 52,
+    "label": "Thit heo"
+  },
+  {
+    "dataset_class_id": 53,
+    "label": "Thit kho"
+  },
+  {
+    "dataset_class_id": 54,
+    "label": "Thit nuong"
+  },
+  {
+    "dataset_class_id": 55,
+    "label": "Tom"
+  },
+  {
+    "dataset_class_id": 56,
+    "label": "Trung"
+  },
+  {
+    "dataset_class_id": 57,
+    "label": "Xoi"
+  },
+  {
+    "dataset_class_id": 58,
+    "label": "Banh beo"
+  },
+  {
+    "dataset_class_id": 59,
+    "label": "Cao lau"
+  },
+  {
+    "dataset_class_id": 60,
+    "label": "Mi Quang"
+  },
+  {
+    "dataset_class_id": 61,
+    "label": "Com chien duong chau"
+  },
+  {
+    "dataset_class_id": 62,
+    "label": "Bun cha ca"
+  },
+  {
+    "dataset_class_id": 63,
+    "label": "Com chien ga"
+  },
+  {
+    "dataset_class_id": 64,
+    "label": "Chao long"
+  },
+  {
+    "dataset_class_id": 65,
+    "label": "Nom hoa chuoi"
+  },
+  {
+    "dataset_class_id": 66,
+    "label": "Nui xao bo"
+  },
+  {
+    "dataset_class_id": 67,
+    "label": "Sup cua"
+  }
+]

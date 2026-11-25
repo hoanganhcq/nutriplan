@@ -1,0 +1,82 @@
+[
+  {
+    "source": "NIN_FOOD",
+    "record_id": "12079",
+    "name_vi": "Kem tươi",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "13024",
+    "name_vi": "Sả",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "13032",
+    "name_vi": "Nước sốt cà chua",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "13056",
+    "name_vi": "Bột hạt điều đỏ",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "13073",
+    "name_vi": "Nước ướp gà nướng",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "15037",
+    "name_vi": "Bún dọc mùng",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "15074",
+    "name_vi": "Muối vừng",
+    "issues": [
+      "energy_macro_disagreement"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "7034002",
+    "name_vi": "Dạ dày lợn, luộc",
+    "issues": [
+      "sat_fat_exceeds_total_fat"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "7054002",
+    "name_vi": "Tai lợn, luộc",
+    "issues": [
+      "sat_fat_exceeds_total_fat"
+    ]
+  },
+  {
+    "source": "NIN_FOOD",
+    "record_id": "7090002",
+    "name_vi": "Thịt ngan, luộc",
+    "issues": [
+      "carb_g:negative_or_nonfinite"
+    ]
+  }
+]

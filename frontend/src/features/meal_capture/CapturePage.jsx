@@ -1,45 +1,258 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DemoLabel, Notice, ResourceState } from '../../components/Feedback.jsx';
+import { Link, useSearchParams } from 'react-router-dom';
+import { currentSession, levels, nutrients, request } from '../../services/api.js';
+import useRequest from '../../services/useRequest.js';
 import Icon from '../../components/Icon.jsx';
-import { useResource } from '../../hooks/useResource.js';
-import { useAction } from '../../hooks/useAction.js';
-import { service } from '../../services/nutriplan.js';
 
-const steps = ['Tải ảnh', 'Xác nhận món', 'Xem đánh giá'];
+function DishForm({ dishes, grams, button, onSubmit }) {
+  function submit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    onSubmit({ dishId: Number(data.get('dish')), grams: Number(data.get('grams')) });
+  }
+
+  return <form className="meal-row" onSubmit={submit}>
+    <label>Món
+      <select name="dish" required defaultValue={dishes.length === 1 ? dishes[0].dishId : ''}>
+        <option value="">Chọn món</option>
+        {dishes.map((dish) => <option key={dish.dishId} value={dish.dishId}>{dish.name}</option>)}
+      </select>
+    </label>
+    <label>Khối lượng (g)<input name="grams" type="number" required min="0.01" max="10000" step="0.01" defaultValue={grams} /></label>
+    <button type="submit">{button}</button>
+  </form>;
+}
+
+async function loadDishes() {
+  const dishes = [];
+  let cursor = 0;
+  do {
+    const result = await request(`/dishes?limit=100&cursor=${cursor}`);
+    dishes.push(...result.data);
+    cursor = result.meta.nextCursor;
+  } while (cursor != null);
+  return dishes;
+}
 
 export default function CapturePage() {
-  const family = useResource(service.getFamily);
-  const action = useAction();
-  const [step, setStep] = useState(0);
+  const [params, setParams] = useSearchParams();
+  const draftId = params.get('draft');
+  const [session] = useState(currentSession);
+  const [members, setMembers] = useState([]);
+  const [memberId, setMemberId] = useState('');
+  const [dishes, setDishes] = useState([]);
+  const [mealType, setMealType] = useState('lunch');
+  const [meal, setMeal] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [recognitionEmpty, setRecognitionEmpty] = useState(false);
+  const [assessment, setAssessment] = useState(null);
+  const [explanation, setExplanation] = useState(null);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState('');
-  const [dishes, setDishes] = useState([]);
-  const [memberId, setMemberId] = useState('');
-  const [meal, setMeal] = useState('Bữa trưa');
-  const [assessment, setAssessment] = useState(null);
-  useEffect(() => { if (family.data?.length && !memberId) setMemberId(family.data[0].id); }, [family.data, memberId]);
-  useEffect(() => { if (!file) { setPreview(''); return undefined; } const url = URL.createObjectURL(file); setPreview(url); return () => URL.revokeObjectURL(url); }, [file]);
-  async function analyze() {
-    const result = await action.run(() => service.analyzePhoto(file), 'Đã tạo kết quả nhận diện giả lập. Vui lòng xác nhận các món.');
-    if (result) { setDishes(result.dishes); setStep(1); }
+  const action = useRequest();
+
+  useEffect(() => {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+
+  useEffect(() => {
+    if (!session) return;
+    if (draftId && String(meal?.mealId) === draftId) return;
+    action.run(async () => {
+      const [profiles, catalog, draft] = await Promise.all([
+        request(`/members?householdId=${session.householdId}`),
+        loadDishes(),
+        draftId ? request(`/meals/${draftId}`) : null,
+      ]);
+      setMembers(profiles.data);
+      setDishes(catalog);
+      setMemberId(draft?.data.memberIds[0] || profiles.data[0]?.memberId || '');
+      setMeal(draft?.data ?? null);
+      setSuggestions([]);
+      setRecognitionEmpty(false);
+      setAssessment(null);
+      setExplanation(null);
+    });
+  }, [session, draftId]);
+
+  function updateMeal(next) {
+    setMeal(next);
+    setAssessment(null);
+    setExplanation(null);
+    if (!draftId) setParams({ draft: next.mealId }, { replace: true });
   }
-  async function assess() {
-    if (!dishes.length || dishes.some((dish) => !dish.name.trim() || !dish.portion.trim())) return action.setError('Vui lòng nhập ít nhất một món với tên và khẩu phần.');
-    const result = await action.run(() => service.assessMeal({ dishes, memberId }));
-    if (result) { setAssessment(result); setStep(2); }
+
+  function upload(event) {
+    event.preventDefault();
+    const body = new FormData(event.currentTarget);
+    body.set('householdId', session.householdId);
+    body.set('memberIds', JSON.stringify([Number(memberId)]));
+    body.set('mealType', mealType);
+    action.run(async () => {
+      const result = await request('/meals/analyze', { method: 'POST', body });
+      updateMeal(result.data);
+      setSuggestions((result.data.recognition || []).map((item, index) => ({ ...item, index })));
+      setRecognitionEmpty(!result.data.recognition?.length && !result.data.items.length);
+      setDishes(await loadDishes());
+    });
   }
-  async function save() {
-    const result = await action.run(() => service.addDiary({ date: new Date().toISOString().slice(0, 10), meal, name: dishes.map((dish) => dish.name.trim()).join(', '), memberId, note: assessment.summary, score: assessment.title, icon: 'plate' }), 'Đã lưu bữa ăn vào nhật ký demo.');
-    if (result) { setStep(3); setFile(null); }
+
+  function addDish(item, suggestionIndex) {
+    action.run(async () => {
+      const result = meal
+        ? await request(`/meals/${meal.mealId}/items`, { method: 'POST', body: { ...item, confirmWeight: true } })
+        : await request('/meals', { method: 'POST', body: {
+          householdId: session.householdId, mealType, memberIds: [Number(memberId)], items: [item],
+        } });
+      updateMeal(result.data);
+      if (suggestionIndex !== undefined) {
+        setSuggestions((previous) => previous.filter((suggestion) => suggestion.index !== suggestionIndex));
+      }
+    });
   }
-  function reset() { setStep(0); setFile(null); setDishes([]); setAssessment(null); action.setError(''); }
-  return <div className="page capture-page"><div className="page-top"><div><span className="eyebrow">GHI NHẬN BỮA ĂN</span><h1>Chụp bữa ăn</h1><p>Từ hình ảnh đến nhật ký, qua ba bước đơn giản.</p></div><DemoLabel /></div>
-    <ol className="stepper">{steps.map((label, index) => <li key={label} className={index <= step ? 'active' : ''}><span>{index + 1}</span>{label}</li>)}</ol>
-    <Notice message={action.notice} onClose={() => action.setNotice('')} />{action.error && <p className="form-error" role="alert">{action.error}</p>}
-    {step === 0 && <div className="capture-grid"><section className="panel"><span className="eyebrow">BƯỚC 01</span><h2>Tải ảnh bữa ăn</h2><p>Ảnh được xử lý giả lập trong trình duyệt. NutriPlan không gửi ảnh đến máy chủ ở mock mode.</p><label className="upload-zone"><input type="file" accept="image/*" capture="environment" onChange={(event) => { setFile(event.target.files?.[0] || null); action.setError(''); }} /><span className="upload-icon"><Icon name="camera" size={32} /></span><b>{file ? file.name : 'Chọn hoặc chụp một bức ảnh'}</b><small>JPG, PNG hoặc ảnh khác · Tối đa 5 MB</small></label><button className="button button--primary" disabled={!file || action.busy} onClick={analyze}>{action.busy ? 'Đang mô phỏng…' : 'Nhận diện món ăn →'}</button></section><div className="preview-panel panel">{preview ? <img src={preview} alt="Ảnh bữa ăn đã chọn" /> : <div className="preview-empty"><Icon name="plate" size={68} /><p>Ảnh của bạn sẽ hiển thị ở đây</p></div>}</div></div>}
-    {step === 1 && <div className="capture-grid"><section className="panel"><span className="eyebrow">BƯỚC 02</span><h2>Xác nhận các món ăn</h2><p>Kết quả nhận diện là dữ liệu mô phỏng. Hãy chỉnh tên món và khẩu phần cho đúng với bữa ăn thực tế.</p><ResourceState loading={family.loading} error={family.error} empty={family.data?.length === 0} onRetry={family.refresh} /><div className="stack-form"><label>Thành viên<select value={memberId} onChange={(e) => setMemberId(e.target.value)}>{family.data?.map((person) => <option value={person.id} key={person.id}>{person.name}</option>)}</select></label><label>Loại bữa ăn<select value={meal} onChange={(e) => setMeal(e.target.value)}><option>Bữa sáng</option><option>Bữa trưa</option><option>Bữa tối</option><option>Bữa phụ</option></select></label></div><div className="dish-list">{dishes.map((dish, index) => <div className="dish-row" key={index}><label>Tên món<input value={dish.name} onChange={(e) => setDishes(dishes.map((item, i) => i === index ? { ...item, name: e.target.value } : item))} /></label><label>Khẩu phần<input value={dish.portion} onChange={(e) => setDishes(dishes.map((item, i) => i === index ? { ...item, portion: e.target.value } : item))} /></label><button className="icon-button" type="button" aria-label={`Xóa món ${index + 1}`} onClick={() => setDishes(dishes.filter((_, i) => i !== index))}>×</button></div>)}</div><button className="text-button" type="button" onClick={() => setDishes([...dishes, { name: '', portion: '' }])}>＋ Thêm món</button><div className="form-actions"><button className="button button--quiet" onClick={() => setStep(0)}>← Đổi ảnh</button><button className="button button--primary" disabled={action.busy || !memberId} onClick={assess}>{action.busy ? 'Đang đánh giá…' : 'Xem đánh giá minh họa →'}</button></div></section><div className="preview-panel panel">{preview && <img src={preview} alt="Ảnh bữa ăn đang xác nhận" />}</div></div>}
-    {step === 2 && <section className="panel result-panel"><span className="eyebrow">BƯỚC 03 · KẾT QUẢ DEMO</span><div className="result-icon"><Icon name="sparkles" size={30} /></div><h2>{assessment.title}</h2><p>{assessment.summary}</p><div className="tag-row">{assessment.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><div className="result-dishes"><h3>Các món đã xác nhận</h3>{dishes.map((dish, index) => <div key={index}>{dish.name}<span>{dish.portion}</span></div>)}</div><p className="helper">Đánh giá này không áp dụng ngưỡng bệnh lý và không thay thế tư vấn của chuyên gia.</p><div className="form-actions"><button className="button button--quiet" onClick={() => setStep(1)}>← Chỉnh món</button><button className="button button--primary" disabled={action.busy} onClick={save}>{action.busy ? 'Đang lưu…' : 'Lưu vào nhật ký'}</button></div></section>}
-    {step === 3 && <section className="panel success-panel"><div className="result-icon"><Icon name="check" size={30} /></div><h2>Đã lưu bữa ăn!</h2><p>Bữa ăn vừa được thêm vào nhật ký demo. Bạn có thể xem lại hoặc ghi nhận bữa ăn khác.</p><div className="form-actions"><Link className="button button--outline" to="/nhat-ky">Xem nhật ký</Link><button className="button button--primary" onClick={reset}>Ghi bữa ăn khác</button></div></section>}
-  </div>;
+
+  function editItem(itemId, method, body) {
+    action.run(async () => {
+      const result = await request(`/meals/${meal.mealId}/items/${itemId}`, { method, body });
+      updateMeal(result.data);
+    });
+  }
+
+  function evaluate() {
+    action.run(async () => {
+      setExplanation(null);
+      const result = await request(`/meals/${meal.mealId}/assessments`, {
+        method: 'POST', body: { memberIds: [Number(memberId)] },
+      });
+      setAssessment(result.data.assessments[0]);
+    });
+  }
+
+  function explain() {
+    action.run(async () => {
+      const result = await request(`/assessments/${assessment.assessmentId}/explain`, {
+        method: 'POST', body: { style: 'simple', maxWords: 120 },
+      });
+      setExplanation(result.data);
+    });
+  }
+
+  function confirm() {
+    action.run(async () => {
+      await request(`/meals/${meal.mealId}/confirm`, {
+        method: 'POST', body: { eatenBy: [Number(memberId)] },
+      });
+      setMeal({ ...meal, status: 'confirmed' });
+    });
+  }
+
+  if (!session) return <><h1>Chụp bữa ăn</h1><p>Tạo phiên tại <Link to="/gia-dinh">Gia đình</Link> để bắt đầu.</p></>;
+  const confirmed = meal?.status === 'confirmed';
+  const hasEstimates = meal?.items.some((item) => item.isEstimate);
+  const step = assessment || confirmed ? 2 : meal ? 1 : 0;
+
+  return <section className="page capture-page meal-flow">
+    <div className="page-top">
+      <div><h1>Chụp bữa ăn</h1><p>Tải ảnh, xác nhận các món và xem đánh giá theo hồ sơ.</p></div>
+    </div>
+    <ol className="stepper">{['Chụp ảnh', 'Xác nhận món', 'Đánh giá'].map((label, index) =>
+      <li key={label} className={index <= step ? 'active' : ''} aria-current={index === step ? 'step' : undefined}>
+        <span>{index + 1}</span>{label}
+      </li>)}
+    </ol>
+    {action.error && <p className="meal-error" role="alert">{action.error}</p>}
+    {action.busy && <p role="status">Đang xử lý…</p>}
+    {!action.busy && !members.length && <p>Hãy thêm thành viên ở <Link to="/gia-dinh">Gia đình</Link>.</p>}
+    <fieldset className="meal-flow__controls" disabled={action.busy || !members.length || confirmed}>
+      <div className="capture-grid">
+      <section className="panel meal-panel">
+        <h2>{meal ? 'Thông tin bữa ăn' : 'Tải ảnh bữa ăn'}</h2>
+        <label>Thành viên
+          <select value={memberId} disabled={Boolean(meal)} onChange={(event) => setMemberId(event.target.value)}>
+            {members.map((person) => <option key={person.memberId} value={person.memberId}>{person.name}</option>)}
+          </select>
+        </label>
+        {!meal && <label>Loại bữa
+          <select value={mealType} onChange={(event) => setMealType(event.target.value)}>
+            <option value="breakfast">Bữa sáng</option><option value="lunch">Bữa trưa</option>
+            <option value="dinner">Bữa tối</option><option value="snack">Bữa phụ</option>
+          </select>
+        </label>}
+        {!meal && !draftId && <form onSubmit={upload} className="stack-form">
+          <label className="upload-zone">
+            <input name="images" type="file" accept="image/jpeg,image/png,image/webp" required
+              onChange={(event) => { setFile(event.target.files[0] || null); }} />
+            <span className="upload-icon"><Icon name="camera" size={32} /></span>
+            <b>{file?.name || 'Chọn ảnh bữa ăn'}</b>
+            <small>JPEG, PNG hoặc WebP · Tối đa 8 MB</small>
+          </label>
+          <button className="button button--primary" type="submit" disabled={!file}>Nhận diện món ăn</button>
+        </form>}
+      </section>
+      {(!meal || file) && <div className="preview-panel panel">
+        {file && preview
+          ? <img src={preview} alt="Ảnh bữa ăn đã chọn" />
+          : <div className="preview-empty"><Icon name="plate" size={68} /><p>Ảnh của bạn sẽ hiển thị ở đây</p></div>}
+      </div>}
+      </div>
+      {recognitionEmpty && <p>Ảnh chưa có món nhận diện được. Bạn có thể thêm từ danh mục.</p>}
+      {suggestions.length > 0 && <section className="meal-panel">
+        <h2>Gợi ý từ ảnh</h2>
+        <p>Kiểm tra các vùng trùng nhau, chọn đúng món và xác nhận gram trước khi thêm.</p>
+        {suggestions.map((item) => <article key={item.index}>
+          <h3>{item.name}</h3>
+          {item.grams != null && <p>Ước lượng từ ảnh {Math.round(item.grams)} g</p>}
+          {item.dishes.length > 0
+            ? <DishForm dishes={item.dishes} grams={item.grams?.toFixed(2)} button="Xác nhận món và gram"
+                onSubmit={(dish) => addDish(dish, item.index)} />
+            : <p>Chưa có món tương ứng trong KB. Có thể tìm trong danh mục bên dưới.</p>}
+          <button type="button" onClick={() => setSuggestions(suggestions.filter((suggestion) => suggestion.index !== item.index))}>
+            Bỏ gợi ý
+          </button>
+        </article>)}
+      </section>}
+      {!confirmed && (!draftId || meal) && <section className="meal-panel">
+        <h2>Thêm món từ danh mục</h2>
+        {dishes.length > 0
+          ? <DishForm dishes={dishes} button="Thêm món" onSubmit={addDish} />
+          : <p>Danh mục dinh dưỡng hiện chưa có món.</p>}
+      </section>}
+      {meal && <section className="meal-panel">
+        <h2>{confirmed ? 'Bữa ăn đã lưu' : 'Bữa ăn nháp'}</h2>
+        {meal.items.map((item) => <article key={item.itemId}>
+          <h3>{item.name}</h3>
+          <form key={`${item.itemId}-${item.grams}-${item.isEstimate}`} className="meal-row" onSubmit={(event) => {
+            event.preventDefault();
+            editItem(item.itemId, 'PATCH', { grams: Number(new FormData(event.currentTarget).get('grams')) });
+          }}>
+            <label>Gram của {item.name}<input type="number" name="grams" min="0.01" max="10000" step="0.01" required defaultValue={item.grams} /></label>
+            {!confirmed && <>
+              <button type="submit">{item.isEstimate ? 'Xác nhận gram' : 'Cập nhật gram'}</button>
+              <button type="button" onClick={() => editItem(item.itemId, 'DELETE')}>Bỏ món</button>
+            </>}
+          </form>
+        </article>)}
+        <h3>Tổng dinh dưỡng</h3>
+        <dl className="meal-totals">{Object.entries(nutrients).map(([key, name]) => <div key={key}>
+          <dt>{name}</dt><dd>{meal.totals[key] == null ? 'Thiếu dữ liệu' : `${meal.totals[key]} ${key === 'kcal' ? 'kcal' : 'g'}`}</dd>
+        </div>)}</dl>
+        {!confirmed && <button type="button" onClick={evaluate} disabled={!meal.items.length || hasEstimates || Boolean(suggestions.length)}>
+          Đánh giá theo hồ sơ
+        </button>}
+        {assessment && <div>
+          <h3>{levels[assessment.level] || assessment.level}</h3>
+          {!explanation && <button type="button" onClick={explain}>Xem giải thích</button>}
+          {explanation && <><p>{explanation.explanation}</p><p>{explanation.disclaimer}</p></>}
+          {!confirmed && (assessment.level === 'INSUFFICIENT_DATA'
+            ? <p>Bữa ăn được giữ ở bản nháp trong nhật ký.</p>
+            : <button type="button" onClick={confirm}>Xác nhận và lưu nhật ký</button>)}
+        </div>}
+      </section>}
+    </fieldset>
+    {meal && <Link className="button button--outline" to="/nhat-ky">Mở nhật ký</Link>}
+  </section>;
 }

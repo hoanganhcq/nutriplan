@@ -1,0 +1,708 @@
+{
+  "version": "2.0.0",
+  "model": "YOLO11m VietFood68 stage33",
+  "output_confidence": 0.6494140625,
+  "entries": [
+    {
+      "dataset_class_id": 0,
+      "model_label": "Banh canh",
+      "name_vi": "Bánh canh",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 1,
+      "model_label": "Banh chung",
+      "name_vi": "Bánh chưng",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15006"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 2,
+      "model_label": "Banh cuon",
+      "name_vi": "Bánh cuốn",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15009",
+        "NIN_F_15010"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 3,
+      "model_label": "Banh khot",
+      "name_vi": "Bánh khọt",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 4,
+      "model_label": "Banh mi",
+      "name_vi": "Bánh mì",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_1012",
+        "NIN_F_15023",
+        "NIN_F_15024"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 5,
+      "model_label": "Banh trang",
+      "name_vi": "Bánh tráng",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_1010"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 6,
+      "model_label": "Banh trang tron",
+      "name_vi": "Bánh tráng trộn",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 7,
+      "model_label": "Banh xeo",
+      "name_vi": "Bánh xèo",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 8,
+      "model_label": "Bo kho",
+      "name_vi": "Bò kho",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 9,
+      "model_label": "Bo la lot",
+      "name_vi": "Bò lá lốt",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 10,
+      "model_label": "Bong cai",
+      "name_vi": "Bông cải",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4100002"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 11,
+      "model_label": "Bun",
+      "name_vi": "Bún",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_1020"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 12,
+      "model_label": "Bun bo Hue",
+      "name_vi": "Bún bò Huế",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 13,
+      "model_label": "Bun cha",
+      "name_vi": "Bún chả",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15034"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 14,
+      "model_label": "Bun dau",
+      "name_vi": "Bún đậu",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15036"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 15,
+      "model_label": "Bun mam",
+      "name_vi": "Bún mắm",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 16,
+      "model_label": "Bun rieu",
+      "name_vi": "Bún riêu",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 17,
+      "model_label": "Ca",
+      "name_vi": "Cá",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_8020002",
+        "NIN_F_8024008"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 18,
+      "model_label": "Ca chua",
+      "name_vi": "Cà chua",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4005"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 19,
+      "model_label": "Ca phao",
+      "name_vi": "Cà pháo muối",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4114"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 20,
+      "model_label": "Ca rot",
+      "name_vi": "Cà rốt",
+      "supported_output": false,
+      "candidate_food_ids": [],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 21,
+      "model_label": "Canh",
+      "name_vi": "Canh",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 22,
+      "model_label": "Cha",
+      "name_vi": "Chả",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_7069",
+        "NIN_F_15041"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 23,
+      "model_label": "Cha gio",
+      "name_vi": "Chả giò",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15063"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 24,
+      "model_label": "Chanh",
+      "name_vi": "Chanh",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_5003"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 25,
+      "model_label": "Com",
+      "name_vi": "Cơm",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "USDA_FDC_168878"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 26,
+      "model_label": "Com tam",
+      "name_vi": "Cơm tấm",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 27,
+      "model_label": "Con nguoi",
+      "name_vi": "Con người",
+      "supported_output": false,
+      "candidate_food_ids": [],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 28,
+      "model_label": "Cu kieu",
+      "name_vi": "Củ kiệu",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4121"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 29,
+      "model_label": "Cua",
+      "name_vi": "Cua",
+      "supported_output": false,
+      "candidate_food_ids": [],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 30,
+      "model_label": "Dau hu",
+      "name_vi": "Đậu hũ",
+      "supported_output": false,
+      "candidate_food_ids": [
+        "NIN_F_3025002",
+        "NIN_F_3027"
+      ],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 31,
+      "model_label": "Dua chua",
+      "name_vi": "Dưa chua",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4116"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 32,
+      "model_label": "Dua leo",
+      "name_vi": "Dưa leo",
+      "supported_output": false,
+      "candidate_food_ids": [
+        "NIN_F_4027"
+      ],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 33,
+      "model_label": "Goi cuon",
+      "name_vi": "Gỏi cuốn",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 34,
+      "model_label": "Hamburger",
+      "name_vi": "Hamburger",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "USDA_FDC_170693"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 35,
+      "model_label": "Heo quay",
+      "name_vi": "Heo quay",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 36,
+      "model_label": "Hu tieu",
+      "name_vi": "Hủ tiếu",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 37,
+      "model_label": "Kho qua thit",
+      "name_vi": "Khổ qua thịt",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 38,
+      "model_label": "Khoai tay chien",
+      "name_vi": "Khoai tây chiên",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "USDA_FDC_170698"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 39,
+      "model_label": "Lau",
+      "name_vi": "Lẩu",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 40,
+      "model_label": "Long heo",
+      "name_vi": "Lòng heo",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_7047002"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 41,
+      "model_label": "Mi",
+      "name_vi": "Mì",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15061"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 42,
+      "model_label": "Muc",
+      "name_vi": "Mực",
+      "supported_output": false,
+      "candidate_food_ids": [
+        "NIN_F_8040003"
+      ],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 43,
+      "model_label": "Nam",
+      "name_vi": "Nấm",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 44,
+      "model_label": "Oc",
+      "name_vi": "Ốc",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 45,
+      "model_label": "Ot chuong",
+      "name_vi": "Ớt chuông",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4063"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 46,
+      "model_label": "Pho",
+      "name_vi": "Phở",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15065",
+        "NIN_F_15066",
+        "NIN_F_15067"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 47,
+      "model_label": "Pho mai",
+      "name_vi": "Phô mai",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_10009"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 48,
+      "model_label": "Rau",
+      "name_vi": "Rau",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_4083002",
+        "NIN_F_4100002",
+        "NIN_F_4010002"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 49,
+      "model_label": "Salad",
+      "name_vi": "Salad",
+      "supported_output": false,
+      "candidate_food_ids": [],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 50,
+      "model_label": "Thit bo",
+      "name_vi": "Thịt bò",
+      "supported_output": false,
+      "candidate_food_ids": [],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 51,
+      "model_label": "Thit ga",
+      "name_vi": "Thịt gà",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_7106002"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 52,
+      "model_label": "Thit heo",
+      "name_vi": "Thịt heo",
+      "supported_output": false,
+      "candidate_food_ids": [
+        "NIN_F_7085002",
+        "NIN_F_7018002"
+      ],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 53,
+      "model_label": "Thit kho",
+      "name_vi": "Thịt kho",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 54,
+      "model_label": "Thit nuong",
+      "name_vi": "Thịt nướng",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15068",
+        "NIN_F_7086"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 55,
+      "model_label": "Tom",
+      "name_vi": "Tôm",
+      "supported_output": false,
+      "candidate_food_ids": [
+        "NIN_F_8051002"
+      ],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 56,
+      "model_label": "Trung",
+      "name_vi": "Trứng",
+      "supported_output": false,
+      "candidate_food_ids": [],
+      "status": "excluded_model_output",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 57,
+      "model_label": "Xoi",
+      "name_vi": "Xôi",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15069",
+        "NIN_F_15070",
+        "NIN_F_15071",
+        "NIN_F_15072",
+        "NIN_F_15073",
+        "NIN_F_1024002"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 58,
+      "model_label": "Banh beo",
+      "name_vi": "Bánh bèo",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15002"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 59,
+      "model_label": "Cao lau",
+      "name_vi": "Cao lầu",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 60,
+      "model_label": "Mi Quang",
+      "name_vi": "Mì Quảng",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 61,
+      "model_label": "Com chien duong chau",
+      "name_vi": "Cơm chiên Dương Châu",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15056"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 62,
+      "model_label": "Bun cha ca",
+      "name_vi": "Bún chả cá",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 63,
+      "model_label": "Com chien ga",
+      "name_vi": "Cơm chiên gà",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 64,
+      "model_label": "Chao long",
+      "name_vi": "Cháo lòng",
+      "supported_output": true,
+      "candidate_food_ids": [
+        "NIN_F_15042"
+      ],
+      "status": "requires_user_variant_selection",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 65,
+      "model_label": "Nom hoa chuoi",
+      "name_vi": "Nộm hoa chuối",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 66,
+      "model_label": "Nui xao bo",
+      "name_vi": "Nui xào bò",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    },
+    {
+      "dataset_class_id": 67,
+      "model_label": "Sup cua",
+      "name_vi": "Súp cua",
+      "supported_output": true,
+      "candidate_food_ids": [],
+      "status": "no_verified_nutrition_variant",
+      "automatic_mapping": false
+    }
+  ]
+}

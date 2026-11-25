@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS MEMBER (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS FOOD_ITEM (
+    vietfood_food_id VARCHAR(80) UNIQUE,
     food_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(150) NOT NULL,
     category VARCHAR(50),
@@ -41,8 +42,14 @@ CREATE TABLE IF NOT EXISTS FOOD_ITEM (
     fat_per_100g DECIMAL(8,2),
     source_name VARCHAR(150),
     source_url TEXT,
+    entity_type VARCHAR(20) NOT NULL DEFAULT 'DISH',
     aliases TEXT,
     default_portion_g DECIMAL(8,2),
+    sugar_per_100g DECIMAL(8,2),
+    fiber_per_100g DECIMAL(8,2),
+    sodium_mg_per_100g DECIMAL(8,2),
+    potassium_mg_per_100g DECIMAL(8,2),
+    phosphorus_mg_per_100g DECIMAL(8,2),
     ingredients TEXT,
     allergen_codes TEXT,
     allergen_verified BOOLEAN NOT NULL DEFAULT FALSE,
@@ -63,11 +70,25 @@ CREATE TABLE IF NOT EXISTS MEAL (
     image_count INTEGER NOT NULL DEFAULT 0,
     is_estimate BOOLEAN NOT NULL DEFAULT TRUE,
     warnings TEXT,
+    confirmed_at DATETIME,
+    note TEXT,
     INDEX idx_meal_household_eaten_at (household_id, eaten_at),
     INDEX idx_meal_status_eaten (status, eaten_at),
     FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id),
     FOREIGN KEY (created_by_member_id) REFERENCES MEMBER(member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS MEAL_REVISION_HISTORY (
+    revision_id INT AUTO_INCREMENT PRIMARY KEY,
+    meal_id INT NOT NULL,
+    revision_no INT NOT NULL,
+    action VARCHAR(30) NOT NULL,
+    snapshot_json JSON NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_MEAL_REVISION_MEAL FOREIGN KEY (meal_id)
+        REFERENCES MEAL(meal_id) ON DELETE CASCADE,
+    CONSTRAINT unique_meal_revision UNIQUE (meal_id, revision_no)
+) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS MEAL_ITEM (
     meal_item_id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -108,7 +129,10 @@ CREATE TABLE IF NOT EXISTS MENU_PLAN (
     status VARCHAR(30) DEFAULT 'draft',
     revision INTEGER NOT NULL DEFAULT 1,
     validation_json TEXT,
+    soft_score_json TEXT,
+    generation_json TEXT,
     soft_score DECIMAL(5,2),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_menu_plan_member_start_date (member_id, start_date),
     FOREIGN KEY (member_id) REFERENCES MEMBER(member_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -119,9 +143,20 @@ CREATE TABLE IF NOT EXISTS MENU_ITEM (
     food_id INTEGER NOT NULL,
     meal_type VARCHAR(30) NOT NULL,
     portion_g DECIMAL(8,2),
+    day_index TINYINT NOT NULL DEFAULT 1,
+    locked BOOLEAN NOT NULL DEFAULT FALSE,
     INDEX idx_menu_item_menu_plan (menu_plan_id),
     FOREIGN KEY (menu_plan_id) REFERENCES MENU_PLAN(menu_plan_id),
     FOREIGN KEY (food_id) REFERENCES FOOD_ITEM(food_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS MENU_PLAN_REVISION_HISTORY (
+    menu_plan_id INTEGER NOT NULL,
+    revision INTEGER NOT NULL,
+    snapshot_json MEDIUMTEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (menu_plan_id, revision),
+    FOREIGN KEY (menu_plan_id) REFERENCES MENU_PLAN(menu_plan_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS CONSENT (
@@ -166,4 +201,59 @@ CREATE TABLE IF NOT EXISTS NUTRITION_RULE (
     active BOOLEAN NOT NULL DEFAULT TRUE,
     INDEX idx_rule_active_verified (active, verified, rule_type, subject),
     UNIQUE KEY uq_rule_version (rule_type, subject, ruleset_version)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS RULE_SOURCE (
+    source_id INT AUTO_INCREMENT PRIMARY KEY,
+    organization VARCHAR(200) NOT NULL,
+    title VARCHAR(300) NOT NULL,
+    published_year SMALLINT,
+    applicability VARCHAR(300),
+    source_url TEXT,
+    updated_at DATE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS HEALTH_RULE (
+    rule_id INT AUTO_INCREMENT PRIMARY KEY,
+    rule_code VARCHAR(80) NOT NULL UNIQUE,
+    condition_code VARCHAR(20) NOT NULL,
+    nutrient VARCHAR(30) NOT NULL,
+    scope VARCHAR(10) NOT NULL,
+    operator VARCHAR(5) NOT NULL,
+    threshold DECIMAL(10,2) NOT NULL,
+    unit VARCHAR(10) NOT NULL,
+    severity VARCHAR(10) NOT NULL,
+    source_id INT,
+    version VARCHAR(20) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT FALSE,
+    rationale TEXT,
+    change_log TEXT,
+    INDEX idx_health_rule_enabled_filter
+        (enabled, condition_code, nutrient, scope),
+    CONSTRAINT fk_HEALTH_RULE_SOURCE FOREIGN KEY (source_id)
+        REFERENCES RULE_SOURCE(source_id) ON DELETE RESTRICT,
+    CONSTRAINT chk_rule_severity CHECK (severity IN ('YELLOW', 'RED')),
+    CONSTRAINT chk_rule_enabled_has_source
+        CHECK (enabled = FALSE OR source_id IS NOT NULL)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS USAGE_EVENT (
+    event_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    session_id INTEGER NOT NULL,
+    study_session_id VARCHAR(64) NOT NULL,
+    participant_id VARCHAR(5) NOT NULL,
+    event_type VARCHAR(30) NOT NULL,
+    task VARCHAR(30),
+    occurred_at DATETIME(6) NOT NULL,
+    meta_json JSON NOT NULL,
+    received_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    INDEX idx_usage_event_session_time (session_id, occurred_at),
+    INDEX idx_usage_event_study_task (study_session_id, participant_id, task, occurred_at),
+    FOREIGN KEY (session_id) REFERENCES SESSION(session_id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS DEMO_DATASET (
+    dataset_key VARCHAR(64) PRIMARY KEY,
+    household_id INTEGER UNIQUE,
+    FOREIGN KEY (household_id) REFERENCES HOUSEHOLD(household_id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

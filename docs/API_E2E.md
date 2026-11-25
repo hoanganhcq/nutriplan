@@ -69,6 +69,11 @@ Tất cả đường dẫn dưới đây là đường dẫn gốc. `POST /sessi
 | POST /menu-plans/generate | Một phần (Partial) | Sinh một ngày; từ chối khi thiếu quy tắc hoặc danh mục đã xác minh |
 | GET /menu-plans/{planId} | Một phần (Partial) | Đã có mã; đọc kế hoạch đã lưu |
 | GET /health | Đã có (Existing) | Trả trạng thái DB; phản hồi cũ chưa hiển thị trạng thái nhận diện ảnh |
+| POST /meals/{mealId}/undo | Một phần (Partial) | Có snapshot tối đa 20 revision; cần chạy migration |
+| GET /meals/{mealId}/assessments | Một phần (Partial) | Trả assessment đã lưu và tính `stale` theo revision hồ sơ/bữa ăn |
+| POST /assessments/{assessmentId}/explain | Một phần (Partial) | Chỉ trả mẫu; chưa tích hợp LLM |
+| POST /meals/{mealId}/confirm | Một phần (Partial) | Nhận `eatenBy`, `note`; yêu cầu assessment hiện hành |
+| DELETE /meals/{mealId} | Một phần (Partial) | Xóa bản ghi liên quan; hiện backend không lưu tệp ảnh |
 
 API bổ sung `POST /meals/{mealId}/items` cho phép thêm món thủ công khi nhận diện ảnh không trả kết quả. API yêu cầu `dishId` và `grams`, rồi trả bữa ăn đã cập nhật.
 
@@ -92,7 +97,13 @@ API bổ sung `POST /meals/{mealId}/items` cho phép thêm món thủ công khi 
 {"data":{"mealId":12,"householdId":1,"mealType":"lunch","eatenAt":"2026-11-18T12:00:00","status":"draft","revision":1,"items":[],"confidence":null,"totals":{"kcal":null,"proteinG":null,"carbG":null,"fatG":null},"memberIds":[3],"isEstimate":true,"warnings":["No dishes recognized; add items manually"]}}
 ```
 
-`PATCH /meals/12/items/4` và `POST /meals/12/items` nhận `{"dishId":7,"grams":150,"seasoning":"light"}`. `POST /meals/12/assessments` nhận `{"memberIds":[3]}`. Phản hồi đánh giá có một kết quả cho mỗi thành viên, gồm `level`, `reasons`, `keyMetrics`, `profileVersion`, `rulesetVersion` và `hardConstraintsPassed`. Khi thiếu bằng chứng, API trả `INSUFFICIENT_DATA`. `POST /meals/12/confirm` yêu cầu đánh giá hiện hành cho từng thành viên được gắn khi phân tích.
+`PATCH /meals/12/items/4` và `POST /meals/12/items` nhận `{"dishId":7,"grams":150,"seasoning":"light"}`. `POST /meals/12/assessments` nhận `{"memberIds":[3]}`; có thể bỏ `memberIds` để dùng thành viên đã gắn với bữa ăn, hoặc toàn bộ thành viên trong hộ gia đình nếu chưa gắn ai. Phản hồi có `mealId`, `assessments` và `warnings`; mỗi assessment gồm `assessmentId`, `memberId`, `level`, `reasons`, `keyMetrics`, `profileVersion`, `rulesetVersion`, `hardConstraintsPassed` và `stale`. Khi thiếu bằng chứng, API trả `INSUFFICIENT_DATA`. Bộ luật hiện tại chưa hỗ trợ đầy đủ ngưỡng bệnh lý, nguồn chi tiết hay đề xuất món thay thế.
+
+`POST /meals/12/undo` nhận `{"steps":1}` (mặc định 1, tối đa 5). Các thay đổi món lưu snapshot trước chỉnh sửa, giới hạn 20 revision; phản hồi gồm `revision`, `canUndo` và bữa ăn đã khôi phục. Đánh giá cũ được đánh dấu stale. Bảng snapshot cần được tạo bằng migration E2E.
+
+`GET /meals/12/assessments?memberId=3` chỉ đọc assessment đã lưu, không chạy lại Rule Engine; response có cùng cấu trúc với API đánh giá. `POST /assessments/4/explain` nhận `{"style":"simple","maxWords":80}`. Do chưa có LLM service, endpoint luôn trả `generatedBy: "template"` và không gửi dữ liệu ra dịch vụ ngoài.
+
+`POST /meals/12/confirm` chấp nhận body tùy chọn `{"eatenBy":[3],"note":"Ăn hết cơm"}`; nếu bỏ `eatenBy`, dùng thành viên đã gắn hoặc thành viên có assessment. API yêu cầu assessment hiện hành và trả `confirmedAt`, `status` cùng `journalEntries`. `GET /meals` trả nhật ký gọn; `thumbnailUrl` hiện là `null` vì ảnh chỉ xử lý trong bộ nhớ, không lưu tệp. `DELETE /meals/12` xóa bữa ăn, món, assessment, thành viên liên quan và snapshot; response `204`.
 
 `POST /menu-plans/generate`:
 

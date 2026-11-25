@@ -1,0 +1,639 @@
+{
+  "$schema": "../schemas/medical_alert_kb.schema.json",
+  "kb_id": "nutriplan_medical_alerts_vi",
+  "version": "3.0.0-draft.2",
+  "locale": "vi-VN",
+  "status": "draft",
+  "production_enabled": false,
+  "condition_codes": [
+    {
+      "code": "HTN",
+      "label_vi": "Tăng huyết áp",
+      "profile_codes": [
+        "hypertension"
+      ],
+      "mapping_vi": "Áp dụng khi hồ sơ đã xác nhận tăng huyết áp."
+    },
+    {
+      "code": "T2DM",
+      "label_vi": "Đái tháo đường típ 2",
+      "profile_codes": [
+        "diabetes",
+        "T2DM"
+      ],
+      "mapping_vi": "Mã diabetes cần trường diabetes_type=type2 và xác nhận hồ sơ."
+    },
+    {
+      "code": "CKD",
+      "label_vi": "Bệnh thận mạn",
+      "profile_codes": [
+        "kidney_disease",
+        "CKD"
+      ],
+      "mapping_vi": "Mã kidney_disease cần xác nhận bệnh thận mạn. Tổn thương thận cấp và ghép thận nằm ngoài phạm vi MVP."
+    }
+  ],
+  "confirmed_meal_contract": {
+    "nutrition_basis": "per_100g_edible",
+    "input_fields": [
+      "meal_id",
+      "meal_revision",
+      "member_id",
+      "profile_version",
+      "confirmed_at",
+      "meal_slot",
+      "overlap_reviewed",
+      "items"
+    ],
+    "item_fields": [
+      "item_id",
+      "food_id",
+      "label_vi",
+      "grams",
+      "food_confirmed",
+      "quantity_confirmed",
+      "quantity_source",
+      "input_source",
+      "inference_id",
+      "detection_id"
+    ],
+    "input_sources": [
+      "model_suggestion",
+      "manual_addition"
+    ],
+    "quantity_sources": [
+      "weighed",
+      "user_entered",
+      "model_estimate",
+      "reference_default"
+    ],
+    "eligible_quantity_sources": [
+      "weighed",
+      "user_entered"
+    ],
+    "steps_vi": [
+      "Dùng cặp inference_id và detection_id của lần chạy để liên kết từng vùng với ứng viên food_id. Điểm nhận diện chỉ dùng khi chọn món.",
+      "Cho phép thêm món thủ công; món có trong danh mục được tính bằng đúng food_id đã xác nhận và dùng cùng công thức với món nhận diện.",
+      "Giữ món chưa có biến thể trong KB với food_id=null và tên đã xác nhận. Mục này khiến tổng chỉ số tương ứng thiếu dữ liệu. Ghi nước chấm hoặc gia vị nếu biết khối lượng và thành phần.",
+      "Giữ nguồn model_estimate nếu dùng gram đề xuất. Backend ghi nguồn gram từ thao tác thực tế và lần nhận diện. Với món nhiều người, dùng gram thuộc thành viên đang đánh giá.",
+      "Tính từng chỉ số = giá trị trên 100 g phần ăn được nhân gram đã chọn rồi chia 100. Giữ nguồn thành phần và phiên bản dữ liệu để đọc lại bữa."
+    ]
+  },
+  "evaluation_policy": {
+    "owner": "backend_rule_engine",
+    "statuses": [
+      "triggered",
+      "not_triggered",
+      "insufficient_data",
+      "needs_context",
+      "not_applicable",
+      "pending_review"
+    ],
+    "gates_vi": [
+      "Bản nháp chỉ dùng cho đánh giá kỹ thuật với dữ liệu giả lập. Cảnh báo cho người dùng thật cần KB và quy tắc đều được thẩm định, phê duyệt.",
+      "Xác nhận món, kiểm tra phần trùng và xác định nguồn gram trước khi so sánh. Gram từ ảnh hoặc khẩu phần mặc định chỉ hiển thị dưới dạng ước tính.",
+      "Đối chiếu từng chỉ số với cùng chất, đơn vị cơ sở và khoảng thời gian. Quy tắc theo ngày cần nhật ký đầy đủ của thành viên trong cùng ngày địa phương. Mục tiêu theo bữa phải khớp loại bữa.",
+      "Khi bất kỳ món nào chưa có giá trị cho chỉ số đang xét, trả insufficient_data. Tổng phụ chỉ để hiển thị; trường đường tổng và đường bổ sung giữ riêng.",
+      "Nhóm hiện hành là người trưởng thành, không mang thai. Hồ sơ thiếu bệnh đã xác nhận, bối cảnh áp dụng hoặc mục tiêu hợp lệ trả needs_context.",
+      "Chỉ dùng giới hạn cá nhân còn hiệu lực do chuyên gia xác nhận cho đúng chất, đơn vị, kỳ và phạm vi bệnh đồng mắc. Mục tiêu cần có định danh và phiên bản kế hoạch để truy vết. Mục tiêu tự nhập để theo dõi nằm ngoài đối chiếu lâm sàng.",
+      "Với cùng chất và kỳ, mục tiêu cá nhân phù hợp có ưu tiên hơn mức tham chiếu. Nếu nhiều mục tiêu cá nhân xung đột, trả needs_context để chuyên gia xác định mục tiêu dùng chung.",
+      "So sánh giá trị dinh dưỡng chưa làm tròn. Giới hạn lt kích hoạt khi giá trị tính được lớn hơn hoặc bằng giới hạn. Giới hạn lte kích hoạt khi giá trị tính được lớn hơn giới hạn.",
+      "Trạng thái not_triggered chỉ mô tả phép đối chiếu đã thực hiện. Không phát sinh nhãn bữa ăn an toàn hoặc mức độ cấp cứu từ ảnh và thành phần dinh dưỡng."
+    ]
+  },
+  "retrieval_policy": {
+    "seed": "rule_evidence_ids",
+    "required_filters": [
+      "condition_code",
+      "nutrient_key",
+      "profile_scope"
+    ],
+    "allow_zero_score_external_match": false,
+    "no_evidence_action": "use_backend_message",
+    "notes_vi": "Ưu tiên đoạn đã gắn trực tiếp với quy tắc và đủ điều kiện áp dụng. Chỉ mở rộng tìm kiếm khi đoạn bổ sung khớp phạm vi và có điểm liên quan dương. Các quy tắc đánh giá dựa trên bằng chứng được liên kết và duyệt cùng phiên bản KB."
+  },
+  "llm_policy": {
+    "role": "explain_backend_alert",
+    "external_consent": "llm_explanation",
+    "allowed_response_fields": [
+      "alert_id",
+      "reason_vi",
+      "evidence_ids",
+      "advice_ids"
+    ],
+    "fallback": "backend_message",
+    "validation_vi": [
+      "Chỉ gửi các cảnh báo đã kích hoạt và đoạn trích đã được chọn. Gỡ tên, ID thành viên, ảnh, xét nghiệm gốc và thông tin có thể định danh.",
+      "Mỗi giải thích phải trỏ đúng alert_id và ít nhất một evidence_id được backend cấp riêng cho cảnh báo đó; backend gắn liên kết từ danh mục nguồn.",
+      "LLM diễn giải căn cứ và phạm vi số liệu. Backend giữ nguyên nhãn, mức độ, số đo, đơn vị và giới hạn. Câu trả lời có số liệu mới, chẩn đoán, chỉ định thuốc hoặc kết luận an toàn sẽ được thay bằng nội dung mẫu.",
+      "Khi thiếu đồng ý dùng LLM, API lỗi, ID nguồn sai hoặc nội dung không kiểm chứng được, hiển thị thông báo của backend cùng nguồn đã xác định.",
+      "Mỗi cảnh báo có nội dung giải thích y khoa đã lưu và lời khuyên gắn căn cứ. RAG gửi đoạn trích, diễn giải và giới hạn áp dụng cho LLM.",
+      "LLM chỉ chọn advice_ids đã cấp riêng cho cảnh báo. Backend hiển thị lời khuyên tương ứng từ KB. Nếu LLM lỗi, backend vẫn hiển thị lời khuyên có căn cứ hợp lệ dưới cùng điều kiện kích hoạt.",
+      "Khi thiếu dữ liệu hoặc bối cảnh, chỉ hiển thị thông tin cần bổ sung. Lời khuyên cá nhân cần quy tắc đã kích hoạt và được thẩm định."
+    ]
+  },
+  "sources": [
+    {
+      "id": "NIN_HTN_SODIUM",
+      "organization": "Viện Dinh dưỡng Quốc gia",
+      "title": "Nước mắm hay muối: Dùng thế nào để không lo tăng huyết áp?",
+      "url": "https://viendinhduong.vn/vi/article/tin-tuc/nuoc-mam-hay-muoi-dung-the-nao-de-khong-lo-tang-huyet-ap-6a0d1bb45aaa4a22bf027ad2",
+      "type": "clinical_education",
+      "retrieved_on": "2026-11-21"
+    },
+    {
+      "id": "NIN_DIABETES_MEAL",
+      "organization": "Viện Dinh dưỡng Quốc gia",
+      "title": "Cách thực hiện bữa ăn lành mạnh cho người đái tháo đường",
+      "url": "https://viendinhduong.vn/vi/article/tin-tuc/69465602baf53db1e6077952",
+      "type": "clinical_education",
+      "retrieved_on": "2026-11-21"
+    },
+    {
+      "id": "NIN_NUTRITION_LABEL",
+      "organization": "Viện Dinh dưỡng Quốc gia",
+      "title": "Cách đọc nhãn dinh dưỡng và xây dựng chế độ ăn hợp lý",
+      "url": "https://viendinhduong.vn/vi/article/tin-tuc/cach-doc-nhan-dinh-duong-va-xay-dung-che-do-an-hop-ly-67dcd2e7ff7633c60d08acf2",
+      "type": "clinical_education",
+      "retrieved_on": "2026-11-21"
+    },
+    {
+      "id": "MOH_CKD_2388_2024",
+      "organization": "Bộ Y tế · Cục Quản lý Khám, chữa bệnh",
+      "title": "Hướng dẫn chẩn đoán và điều trị bệnh thận mạn và một số bệnh lý thận, Quyết định 2388/QĐ-BYT",
+      "url": "https://kcb.vn/upload/2005611/20240826/QD_ban_hanh_HD_chan_doan__dieu_tri_benh_than_man_va_mot_so_benh_ly_than__2024_08_12_f0584.pdf",
+      "type": "national_guideline",
+      "retrieved_on": "2026-11-21"
+    },
+    {
+      "id": "BACH_MAI_CKD",
+      "organization": "Bệnh viện Bạch Mai",
+      "title": "Khuyến cáo về liệu pháp dinh dưỡng cho người mắc bệnh thận",
+      "url": "https://bachmai.gov.vn/bai-viet/khuyen-cao-ve-lieu-phap-dinh-duong-cho-nguoi-mac-benh-than?id=062f64b7-ce17-4043-bd60-db884b3a550f",
+      "type": "clinical_education",
+      "retrieved_on": "2026-11-21"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "NIN_HTN_NATRI_NGAY",
+      "source_id": "NIN_HTN_SODIUM",
+      "locator": "Mục 4, đoạn khuyến nghị lượng muối ở người trưởng thành",
+      "condition_codes": [
+        "HTN"
+      ],
+      "nutrient_keys": [
+        "sodium_mg"
+      ],
+      "summary_vi": "Viện Dinh dưỡng dẫn mức tham chiếu dưới 2.000 mg natri mỗi ngày cho người trưởng thành. Có thể cần mục tiêu riêng khi có bệnh đồng mắc.",
+      "required_context": [
+        "no_ckd_or_other_individual_sodium_plan"
+      ],
+      "excerpt_vi": "dưới 5 g muối (2.000 mg natri)/ngày",
+      "applicability_note_vi": "Mốc tham chiếu cho tổng lượng trong ngày ở người trưởng thành. Cần xem xét mục tiêu riêng khi có bệnh đồng mắc."
+    },
+    {
+      "id": "NIN_T2DM_CARB_KHAU_PHAN",
+      "source_id": "NIN_DIABETES_MEAL",
+      "locator": "Nguyên tắc xây dựng khẩu phần, đoạn về chất bột đường và phân bố bữa ăn",
+      "condition_codes": [
+        "T2DM"
+      ],
+      "nutrient_keys": [
+        "carb_g",
+        "energy_kcal"
+      ],
+      "summary_vi": "Khẩu phần và năng lượng cần phù hợp với người bệnh. Lượng carbohydrate là một phần của kế hoạch ăn cần được theo dõi cùng cách phân bố bữa.",
+      "required_context": [
+        "type2_diabetes_confirmed"
+      ],
+      "excerpt_vi": "cần được tư vấn chế độ dinh dưỡng phù hợp",
+      "applicability_note_vi": "Nguồn nêu nguyên tắc điều chỉnh khẩu phần theo từng người. Giới hạn carbohydrate theo bữa và năng lượng theo ngày lấy từ kế hoạch đã xác nhận."
+    },
+    {
+      "id": "NIN_T2DM_DUONG_THEM_VAO",
+      "source_id": "NIN_NUTRITION_LABEL",
+      "locator": "Mục đọc nhãn cho người có bệnh mạn tính, đoạn đái tháo đường",
+      "condition_codes": [
+        "T2DM"
+      ],
+      "nutrient_keys": [
+        "added_sugar_g"
+      ],
+      "summary_vi": "Khi xem nhãn thực phẩm, người bệnh đái tháo đường cần lưu ý lượng carbohydrate, đặc biệt là đường thêm vào.",
+      "required_context": [
+        "type2_diabetes_confirmed"
+      ],
+      "excerpt_vi": "Chọn sản phẩm có ít hoặc không có đường thêm vào",
+      "applicability_note_vi": "Đường tổng bao gồm cả đường tự nhiên. Nếu nhãn chỉ có đường tổng, chỉ số đường thêm vào vẫn thiếu dữ liệu."
+    },
+    {
+      "id": "MOH_CKD_DAM_GIAM_SAT",
+      "source_id": "MOH_CKD_2388_2024",
+      "locator": "Chương 1, mục 4.1.1, phần biện pháp không dùng thuốc (tr. 28–29 theo số in)",
+      "condition_codes": [
+        "CKD"
+      ],
+      "nutrient_keys": [
+        "protein_g"
+      ],
+      "summary_vi": "Giới hạn đạm ở người bệnh thận mạn cần được giám sát. Việc xem xét chế độ giảm đạm phụ thuộc vào giai đoạn, lọc máu và tình trạng chuyển hóa.",
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known"
+      ],
+      "excerpt_vi": "Việc hạn chế protein đưa vào cần được giám sát",
+      "applicability_note_vi": "Việc giảm đạm cần xét giai đoạn, lọc máu và tình trạng chuyển hóa. Dùng mục tiêu trong kế hoạch thận đã xác nhận."
+    },
+    {
+      "id": "BACH_MAI_CKD_NATRI",
+      "source_id": "BACH_MAI_CKD",
+      "locator": "Mục Quản lý khoáng chất thông minh, đoạn về natri",
+      "condition_codes": [
+        "CKD"
+      ],
+      "nutrient_keys": [
+        "sodium_mg"
+      ],
+      "summary_vi": "Natri là một thành phần cần theo dõi trong chế độ dinh dưỡng cho người bệnh thận. Mục tiêu dùng để đối chiếu tại đây lấy từ kế hoạch đã được chuyên gia xác nhận.",
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known"
+      ],
+      "excerpt_vi": "Natri: Hạn chế dưới 2g/ngày",
+      "applicability_note_vi": "Nguồn giải thích vai trò kiểm soát natri. Quy tắc CKD đối chiếu với giới hạn cá nhân đang có hiệu lực."
+    },
+    {
+      "id": "BACH_MAI_CKD_KALI",
+      "source_id": "BACH_MAI_CKD",
+      "locator": "Mục Khuyến cáo dinh dưỡng theo giai đoạn bệnh và Quản lý khoáng chất thông minh, đoạn về kali",
+      "condition_codes": [
+        "CKD"
+      ],
+      "nutrient_keys": [
+        "potassium_mg"
+      ],
+      "summary_vi": "Khuyến cáo dinh dưỡng phụ thuộc vào giai đoạn bệnh và hoàn cảnh lâm sàng. Bài viết nêu việc hạn chế kali ở nhóm được mô tả khi có tăng kali máu. Lượng kali trong món không cho biết chỉ số kali máu.",
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known",
+        "clinician_validated_potassium_context"
+      ],
+      "excerpt_vi": "Hạn chế kali khi có tăng kali máu",
+      "applicability_note_vi": "Đoạn trích đề cập người bệnh G3–G4 có tăng kali máu. Lượng kali từ món ăn không thay thế kết quả xét nghiệm kali máu."
+    },
+    {
+      "id": "BACH_MAI_CKD_PHOSPHO",
+      "source_id": "BACH_MAI_CKD",
+      "locator": "Mục Quản lý khoáng chất thông minh, đoạn về phospho",
+      "condition_codes": [
+        "CKD"
+      ],
+      "nutrient_keys": [
+        "phosphorus_mg"
+      ],
+      "summary_vi": "Nguồn phospho và phụ gia phospho trong thực phẩm chế biến là những thông tin cần xem xét khi lập kế hoạch dinh dưỡng cho người bệnh thận.",
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known",
+        "clinician_validated_phosphorus_context"
+      ],
+      "excerpt_vi": "Nên hạn chế các phụ gia phospho vô cơ",
+      "applicability_note_vi": "Mức hấp thu phospho thay đổi theo nguồn thực phẩm. Đánh giá cá nhân cần mục tiêu chuyên gia đã xác nhận."
+    }
+  ],
+  "rules": [
+    {
+      "id": "HTN_SODIUM_DAY_REFERENCE",
+      "category": "medical",
+      "condition_code": "HTN",
+      "nutrient_key": "sodium_mg",
+      "period": "day",
+      "target": {
+        "kind": "published_reference",
+        "upper_limit": 2000,
+        "operator": "lt",
+        "unit": "mg"
+      },
+      "required_context": [
+        "no_ckd_or_other_individual_sodium_plan"
+      ],
+      "precedence": 10,
+      "severity": "info",
+      "tags": [
+        "tang_huyet_ap",
+        "natri",
+        "tham_chieu_ngay"
+      ],
+      "label_vi": "Natri chạm hoặc vượt mức tham chiếu ngày",
+      "message_vi": "Natri ước tính trong nhật ký ngày đạt hoặc cao hơn mốc tham chiếu cho người trưởng thành.",
+      "evidence_ids": [
+        "NIN_HTN_NATRI_NGAY"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng natri ước tính đã chạm hoặc vượt mốc của cả ngày. Nước chấm, gia vị mặn và thực phẩm chế biến có thể đóng góp vào tổng natri.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_SODIUM_SOURCES",
+          "kind": "review_intake",
+          "text_vi": "Xem lại lượng nước mắm, nước tương, nước dùng và đồ chế biến đã ghi. Với các bữa sau, thử giảm lượng gia vị mặn và theo dõi lại tổng natri trong ngày.",
+          "evidence_ids": [
+            "NIN_HTN_NATRI_NGAY"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T2DM_CARB_MEAL_PLAN",
+      "category": "medical",
+      "condition_code": "T2DM",
+      "nutrient_key": "carb_g",
+      "period": "meal",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "type2_diabetes_confirmed",
+        "meal_slot_matches_plan"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "dai_thao_duong_tip_2",
+        "carbohydrate",
+        "bua_an"
+      ],
+      "label_vi": "Carbohydrate vượt giới hạn của bữa",
+      "message_vi": "Lượng carbohydrate ước tính nằm ngoài giới hạn trên áp dụng cho bữa này trong kế hoạch đã xác nhận.",
+      "evidence_ids": [
+        "NIN_T2DM_CARB_KHAU_PHAN"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng carbohydrate của bữa nằm ngoài giới hạn trên trong kế hoạch cá nhân. Chỉ số này mô tả thành phần bữa ăn và không dự đoán trực tiếp đường huyết sau ăn.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_MEAL_CARB_PORTIONS",
+          "kind": "review_intake",
+          "text_vi": "Kiểm tra lại khẩu phần cơm, bún, bánh và đồ uống có đường đã ghi. Khi lên bữa tiếp theo, phân bố các món chứa carbohydrate theo kế hoạch của bạn.",
+          "evidence_ids": [
+            "NIN_T2DM_CARB_KHAU_PHAN"
+          ]
+        },
+        {
+          "id": "DISCUSS_REPEATED_CARB_ALERTS",
+          "kind": "consult_clinician",
+          "text_vi": "Nếu cảnh báo lặp lại, trao đổi với chuyên gia dinh dưỡng về cách phân bố carbohydrate phù hợp với lịch ăn và điều trị của bạn.",
+          "evidence_ids": [
+            "NIN_T2DM_CARB_KHAU_PHAN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T2DM_ADDED_SUGAR_DAY_PLAN",
+      "category": "medical",
+      "condition_code": "T2DM",
+      "nutrient_key": "added_sugar_g",
+      "period": "day",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "type2_diabetes_confirmed"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "dai_thao_duong_tip_2",
+        "duong_bo_sung",
+        "nhat_ky_ngay"
+      ],
+      "label_vi": "Đường bổ sung vượt giới hạn ngày",
+      "message_vi": "Đường bổ sung ước tính trong ngày nằm ngoài giới hạn trên của kế hoạch đã xác nhận.",
+      "evidence_ids": [
+        "NIN_T2DM_DUONG_THEM_VAO"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng đường thêm vào ước tính nằm ngoài giới hạn ngày trong kế hoạch. Đường thêm vào được theo dõi riêng với đường tổng.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_ADDED_SUGAR_LABEL",
+          "kind": "review_label",
+          "text_vi": "Xem nhãn hoặc công thức của đồ uống, món tráng miệng và thực phẩm có thêm đường. Khi nhãn ghi đường thêm vào, đối chiếu theo khẩu phần thực tế đã dùng.",
+          "evidence_ids": [
+            "NIN_T2DM_DUONG_THEM_VAO"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "T2DM_ENERGY_DAY_PLAN",
+      "category": "medical",
+      "condition_code": "T2DM",
+      "nutrient_key": "energy_kcal",
+      "period": "day",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "type2_diabetes_confirmed"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "dai_thao_duong_tip_2",
+        "nang_luong",
+        "nhat_ky_ngay"
+      ],
+      "label_vi": "Năng lượng vượt giới hạn ngày",
+      "message_vi": "Tổng năng lượng ước tính trong ngày nằm ngoài giới hạn trên của kế hoạch đã xác nhận.",
+      "evidence_ids": [
+        "NIN_T2DM_CARB_KHAU_PHAN"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Năng lượng ước tính của cả ngày nằm ngoài giới hạn trên trong kế hoạch. Mức năng lượng phù hợp phụ thuộc vào nhu cầu và tình trạng sức khỏe của từng người.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_DAILY_ENERGY_LOG",
+          "kind": "review_intake",
+          "text_vi": "Kiểm tra khẩu phần, đồ uống, lượng dầu chế biến và các mục ghi trùng. Nếu thường xuyên vượt mục tiêu, trao đổi với chuyên gia trước khi điều chỉnh khẩu phần.",
+          "evidence_ids": [
+            "NIN_T2DM_CARB_KHAU_PHAN"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CKD_PROTEIN_DAY_PLAN",
+      "category": "medical",
+      "condition_code": "CKD",
+      "nutrient_key": "protein_g",
+      "period": "day",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "benh_than_man",
+        "protein",
+        "nhat_ky_ngay"
+      ],
+      "label_vi": "Đạm vượt giới hạn ngày trong kế hoạch",
+      "message_vi": "Lượng đạm ước tính trong ngày nằm ngoài giới hạn trên áp dụng theo kế hoạch đã xác nhận cho tình trạng thận hiện tại.",
+      "evidence_ids": [
+        "MOH_CKD_DAM_GIAM_SAT"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng đạm ước tính nằm ngoài giới hạn trên trong kế hoạch thận. Nhu cầu đạm thay đổi theo giai đoạn bệnh, tình trạng lọc máu và dinh dưỡng.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_CKD_PROTEIN_PLAN",
+          "kind": "consult_clinician",
+          "text_vi": "Rà lại lượng thịt, cá, trứng, sữa và sản phẩm bổ sung đạm đã ghi. Nếu kết quả lặp lại, mang nhật ký đến buổi tư vấn để chuyên gia xem lại mức đạm phù hợp.",
+          "evidence_ids": [
+            "MOH_CKD_DAM_GIAM_SAT"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CKD_SODIUM_DAY_PLAN",
+      "category": "medical",
+      "condition_code": "CKD",
+      "nutrient_key": "sodium_mg",
+      "period": "day",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "benh_than_man",
+        "natri",
+        "nhat_ky_ngay"
+      ],
+      "label_vi": "Natri vượt giới hạn ngày trong kế hoạch",
+      "message_vi": "Lượng natri ước tính trong ngày nằm ngoài giới hạn trên theo kế hoạch thận đã xác nhận.",
+      "evidence_ids": [
+        "BACH_MAI_CKD_NATRI"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng natri trong nhật ký nằm ngoài giới hạn trên của kế hoạch thận. Nước dùng, nước chấm và gia vị mặn có thể đóng góp vào tổng lượng natri.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_CKD_SODIUM_LOG",
+          "kind": "review_intake",
+          "text_vi": "Kiểm tra lượng nước dùng, nước chấm và thực phẩm đóng gói đã dùng. Đối chiếu lượng natri của khẩu phần thực tế với mục tiêu chuyên gia đã xác nhận.",
+          "evidence_ids": [
+            "BACH_MAI_CKD_NATRI"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CKD_POTASSIUM_DAY_PLAN",
+      "category": "medical",
+      "condition_code": "CKD",
+      "nutrient_key": "potassium_mg",
+      "period": "day",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known",
+        "clinician_validated_potassium_context"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "benh_than_man",
+        "kali",
+        "nhat_ky_ngay"
+      ],
+      "label_vi": "Kali khẩu phần vượt giới hạn ngày",
+      "message_vi": "Kali ước tính từ thực phẩm nằm ngoài giới hạn trên cá nhân đã xác nhận cho nhật ký ngày.",
+      "evidence_ids": [
+        "BACH_MAI_CKD_KALI"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng kali ước tính trong khẩu phần nằm ngoài giới hạn trên của kế hoạch đã được chuyên gia xem xét. Kết quả này phản ánh lượng kali từ thực phẩm đã ghi.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_CKD_POTASSIUM_PLAN",
+          "kind": "consult_clinician",
+          "text_vi": "Xem lại khẩu phần và các thực phẩm có phụ gia kali hoặc sản phẩm thay muối đã dùng. Trao đổi với nhóm điều trị thận trước khi thay đổi lượng rau quả hoặc dùng sản phẩm thay muối.",
+          "evidence_ids": [
+            "BACH_MAI_CKD_KALI"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CKD_PHOSPHORUS_DAY_PLAN",
+      "category": "medical",
+      "condition_code": "CKD",
+      "nutrient_key": "phosphorus_mg",
+      "period": "day",
+      "target": {
+        "kind": "clinician_upper_limit"
+      },
+      "required_context": [
+        "ckd_confirmed",
+        "ckd_stage_known",
+        "dialysis_status_known",
+        "clinician_validated_phosphorus_context"
+      ],
+      "precedence": 100,
+      "severity": "warning",
+      "tags": [
+        "benh_than_man",
+        "phospho",
+        "nhat_ky_ngay"
+      ],
+      "label_vi": "Phospho khẩu phần vượt giới hạn ngày",
+      "message_vi": "Phospho ước tính từ thực phẩm nằm ngoài giới hạn trên cá nhân đã xác nhận cho nhật ký ngày.",
+      "evidence_ids": [
+        "BACH_MAI_CKD_PHOSPHO"
+      ],
+      "review_status": "pending_clinical_review",
+      "medical_warning_basis_vi": "Lượng phospho ước tính nằm ngoài giới hạn trên của kế hoạch. Phospho có thể đến từ thành phần tự nhiên và phụ gia trong thực phẩm chế biến.",
+      "medical_advice": [
+        {
+          "id": "REVIEW_PHOSPHATE_INGREDIENTS",
+          "kind": "review_label",
+          "text_vi": "Xem danh sách thành phần trên bao bì để nhận biết phụ gia có tên phosphate hoặc phosphat. Dùng nhật ký và nhãn thực phẩm khi trao đổi về kế hoạch ăn với chuyên gia.",
+          "evidence_ids": [
+            "BACH_MAI_CKD_PHOSPHO"
+          ]
+        }
+      ]
+    }
+  ],
+  "context_checks": {
+    "ckd_confirmed": "profile.ckd_confirmed=true và profile.transplant=false. Hồ sơ tổn thương thận cấp nằm ngoài phạm vi.",
+    "ckd_stage_known": "profile.ckd_stage là G1, G2, G3a, G3b, G4 hoặc G5 từ hồ sơ đã xác nhận.",
+    "dialysis_status_known": "profile.dialysis là none, hemodialysis hoặc peritoneal_dialysis.",
+    "type2_diabetes_confirmed": "profile.diabetes_type=type2 và bệnh lý đã được xác nhận trong hồ sơ.",
+    "meal_slot_matches_plan": "meal.meal_slot trùng loại bữa được ghi trên mục tiêu đã xác nhận.",
+    "clinician_validated_potassium_context": "Kế hoạch kali đã được chuyên gia xem xét theo bối cảnh kali máu và giai đoạn bệnh hiện tại.",
+    "clinician_validated_phosphorus_context": "Kế hoạch phospho đã được chuyên gia xem xét theo dữ kiện xét nghiệm và giai đoạn bệnh hiện tại.",
+    "no_ckd_or_other_individual_sodium_plan": "Hồ sơ xác nhận không có bệnh thận mạn, suy tim hoặc chỉ định kiểm soát natri riêng cần được ưu tiên."
+  }
+}

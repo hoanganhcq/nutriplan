@@ -25,16 +25,20 @@ def test_upload_rejects_bad_signature_without_database():
 
 
 def test_new_private_endpoints_require_session():
-    with TestClient(app) as client:
-        for path in (
-            "/consents?householdId=1",
-            "/members?householdId=1",
-            "/dishes",
-            "/meals",
-            "/menu-plans/1",
-        ):
-            response = client.get(path)
-            assert response.status_code == 401, path
+    app.dependency_overrides[get_db] = lambda: DummyDB()
+    try:
+        with TestClient(app) as client:
+            for path in (
+                "/consents?householdId=1",
+                "/members?householdId=1",
+                "/dishes",
+                "/meals",
+                "/menu-plans/1",
+            ):
+                response = client.get(path)
+                assert response.status_code == 401, path
+    finally:
+        app.dependency_overrides.clear()
 
 
 def test_dish_response_matches_openapi_schema(monkeypatch):
@@ -73,6 +77,12 @@ def test_openapi_includes_all_e2e_paths():
         "/dishes",
         "/meals/analyze",
         "/meals/{meal_id}/assessments",
+        "/meals/{meal_id}/undo",
+        "/meals/{meal_id}/confirm",
+        "/meals/{meal_id}",
+        "/assessments/{assessment_id}/explain",
         "/menu-plans/generate",
     ):
         assert path in schema["paths"]
+    assert "get" in schema["paths"]["/meals/{meal_id}/assessments"]
+    assert "delete" in schema["paths"]["/meals/{meal_id}"]

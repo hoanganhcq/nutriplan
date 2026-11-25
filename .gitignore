@@ -28,6 +28,12 @@ htmlcov/
 backend/meal_analysis.db
 backend/.demo-session-token
 
+# VietFood data and artifacts kept locally
+/ai/models/vietfood/models/
+/data/knowledge_base/vietfood/data/food_kb.json
+/data/knowledge_base/vietfood/provenance/
+/tests/fixtures/vietfood_demo.jpg
+
 # IDE and editor
 .idea/
 .vscode/

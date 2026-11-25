@@ -1,0 +1,15 @@
+{
+  "upstream_repository": "https://github.com/FoodCNN/FoodCNN",
+  "revision": "2c944166f988acff4374d131b8b1fe535a64abf6",
+  "checkpoint_sha256": "afd8462c5908778d3d0d0bb96f59d3ea082adce17c35e62e46cd41d8df7d50ad",
+  "training_dataset_of_upstream_model": "Nutrition5k",
+  "input": "YOLO detection crop resized to 224x224 RGB",
+  "selected_crop_padding_fraction_per_side": 0.05,
+  "model_output_unit": "g",
+  "application_status": "experimental_transfer_to_VietFood_regions",
+  "known_limitation": "Upstream predicts plated-dish mass. YOLO crops of ingredients, garnishes, overlapping regions and Vietnamese dishes may differ substantially from its training inputs.",
+  "crop_range_is_confidence_interval": false,
+  "weighed_ground_truth_available": false,
+  "error_under_5_percent_verified": false,
+  "sum_over_boxes_allowed": false
+}

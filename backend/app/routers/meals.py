@@ -1,16 +1,25 @@
 import json
-from datetime import datetime
+from datetime import date, datetime
+from typing import Literal
 
 from fastapi import APIRouter, Depends, File, Form, Query, UploadFile
+from pydantic import BaseModel, Field
+from starlette.concurrency import run_in_threadpool
 
 from app.core.exceptions import AppException
 from app.dependencies import get_current_session, get_db
+from app.repositories import meal_repository
 from app.schemas.e2e import (
     AssessmentInput,
     AssessmentResponse,
+    ConfirmInput,
+    ConfirmResponse,
+    ManualMealInput,
     MealItemUpdate,
     MealListResponse,
     MealResponse,
+    MealUndoResponse,
+    UndoInput,
 )
 from app.schemas.error import ErrorResponse
 from app.services import assessment_service, meal_service
@@ -23,7 +32,20 @@ router = APIRouter(
     },
 )
 
-# truy vấn các bữa ăn và các mục liên quan đến bữa ăn, bao gồm phân tích hình ảnh, xác nhận và đánh giá
+
+class ClarificationAnswer(BaseModel):
+    answer: str = Field(min_length=1, max_length=1000)
+
+
+@router.post("", status_code=201, response_model=MealResponse)
+def create_manual_meal(
+    payload: ManualMealInput,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {"data": meal_service.create_manual(db, session["session_id"], payload)}
+
+
 @router.post("/analyze", status_code=201, response_model=MealResponse)
 async def analyze_meal(
     images: list[UploadFile] = File(...),
@@ -32,6 +54,7 @@ async def analyze_meal(
     eaten_at: datetime | None = Form(None, alias="eatenAt"),
     member_ids: str = Form("[]", alias="memberIds"),
     reference_object: str | None = Form(None, alias="referenceObject"),
+    portion_method: str | None = Form("reference_object", alias="portionMethod"),
     use_external_vision: bool = Form(False, alias="useExternalVision"),
     session=Depends(get_current_session),
     db=Depends(get_db),
@@ -48,7 +71,8 @@ async def analyze_meal(
         ) from exc
     validated = await meal_service.validate_images(images)
     return {
-        "data": meal_service.analyze(
+        "data": await run_in_threadpool(
+            meal_service.analyze,
             db,
             session["session_id"],
             household_id,
@@ -57,38 +81,40 @@ async def analyze_meal(
             eaten_at,
             parsed_ids,
             use_external_vision,
+            reference_object,
+            portion_method,
         )
     }
 
 
-# truy vấn các bữa ăn đã được xác nhận cho một thành viên cụ thể trong một khoảng thời gian nhất định, với phân trang
 @router.get("", response_model=MealListResponse)
 def list_meals(
     member_id: int | None = Query(None, alias="memberId"),
-    from_date: datetime | None = Query(None, alias="from"),
-    to_date: datetime | None = Query(None, alias="to"),
-    status: str = "confirmed",
+    from_date: date | None = Query(None, alias="from"),
+    to_date: date | None = Query(None, alias="to"),
+    status: Literal["confirmed", "draft", "all"] = "confirmed",
     limit: int = Query(20, ge=1, le=100),
     cursor: int = Query(0, ge=0),
     session=Depends(get_current_session),
     db=Depends(get_db),
 ):
-    if status != "confirmed":
-        raise AppException(
-            "VALIDATION_ERROR", "Only confirmed journal entries are supported", 422
-        )
     return meal_service.journal(
-        db, session["session_id"], member_id, from_date, to_date, limit, cursor
+        db,
+        session["session_id"],
+        member_id,
+        from_date,
+        to_date,
+        limit,
+        cursor,
+        status,
     )
 
 
-# truy vấn chi tiết một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.get("/{meal_id}", response_model=MealResponse)
 def get_meal(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
     return {"data": meal_service.detail(db, session["session_id"], meal_id)}
 
 
-# cập nhật chi tiết một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
 @router.patch("/{meal_id}/items/{item_id}", response_model=MealResponse)
 def patch_item(
     meal_id: int,
@@ -103,7 +129,7 @@ def patch_item(
         )
     }
 
-# xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
+
 @router.post("/{meal_id}/items", status_code=201, response_model=MealResponse)
 def post_item(
     meal_id: int,
@@ -114,7 +140,18 @@ def post_item(
     return {"data": meal_service.add_item(db, session["session_id"], meal_id, payload)}
 
 
-# xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
+@router.delete("/{meal_id}/items/{item_id}", response_model=MealResponse)
+def delete_item(
+    meal_id: int,
+    item_id: int,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": meal_service.remove_item(db, session["session_id"], meal_id, item_id)
+    }
+
+
 @router.post("/{meal_id}/assessments", response_model=AssessmentResponse)
 def assess(
     meal_id: int,
@@ -129,7 +166,68 @@ def assess(
     }
 
 
-# xóa một mục cụ thể khỏi một bữa ăn cụ thể, bao gồm các mục liên quan đến bữa ăn, đánh giá và xác nhận
-@router.post("/{meal_id}/confirm", response_model=MealResponse)
-def confirm(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
-    return {"data": assessment_service.confirm(db, session["session_id"], meal_id)}
+@router.get("/{meal_id}/assessments", response_model=AssessmentResponse)
+def get_assessments(
+    meal_id: int,
+    member_id: int | None = Query(None, alias="memberId"),
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": assessment_service.get_assessments(
+            db, session["session_id"], meal_id, member_id
+        )
+    }
+
+
+@router.post("/{meal_id}/undo", response_model=MealUndoResponse)
+def undo_meal(
+    meal_id: int,
+    payload: UndoInput = UndoInput(),
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": meal_service.undo(db, session["session_id"], meal_id, payload.steps)
+    }
+
+
+@router.post("/{meal_id}/confirm", response_model=ConfirmResponse)
+def confirm(
+    meal_id: int,
+    payload: ConfirmInput | None = None,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    return {
+        "data": assessment_service.confirm(
+            db,
+            session["session_id"],
+            meal_id,
+            payload.eaten_by if payload else None,
+            payload.note if payload else None,
+        )
+    }
+
+
+@router.post(
+    "/{meal_id}/clarifications/{question_id}/answer",
+    response_model=MealResponse,
+)
+def answer_clarification(
+    meal_id: int,
+    question_id: int,
+    payload: ClarificationAnswer,
+    session=Depends(get_current_session),
+    db=Depends(get_db),
+):
+    row = meal_service.owned(db, session["session_id"], meal_id, lock=True)
+    if row["status"] != "draft":
+        raise AppException("MEAL_LOCKED", "Confirmed meal cannot be edited", 409)
+    meal_repository.increment_revision(db, meal_id)
+    return {"data": meal_service.detail(db, session["session_id"], meal_id)}
+
+
+@router.delete("/{meal_id}", status_code=204)
+def delete_meal(meal_id: int, session=Depends(get_current_session), db=Depends(get_db)):
+    meal_service.delete(db, session["session_id"], meal_id)

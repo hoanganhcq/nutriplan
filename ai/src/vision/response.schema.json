@@ -1,0 +1,474 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "request_id",
+    "created_at",
+    "model",
+    "image",
+    "policy",
+    "detections",
+    "foods",
+    "nutrition_status",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recognition_sha256",
+        "portion_sha256",
+        "release_status"
+      ],
+      "properties": {
+        "recognition_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "portion_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "release_status": {
+          "const": "experimental"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width",
+        "height",
+        "color_space",
+        "sha256_rgb",
+        "coordinate_system"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "color_space": {
+          "const": "RGB"
+        },
+        "sha256_rgb": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "coordinate_system": {
+          "const": "pixels_after_exif_orientation"
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confidence_threshold",
+        "supported_class_ids",
+        "mass_aggregation"
+      ],
+      "properties": {
+        "confidence_threshold": {
+          "const": 0.6494140625
+        },
+        "supported_class_ids": {
+          "const": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            31,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            51,
+            53,
+            54,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ]
+        },
+        "mass_aggregation": {
+          "const": "none"
+        }
+      }
+    },
+    "detections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/detection"
+      }
+    },
+    "foods": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/food"
+      }
+    },
+    "nutrition_status": {
+      "const": "not_computed"
+    },
+    "warnings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "PORTION_UNVALIDATED",
+          "KB_MAPPING_UNRESOLVED",
+          "MAX_DETECTIONS_REACHED",
+          "INVALID_BOX_SKIPPED",
+          "INVALID_MASS_PREDICTION"
+        ]
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VietFood inference response v1.0.0",
+  "$defs": {
+    "portion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "estimated_mass_g",
+        "unit",
+        "method",
+        "scope",
+        "status",
+        "consumed_mass_g",
+        "requires_user_review"
+      ],
+      "properties": {
+        "estimated_mass_g": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "const": "g"
+        },
+        "method": {
+          "const": "foodcnn_v2"
+        },
+        "scope": {
+          "const": "padded_detection_crop"
+        },
+        "status": {
+          "enum": [
+            "unvalidated_estimate",
+            "invalid_prediction"
+          ]
+        },
+        "consumed_mass_g": {
+          "type": "null"
+        },
+        "requires_user_review": {
+          "const": true
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unvalidated_estimate"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "estimated_mass_g": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "estimated_mass_g": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "detection_id",
+        "dataset_class_id",
+        "label",
+        "confidence",
+        "bbox_xyxy",
+        "kb_food_id",
+        "kb_mapping_status",
+        "portion"
+      ],
+      "properties": {
+        "detection_id": {
+          "type": "string",
+          "pattern": "^det_[0-9]{4,}$"
+        },
+        "dataset_class_id": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            31,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            51,
+            53,
+            54,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "bbox_xyxy": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "kb_food_id": {
+          "type": "null"
+        },
+        "kb_mapping_status": {
+          "const": "not_resolved"
+        },
+        "portion": {
+          "$ref": "#/$defs/portion"
+        }
+      }
+    },
+    "food": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset_class_id",
+        "label",
+        "confidence",
+        "confidence_aggregation",
+        "detection_ids",
+        "kb_food_id",
+        "kb_mapping_status"
+      ],
+      "properties": {
+        "dataset_class_id": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            28,
+            31,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            51,
+            53,
+            54,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "confidence_aggregation": {
+          "const": "maximum_detection_score"
+        },
+        "detection_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "kb_food_id": {
+          "type": "null"
+        },
+        "kb_mapping_status": {
+          "const": "not_resolved"
+        }
+      }
+    }
+  }
+}

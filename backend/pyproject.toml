@@ -19,6 +19,9 @@ dev = [
     "ruff>=0.6.0",
 ]
 
+[tool.setuptools.packages.find]
+include = ["app*"]
+
 [tool.ruff]
 line-length = 88
 target-version = "py311"
@@ -28,4 +31,7 @@ select = ["E", "F", "I", "UP"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-markers = ["integration: test API dùng nutriplan và rollback sau mỗi test"]
+markers = [
+    "integration: test API dùng database development và rollback sau mỗi test",
+    "mysql_support: test API nhóm H trong database MySQL tạm, bật RUN_MYSQL_SUPPORT_TESTS=1",
+]

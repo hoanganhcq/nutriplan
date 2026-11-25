@@ -11,7 +11,7 @@ Dùng Python 3.11+, MySQL và cài gói backend. Sao chép `backend/.env.example
 ```powershell
 cd backend
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
-Copy-Item .env.example .env
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 # Sửa DATABASE_URL trong .env, giữ tên database là nutriplan.
 ```
 
@@ -23,7 +23,7 @@ Copy-Item .env.example .env
 .\.venv\Scripts\python.exe -m app.db.dev_db init
 ```
 
-Nếu `nutriplan` chưa tồn tại, lệnh cần quyền tạo database. Nếu đã tồn tại nhưng thiếu bảng/cột E2E, lệnh cần quyền `CREATE`/`ALTER`. DDL của MySQL có thể commit riêng từng câu lệnh. Tài khoản ứng dụng trên máy hiện tại chưa có quyền này; quản trị viên cần cấp quyền hoặc tự chạy lệnh `init`. Có thể xem các thay đổi migration dự kiến bằng lệnh đọc sau:
+Nếu `nutriplan` chưa tồn tại, lệnh cần quyền tạo database. Nếu đã tồn tại nhưng thiếu bảng/cột E2E, lệnh cần quyền `CREATE`/`ALTER`. DDL của MySQL có thể commit riêng từng câu lệnh. Nếu tài khoản hiện tại thiếu quyền, dùng tài khoản có quyền để chạy `init`. Có thể xem các thay đổi migration dự kiến bằng lệnh đọc sau:
 
 ```powershell
 .\.venv\Scripts\python.exe -m app.db.migrate_e2e --check
@@ -39,6 +39,24 @@ Lệnh seed tạo ba món `DEMO` với số dinh dưỡng **mô phỏng**, ba b�
 
 Dữ liệu mẫu đủ để kiểm tra danh mục món, hồ sơ, tạo bản nháp bữa ăn và xử lý lỗi thiếu bằng chứng. Bộ quy tắc hiện từ chối xác nhận bữa ăn hoặc lưu thực đơn nếu thiếu quy tắc, nguồn và bộ đánh giá đã xác minh. Vì vậy chỉ có thể demo kết quả thành công cuối luồng sau khi bổ sung dữ liệu và quy tắc thực sự được xác thực; không đánh dấu ngưỡng y khoa giả là đã xác minh.
 
+### Danh mục và nhận diện VietFood trên nhánh Vanh
+
+Để chạy nhận diện cục bộ, thêm `VISION_PROVIDER=vietfood` vào `backend/.env` (không commit tệp này). Từ thư mục gốc dự án, cài các thư viện model vào venv backend:
+
+```powershell
+$python = 'backend/.venv/Scripts/python.exe'
+& $python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+& $python -m pip install -r ai/requirements.txt
+```
+
+Sau khi `init` thành công, trở lại thư mục `backend` và nhập 150 món từ KB. Lệnh có thể chạy lại mà không nhân đôi món VietFood:
+
+```powershell
+.\.venv\Scripts\python.exe -m app.db.vietfood_catalog
+```
+
+Model dùng một ảnh JPEG/PNG/WebP mỗi bữa, chạy trên CPU và có thể mất thời gian ở lần tải đầu. Kết quả nhận diện và gram là gợi ý cần người dùng xác nhận; nếu model không sẵn sàng, giao diện vẫn cho nhập món thủ công. Không cần bật quyền gửi ảnh ra dịch vụ ngoài khi chạy provider `vietfood` cục bộ.
+
 ## Chạy backend và pytest
 
 ```powershell
@@ -52,7 +70,18 @@ cd backend
 .\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
 ```
 
-Pytest dùng `DATABASE_URL` hiện tại và chỉ chấp nhận tên database `nutriplan`. Các test tích hợp có dấu `pytest.mark.integration`; fixture xác nhận `SELECT DATABASE()` trước khi ghi và thay dependency `get_db` bằng một kết nối dùng chung trong từng test. Mọi thao tác của test được rollback sau test, kể cả khi lỗi. Test tích hợp mới có ghi DB cũng phải mang dấu này. Không chạy đồng thời các test tích hợp với thao tác reset hoặc thay đổi schema. Pytest không `DROP`, `TRUNCATE` hay seed tự động và không phụ thuộc bản ghi từ test trước.
+Mở thêm terminal tại thư mục gốc dự án để chạy frontend:
+
+```powershell
+npm.cmd --prefix frontend ci
+npm.cmd --prefix frontend test
+npm.cmd --prefix frontend run build
+npm.cmd --prefix frontend run dev -- --host 127.0.0.1 --port 5173 --strictPort
+```
+
+Mở `http://127.0.0.1:5173`. Frontend dùng API `http://127.0.0.1:8000` theo mặc định; có thể đặt `VITE_API_URL` khi dùng địa chỉ khác. Chạy test AI từ thư mục gốc bằng `& backend/.venv/Scripts/python.exe -m pytest -q ai/tests/evaluation`.
+
+Pytest dùng `DATABASE_URL` hiện tại và chỉ chấp nhận tên database `nutriplan` cho test tích hợp. Các test có dấu `pytest.mark.integration` dùng giao dịch rollback sau từng test; không chạy đồng thời chúng với thao tác reset hoặc thay đổi schema. Test `mysql_support` mặc định bị bỏ qua; chỉ bật `RUN_MYSQL_SUPPORT_TESTS=1` khi tài khoản MySQL có quyền tạo/xóa database tạm riêng. Không bật cờ đó trên tài khoản chỉ có quyền ứng dụng.
 
 ## Reset development khi chủ động yêu cầu
 
@@ -69,15 +98,16 @@ Sau reset, chạy lại `seed` nếu cần demo. Chỉ thực hiện lệnh khi 
 1. Gọi `POST /sessions`, lưu `token` và gửi `Authorization: Bearer <token>` cho các request riêng tư.
 2. Gọi `POST /households`, lưu `household_id`; gọi `PUT /consents` với `store_health_profile: true`.
 3. Gọi `POST /members`, lưu `data.memberId`; gọi `GET /dishes` để chọn món mẫu.
-4. Gửi ảnh qua `POST /meals/analyze` với `images`, `householdId` và `memberIds` là chuỗi mảng JSON. Có thể dùng `ENVIRONMENT=demo` và `VISION_PROVIDER=mock` để thử nhận diện mô phỏng; nếu không nhận diện được món, dùng `POST /meals/{mealId}/items`.
+4. Gửi một ảnh qua `POST /meals/analyze` với `images`, `householdId` và `memberIds` là chuỗi mảng JSON. Với `VISION_PROVIDER=vietfood`, kiểm tra gợi ý món và gram trên giao diện, chọn ứng viên từ danh mục. Nếu không nhận diện được món, dùng `POST /meals/{mealId}/items` hoặc tạo bữa thủ công bằng `POST /meals`.
 5. Sửa khẩu phần bằng `PATCH /meals/{mealId}/items/{itemId}`, rồi xem `GET /meals/{mealId}`.
 6. Gọi `POST /meals/{mealId}/assessments`. Nếu thiếu bằng chứng đã xác minh, kết quả phải là `INSUFFICIENT_DATA` và `POST /meals/{mealId}/confirm` phải từ chối. Khi có bộ quy tắc hợp lệ, xác nhận rồi đọc `GET /meals?memberId=...`.
+7. Kiểm tra undo bằng cách thêm hoặc sửa món, gọi `POST /meals/{mealId}/undo`, rồi đọc lại `GET /meals/{mealId}`. Migration phải được áp dụng trước để tạo bảng snapshot.
 
 ## Quy trình thủ công UC2
 
 Đặt `energyGoalKcal` cho thành viên, bổ sung danh mục dinh dưỡng có nguồn thực và quy tắc đã xác minh. Gọi `POST /menu-plans/generate` với `days: 1`, rồi `GET /menu-plans/{planId}`. Nếu bằng chứng chưa đủ, API trả lỗi và không lưu thực đơn. Dữ liệu seed mô phỏng chỉ dùng để kiểm tra nhánh lỗi này.
 
-## Kết quả kiểm tra gần nhất
+## Kiểm tra thủ công trước khi PR
 
-Đã chạy pytest trên `nutriplan`: **26 bài đạt**, không có bài bị bỏ qua; test tích hợp dùng rollback. Số bản ghi trong `SESSION`, `HOUSEHOLD` và `MEMBER` không đổi trước và sau lần chạy kiểm tra. Chưa áp dụng schema E2E lên DB hiện tại vì tài khoản MySQL thiếu quyền `CREATE`/`ALTER`. Lệnh `init` đã dừng tại bảng `CONSENT` còn thiếu. Vì vậy chưa chạy seed hoặc xác minh đầy đủ UC1/UC2 trên DB thật.
+Trên frontend: **Bắt đầu trải nghiệm** → bật **Lưu hồ sơ sức khỏe** trong **Cài đặt** → thêm thành viên → tải ảnh trong **Chụp bữa ăn** → chọn món và xác nhận gram → đánh giá → mở **Nhật ký**. Kiểm tra bữa vẫn là bản nháp khi đánh giá `INSUFFICIENT_DATA`; không ép xác nhận để hoàn tất demo. Ghi lại kết quả kiểm tra trong mô tả PR, gồm trạng thái `/health` và ảnh/model đã dùng. Không đưa token, ảnh cá nhân hoặc dữ liệu sức khỏe thật vào PR.
 

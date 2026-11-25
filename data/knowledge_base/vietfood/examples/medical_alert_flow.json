@@ -1,0 +1,303 @@
+{
+  "fixture_note_vi": "Dữ liệu giả lập để kiểm tra tích hợp. Giá trị 40 g chỉ dùng cho ca thử này. Món chanh đã cân lại sau khi model gợi ý, còn cơm được thêm thủ công.",
+  "reviewed_meal": {
+    "kind": "confirmed_meal",
+    "meal_id": "demo-meal-1",
+    "meal_revision": 2,
+    "member_id": "demo-member-1",
+    "profile_version": 1,
+    "confirmed_at": "2026-11-21T12:30:00+07:00",
+    "meal_slot": "lunch",
+    "overlap_reviewed": true,
+    "items": [
+      {
+        "item_id": "lime",
+        "food_id": "NIN_F_5003",
+        "label_vi": "Chanh, tươi",
+        "grams": 20,
+        "food_confirmed": true,
+        "quantity_confirmed": true,
+        "quantity_source": "weighed",
+        "input_source": "model_suggestion",
+        "inference_id": "demo-inference-1",
+        "detection_id": "det_0000"
+      },
+      {
+        "item_id": "rice",
+        "food_id": "USDA_FDC_168878",
+        "label_vi": "Cơm trắng chín, gạo hạt dài",
+        "grams": 158,
+        "food_confirmed": true,
+        "quantity_confirmed": true,
+        "quantity_source": "weighed",
+        "input_source": "manual_addition"
+      }
+    ]
+  },
+  "assessment_context": {
+    "kind": "medical_assessment_context",
+    "member_id": "demo-member-1",
+    "profile_version": 1,
+    "age_years": 50,
+    "pregnant": false,
+    "condition_codes": [
+      "T2DM"
+    ],
+    "llm_explanation_consent": true,
+    "context_checks": {
+      "type2_diabetes_confirmed": true,
+      "meal_slot_matches_plan": true
+    },
+    "clinician_targets": [
+      {
+        "plan_id": "demo-plan-1",
+        "plan_version": 1,
+        "condition_codes": [
+          "T2DM"
+        ],
+        "nutrient_key": "carb_g",
+        "period": "meal",
+        "meal_slot": "lunch",
+        "unit": "g",
+        "upper_limit": 40,
+        "operator": "lte",
+        "verification": "clinician_confirmed",
+        "valid_from": "2026-11-21T00:00:00+07:00",
+        "valid_until": "2026-11-22T00:00:00+07:00"
+      }
+    ]
+  },
+  "expected_nutrition": {
+    "energy_kcal": 211.2,
+    "carb_g": 45.70060000000001,
+    "added_sugar_g": null
+  },
+  "expected_backend_evaluation": {
+    "kind": "medical_alert_evaluation",
+    "assessment_id": "demo-assessment-1",
+    "meal_id": "demo-meal-1",
+    "meal_revision": 2,
+    "profile_version": 1,
+    "composition_kb_version": "2.0.0",
+    "kb_version": "3.0.0-draft.2",
+    "synthetic_fixture": true,
+    "outcomes": [
+      {
+        "rule_id": "T2DM_CARB_MEAL_PLAN",
+        "status": "triggered",
+        "missing_item_ids": [],
+        "reason_codes": [],
+        "plan_ref": {
+          "plan_id": "demo-plan-1",
+          "plan_version": 1
+        }
+      }
+    ],
+    "alerts": [
+      {
+        "alert_id": "demo-alert-1",
+        "rule_id": "T2DM_CARB_MEAL_PLAN",
+        "condition_code": "T2DM",
+        "nutrient_key": "carb_g",
+        "severity": "warning",
+        "label_vi": "Carbohydrate vượt giới hạn của bữa",
+        "message_vi": "Lượng carbohydrate ước tính nằm ngoài giới hạn trên áp dụng cho bữa này trong kế hoạch đã xác nhận.",
+        "tags": [
+          "dai_thao_duong_tip_2",
+          "carbohydrate",
+          "bua_an"
+        ],
+        "comparison": {
+          "value": 45.70060000000001,
+          "upper_limit": 40,
+          "operator": "lte",
+          "unit": "g",
+          "period": "meal",
+          "day_log_complete": false,
+          "target_origin": "clinician_upper_limit"
+        },
+        "evidence_ids": [
+          "NIN_T2DM_CARB_KHAU_PHAN"
+        ],
+        "medical_warning_basis_vi": "Lượng carbohydrate của bữa nằm ngoài giới hạn trên trong kế hoạch cá nhân. Chỉ số này mô tả thành phần bữa ăn và không dự đoán trực tiếp đường huyết sau ăn.",
+        "medical_advice": [
+          {
+            "id": "REVIEW_MEAL_CARB_PORTIONS",
+            "kind": "review_intake",
+            "text_vi": "Kiểm tra lại khẩu phần cơm, bún, bánh và đồ uống có đường đã ghi. Khi lên bữa tiếp theo, phân bố các món chứa carbohydrate theo kế hoạch của bạn.",
+            "evidence_ids": [
+              "NIN_T2DM_CARB_KHAU_PHAN"
+            ]
+          },
+          {
+            "id": "DISCUSS_REPEATED_CARB_ALERTS",
+            "kind": "consult_clinician",
+            "text_vi": "Nếu cảnh báo lặp lại, trao đổi với chuyên gia dinh dưỡng về cách phân bố carbohydrate phù hợp với lịch ăn và điều trị của bạn.",
+            "evidence_ids": [
+              "NIN_T2DM_CARB_KHAU_PHAN"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "example_llm_request": {
+    "kind": "explain_medical_alerts",
+    "request_id": "demo-explanation-1",
+    "locale": "vi-VN",
+    "alerts": [
+      {
+        "alert_id": "demo-alert-1",
+        "rule_id": "T2DM_CARB_MEAL_PLAN",
+        "condition_code": "T2DM",
+        "nutrient_key": "carb_g",
+        "severity": "warning",
+        "label_vi": "Carbohydrate vượt giới hạn của bữa",
+        "message_vi": "Lượng carbohydrate ước tính nằm ngoài giới hạn trên áp dụng cho bữa này trong kế hoạch đã xác nhận.",
+        "tags": [
+          "dai_thao_duong_tip_2",
+          "carbohydrate",
+          "bua_an"
+        ],
+        "comparison": {
+          "value": 45.70060000000001,
+          "upper_limit": 40,
+          "operator": "lte",
+          "unit": "g",
+          "period": "meal",
+          "day_log_complete": false,
+          "target_origin": "clinician_upper_limit"
+        },
+        "evidence_ids": [
+          "NIN_T2DM_CARB_KHAU_PHAN"
+        ],
+        "medical_warning_basis_vi": "Lượng carbohydrate của bữa nằm ngoài giới hạn trên trong kế hoạch cá nhân. Chỉ số này mô tả thành phần bữa ăn và không dự đoán trực tiếp đường huyết sau ăn.",
+        "medical_advice": [
+          {
+            "id": "REVIEW_MEAL_CARB_PORTIONS",
+            "kind": "review_intake",
+            "text_vi": "Kiểm tra lại khẩu phần cơm, bún, bánh và đồ uống có đường đã ghi. Khi lên bữa tiếp theo, phân bố các món chứa carbohydrate theo kế hoạch của bạn.",
+            "evidence_ids": [
+              "NIN_T2DM_CARB_KHAU_PHAN"
+            ]
+          },
+          {
+            "id": "DISCUSS_REPEATED_CARB_ALERTS",
+            "kind": "consult_clinician",
+            "text_vi": "Nếu cảnh báo lặp lại, trao đổi với chuyên gia dinh dưỡng về cách phân bố carbohydrate phù hợp với lịch ăn và điều trị của bạn.",
+            "evidence_ids": [
+              "NIN_T2DM_CARB_KHAU_PHAN"
+            ]
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "id": "NIN_T2DM_CARB_KHAU_PHAN",
+        "summary_vi": "Khẩu phần và năng lượng cần phù hợp với người bệnh. Lượng carbohydrate là một phần của kế hoạch ăn cần được theo dõi cùng cách phân bố bữa.",
+        "excerpt_vi": "cần được tư vấn chế độ dinh dưỡng phù hợp",
+        "applicability_note_vi": "Nguồn nêu nguyên tắc điều chỉnh khẩu phần theo từng người. Giới hạn carbohydrate theo bữa và năng lượng theo ngày lấy từ kế hoạch đã xác nhận."
+      }
+    ]
+  },
+  "example_llm_response": {
+    "kind": "medical_alert_explanations",
+    "request_id": "demo-explanation-1",
+    "explanations": [
+      {
+        "alert_id": "demo-alert-1",
+        "reason_vi": "Lượng carbohydrate ước tính nằm ngoài giới hạn trên của kế hoạch áp dụng cho bữa trưa. Theo dõi carbohydrate cùng cách phân bố bữa giúp đối chiếu với kế hoạch đã xác nhận.",
+        "evidence_ids": [
+          "NIN_T2DM_CARB_KHAU_PHAN"
+        ],
+        "advice_ids": [
+          "REVIEW_MEAL_CARB_PORTIONS"
+        ]
+      }
+    ]
+  },
+  "when_unknown_food_is_added": {
+    "add_to_reviewed_meal": {
+      "item_id": "unknown-dish",
+      "food_id": null,
+      "label_vi": "Món nhà nấu chưa có trong danh mục",
+      "grams": 100,
+      "food_confirmed": true,
+      "quantity_confirmed": true,
+      "quantity_source": "weighed",
+      "input_source": "manual_addition"
+    },
+    "expected_nutrient_total": {
+      "carb_g": null
+    },
+    "expected_backend_evaluation": {
+      "kind": "medical_alert_evaluation",
+      "assessment_id": "demo-assessment-2",
+      "meal_id": "demo-meal-1",
+      "meal_revision": 3,
+      "profile_version": 1,
+      "composition_kb_version": "2.0.0",
+      "kb_version": "3.0.0-draft.2",
+      "synthetic_fixture": true,
+      "outcomes": [
+        {
+          "rule_id": "T2DM_CARB_MEAL_PLAN",
+          "status": "insufficient_data",
+          "missing_item_ids": [
+            "unknown-dish"
+          ],
+          "reason_codes": [
+            "missing_nutrient"
+          ]
+        }
+      ],
+      "alerts": []
+    }
+  },
+  "additional_cases": [
+    {
+      "case_id": "ONLY_ONE_MEAL",
+      "rule_id": "HTN_SODIUM_DAY_REFERENCE",
+      "period": "meal",
+      "expected_status": "not_applicable",
+      "reason_code": "scope_mismatch"
+    },
+    {
+      "case_id": "DAY_LOG_INCOMPLETE",
+      "rule_id": "HTN_SODIUM_DAY_REFERENCE",
+      "period": "day",
+      "day_log_complete": false,
+      "expected_status": "insufficient_data",
+      "reason_code": "incomplete_day"
+    },
+    {
+      "case_id": "HELD_MODEL_ESTIMATE",
+      "rule_id": "T2DM_CARB_MEAL_PLAN",
+      "quantity_source": "model_estimate",
+      "expected_status": "insufficient_data",
+      "reason_code": "unvalidated_quantity"
+    },
+    {
+      "case_id": "CLINICIAN_TARGET_MISSING",
+      "rule_id": "T2DM_CARB_MEAL_PLAN",
+      "expected_status": "needs_context",
+      "reason_code": "missing_or_conflicting_target"
+    },
+    {
+      "case_id": "UNREVIEWED_FOR_REAL_USER",
+      "rule_id": "T2DM_CARB_MEAL_PLAN",
+      "synthetic_fixture": false,
+      "expected_status": "pending_review",
+      "reason_code": "rule_not_approved"
+    }
+  ],
+  "example_display_vi": {
+    "warning_vi": "Lượng carbohydrate ước tính nằm ngoài giới hạn trên áp dụng cho bữa này trong kế hoạch đã xác nhận.",
+    "medical_reason_vi": "Lượng carbohydrate ước tính nằm ngoài giới hạn trên của kế hoạch áp dụng cho bữa trưa. Theo dõi carbohydrate cùng cách phân bố bữa giúp đối chiếu với kế hoạch đã xác nhận.",
+    "advice_vi": [
+      "Kiểm tra lại khẩu phần cơm, bún, bánh và đồ uống có đường đã ghi. Khi lên bữa tiếp theo, phân bố các món chứa carbohydrate theo kế hoạch của bạn."
+    ],
+    "source_excerpt_vi": "cần được tư vấn chế độ dinh dưỡng phù hợp"
+  }
+}
